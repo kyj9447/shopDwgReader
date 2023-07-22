@@ -1,0 +1,38 @@
+<!doctype html>
+<html layout:decorate="~{layouts/layout1}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block layout:fragment="css">
+    <style>
+        .error{
+        color: #bd2130;
+        }
+.kakao{
+   background-color: #FEE500;
+   color: #3c1d1e;
+   border-color: #FEE500;
+   }
+
+    </style>
+</th:block>
+
+<div layout:fragment="content">
+    <form action="/members/login" method="post" role="form">
+        <div class="form-group">
+            <label th:for="email">이메일 주소</label>
+            <input class="form-control" name="email" placeholder="이메일을 입력해주세요." type="email">
+        </div>
+        <div class="form-group">
+            <label th:for="password">비밀번호</label>
+            <input class="form-control" name="password" placeholder="비밀번호 입력" type="password">
+        </div>
+        <p class="error" th:if="${loginErrorMsg}" th:text="${loginErrorMsg}"></p>
+        <button class="btn btn-primary">로그인</button>
+        <button class="btn btn-primary" onclick="location.href='/members/new'" type="button">회원가입</button>
+        <a class="btn btn-primary kakao" href="https://kauth.kakao.com/oauth/authorize?client_id=0ea9af982ecb374ececf50d24a8894d6&redirect_uri=http://localhost/kakaologin&response_type=code" type="button">카카오로그인</a>
+        <!--로그인마다 로그인창 출력 원할시 href 끝에 &prompt=login 추가--->
+        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden">
+    </form>
+</div>
+</html>

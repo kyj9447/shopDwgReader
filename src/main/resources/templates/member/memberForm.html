@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layouts/layout1}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:th="http://www.thymeleaf.org">
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        .fieldError {
+            color: #bd2130;
+        }
+    </style>
+</th:block>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            var err = [[${ errorMessage }]];
+            if (err != null) {
+                alert(err);
+            }
+        });
+
+    </script>
+</th:block>
+
+<div layout:fragment="content">
+    <form action="/members/new" method="post" role="form" th:object="${memberFormDto}">
+        <div class="form-group">
+            <label th:for="name">이름</label>
+            <input class="form-control" placeholder="이름을 입력해주세요." th:field="*{name}" type="text">
+            <p class="fieldError" th:errors="*{name}" th:if="${#fields.hasErrors('name')}">Incorrect date</p>
+        </div>
+        <div class="form-group">
+            <label th:for="email">이메일 주소</label>
+            <input class="form-control" id="sendmail" placeholder="이메일을 입력해주세요." th:field="*{email}" type="text">
+            <p class="fieldError" th:errors="*{email}" th:if="${#fields.hasErrors('email')}">Incorrect date</p>
+        </div>
+        <div class="form-group">
+            <label th:for="password">비밀번호</label>
+            <input class="form-control" placeholder="비밀번호 입력" th:field="*{password}" type="password">
+            <p class="fieldError" th:errors="*{password}" th:if="${#fields.hasErrors('password')}">Incorrect date</p>
+        </div>
+        <div class="form-group">
+            <label th:for="address">주소</label>
+            <input class="form-control" id="address_kakao" placeholder="주소를 입력해주세요." th:field="*{address}" type="text">
+            <p class="fieldError" th:errors="*{address}" th:if="${#fields.hasErrors('address')}">Incorrect date</p>
+        </div>
+        <div class="form-group">
+            <label th:for="number">전화번호</label>
+            <input class="form-control" placeholder="전화번호를 입력해주세요." th:field="*{number}" type="text">
+            <p class="fieldError" th:errors="*{number}" th:if="${#fields.hasErrors('number')}">Incorrect date</p>
+        </div>
+        <div style="text-align: center">
+            <button class="btn btn-primary" style="" type="submit">Submit</button>
+        </div>
+        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden">
+    </form>
+
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        window.onload = function () {
+            document.getElementById("address_kakao").addEventListener("click", function () { //주소입력칸을 클릭하면
+                //카카오 지도 발생
+                new daum.Postcode({
+                    oncomplete: function (data) { //선택시 입력값 세팅
+                        document.getElementById("address_kakao").value = data.address; // 주소 넣기
+                        document.querySelector("input[name=address_detail]");
+                    }
+                }).open();
+            });
+        }
+    </script>
+
+</div>
+
+</html>

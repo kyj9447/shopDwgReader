@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layouts/layout1}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+</head>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            var errorMessage = /*[[${ errorMessage }]]*/null;
+            if (errorMessage != null) {
+                alert(errorMessage);
+            }
+            bindDomEvent();
+        });
+
+        function bindDomEvent() {
+            $(".custom-file-input").on("change", function () {
+                // a.jpg
+                // alert($(this).val());
+                var fileName = $(this).val().split("\\").pop();
+                // alert(fileName);
+                var fileExt = fileName.substring(fileName.lastIndexOf(".") + 1);
+                // alert(fileExt);
+
+                fileExt = fileExt.toLowerCase();
+                if (fileExt != "dwg") {
+                    alert(".dwg 파일만 등록이 가능합니다.");
+                    return;
+                }
+                $(this).siblings(".custom-file-label").html(fileName);
+            });
+        }
+    </script>
+    <script>
+        function showLoading() {
+        var element = document.getElementById("loadingImage");
+            element.style.height = '200px';
+        }
+    </script>
+</th:block>
+<th:block layout:fragment="css">
+    <style>
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .img-div {
+            margin-bottom: 10px;
+        }
+
+        .fieldError {
+            color: #bd2130;
+        }
+
+        #loadingImage{
+            display: block;
+            height: 0px;
+            transition: 1s;
+        }
+    </style>
+</th:block>
+<div layout:fragment="content">
+    <img class="rounded repImg" id="loadingImage" th:alt="처리중" th:src="${loading}">
+    <form action="/dwg" enctype="multipart/form-data" method="post" onsubmit="showLoading()">
+        <div>
+            .dwg파일 : <input accept=".dwg" name="dwgFile" type="file">
+        </div>
+        <input type="radio" name="thick" value="2" checked> 2T [원판단가: 20000원/m2(=0.2원/mm2) , 가공단가: 20원/mm, 드릴단가: 500원/개]<br>
+        <input type="radio" name="thick" value="5"> 5T [원판단가: 50000원/m2(=0.5원/mm2) , 가공단가: 50원/mm, 드릴단가: 1300원/개]<br>
+        <input type="radio" name="thick" value="10"> 10T [원판단가: 100000원/m2(=1원/mm2) , 가공단가: 100원/mm, 드릴단가: 2800원/개]<br>
+        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden">
+        <button type="submit">업로드</button>
+    </form>
+</div>
+
+</html>

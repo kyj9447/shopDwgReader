@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html
+        layout:decorate="~{layouts/layout1}"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+    <style>
+        #canvas {
+            padding: 20px;
+            display: block;
+            align-items: center;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        .resultcontent {
+            width: 90%;
+        }
+
+        .resulttitle {
+            text-align: center
+        }
+
+    </style>
+</head>
+
+<div layout:fragment="content">
+
+    <div class="resultcontent">
+        <h1 class="resulttitle">업로드 결과</h1>
+
+        <canvas id="canvas"></canvas>
+
+        <div>
+            <h2> 가공비용 계산</h2>
+            <ul id="resultlist"></ul>
+            <div id="totalprice"></div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            // JSON 데이터를 문자열로 받아옵니다. -skip
+
+            // JSON 데이터의 따옴표 앞의 역슬래시를 삭제합니다.
+            function removeBackslashes(str) {
+                return str.replace(/\\/g, '');
+            }
+            const cleanedJsonData = removeBackslashes(/*[[${finalObjectList}]]*/);
+
+            // 문자열의 시작과 끝이 쌍따옴표인지 확인하고, 쌍따옴표를 따옴표로 변경합니다.
+            function replaceQuotes(str) {
+                if (str.startsWith('"') && str.endsWith('"')) {
+                    // 첫 번째 쌍따옴표를 따옴표로 변경
+                    str = "'" + str.slice(1, -1);
+                    // 마지막 쌍따옴표를 따옴표로 변경
+                    str = str.slice(0, -1) + "'";
+                }
+                return str;
+            }
+            const cleanedObjectList = replaceQuotes(cleanedJsonData);
+
+            //alert('canvas 로드');
+            //alert(cleanedJsonData2);
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // 문자열 형태의 JSON 데이터를 JavaScript 객체로 변환합니다.
+            const jsonObject = JSON.parse(cleanedObjectList);
+
+            // JavaScript 변수로 받은 JSON 데이터를 출력하거나 사용할 수 있습니다.
+            //console.log(jsonObject[0].objectlist[0].startX);
+            //console.log(jsonObject[0].objectlist[0].startY);
+            //alert(jsonObject[0].objectlist[0].startX);
+            //alert(jsonObject[0].objectlist[0].startY);
+
+            // canvassize 저장
+            const canvassizeX = jsonObject[0].canvassizeX;
+            const canvassizeY = jsonObject[0].canvassizeY;
+
+            // canvassizeX : "1500px" 비율로 scaler값 지정
+            const scaler = 1500 / jsonObject[0].canvassizeX;
+            const padding = 1 * scaler;
+
+            // 캔버스 사이즈 재조정
+            canvas.width = jsonObject[0].canvassizeX * scaler;
+            canvas.height = jsonObject[0].canvassizeY * scaler;
+
+            // 선 두께 사전 설정 (원판용)
+            ctx.lineWidth = scaler * 2;
+
+            // 가격 총합 보관용 변수
+            let totalprice = 0;
+
+            // attribute의 값 불러와 저장
+            const plateprice = /*[[${plateprice}]]*/ 0;
+            const cutprice = /*[[${cutprice}]]*/ 0;
+            const drillprice = /*[[${drillprice}]]*/ 0;
+
+            // 사각형 원판 그리기
+            ctx.strokeStyle = "grey";
+            ctx.strokeRect(0, 0, (jsonObject[0].canvassizeX) * scaler, (jsonObject[0].canvassizeY) * scaler);
+
+            // 원판 결과 태그 추가
+            let container = document.getElementById("resultlist");
+            const mainplate = document.createElement("li"); // 새로운 <li> 요소 생성
+            mainplate.textContent = "원판 가격 [회색] : (" + canvassizeX + "mm x " + canvassizeY + "mm) " + (canvassizeX * canvassizeY * plateprice) + "원"; // 내용 설정
+            container.appendChild(mainplate); // 새로운 <li> 요소를 <ul id="resultlist"> 하위에 추가
+            totalprice += (canvassizeX * canvassizeY * plateprice);
+
+            // 선 두께 사전 설정 (본 객체용)
+            ctx.lineWidth = scaler * 1;
+
+            // 2중 for문으로 도형 그리기
+            for (let i = 0; i < jsonObject.length; i++) {
+                if (i == 0) {  // 첫객체 채우기색 하늘색, 선 파란색
+                    ctx.fillStyle = "skyblue";
+                    ctx.strokeStyle = "red";
+                    console.log('첫객체 하늘색');
+                }
+                else {  // 나머지 흰색
+                    ctx.fillStyle = "white";
+                    ctx.strokeStyle = "green";
+                    console.log('나머지객체 흰색');
+                }
+
+                if (jsonObject[i].circle == true) { // Circle이면
+                    // ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+                    var centerX = jsonObject[i].objectlist[0].centerX * scaler;
+                    var centerY = jsonObject[i].objectlist[0].centerY * scaler;
+                    var radius = jsonObject[i].objectlist[0].radius * scaler;
+                    if (jsonObject[i].objectlist[0].drillable == true) { // drill 가공 가능하면
+                        ctx.strokeStyle = "orange"; // 선 색깔 오렌지
+                    }
+
+                    ctx.beginPath(); // 경로 시작
+                    console.log('arc circle ' + ' centerX: ' + centerX + ' centerY: ' + centerY);
+                    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true); // arc 360도 => circle
+                } else { // Circle이 아니면 Object List 반복문 시작
+                    console.log('notCircle');
+                    ctx.beginPath(); // 경로 시작
+                    var startX = jsonObject[i].objectlist[0].startX * scaler;
+                    var startY = jsonObject[i].objectlist[0].startY * scaler;
+
+                    console.log('moveTo' + ' startX: ' + startX + ' startY: ' + startY);
+                    ctx.moveTo(startX, startY); // 시작점으로 이동
+
+                    for (let j = 0; j < jsonObject[i].objectlist.length; j++) {
+                        if (jsonObject[i].objectlist[j].radius == 0) { // radius가 0이면 Line이다
+                            var endX = jsonObject[i].objectlist[j].endX * scaler;
+                            var endY = jsonObject[i].objectlist[j].endY * scaler;
+
+                            console.log('Line to' + ' endX: ' + endX + ' endY: ' + endY);
+                            ctx.lineTo(endX, endY);
+                        }
+                        else { // circle이 false면서 radius가 0.0이 아니면 Arc다
+                            console.log('Arc');
+                            var centerX = jsonObject[i].objectlist[j].centerX * scaler;
+                            var centerY = jsonObject[i].objectlist[j].centerY * scaler;
+                            var radius = jsonObject[i].objectlist[j].radius * scaler;
+                            var startangle = jsonObject[i].objectlist[j].startangle;
+                            var endangle = jsonObject[i].objectlist[j].endangle;
+
+                            // arc(중심X좌표, 중심Y좌표, 반지름, 시작각, 끝각, 반시계방향 여부)
+                            console.log('arc' + ' cencterX: ' + centerX + ' cencterY: ' + centerY + ' radius: ' + radius + ' startAngle: ' + startangle + ' endAngle: ' + endangle);
+                            ctx.arc(centerX, centerY, radius, (Math.PI / 180) * startangle, (Math.PI / 180) * endangle, false);
+                        }
+                    }
+                }
+                console.log('객체끝 fill & stroke')
+                ctx.fill();
+                ctx.stroke();
+            }
+
+            // for문으로 가격 계산, li 태그 추가
+            for (let i = 0; i < jsonObject.length; i++) {
+                let resulttemp = document.createElement("li"); // 새로운 <li> 요소 생성
+                if (i == 0) { // 첫 객체
+                    resulttemp.textContent = "원판 가공 [빨간색] : (" + Math.round(jsonObject[i].totallength) + "mm) " + Math.ceil((jsonObject[i].totallength * cutprice)) + "원"; // 내용 설정
+                    container.appendChild(resulttemp); // 새로운 <li> 요소를 <ul id="resultlist"> 하위에 추가
+                    totalprice += Math.ceil((jsonObject[i].totallength * cutprice)); // 가격 누적
+                    continue; // 다음 반복으로 넘어감
+                }
+                if (jsonObject[i].objectlist[0].drillable == true) { // drill 가공 가능하면
+                    resulttemp.textContent = "드릴 가공 ø" + jsonObject[i].objectlist[0].radius * 2 + " [주황색] :  " + drillprice + "원"; // 내용 설정
+                    container.appendChild(resulttemp); // 새로운 <li> 요소를 <ul id="resultlist"> 하위에 추가
+                    totalprice += (drillprice); // 가격 누적
+                }
+                else {
+                    resulttemp.textContent = "일반 가공 [초록색] : (" + Math.round(jsonObject[i].totallength) + "mm) " + Math.ceil((jsonObject[i].totallength * cutprice)) + "원"; // 내용 설정
+                    container.appendChild(resulttemp); // 새로운 <li> 요소를 <ul id="resultlist"> 하위에 추가
+                    totalprice += Math.ceil((jsonObject[i].totallength * cutprice)); // 가격 누적
+                }
+            }
+
+            // 총합 출력
+            container = document.getElementById("totalprice");
+            const totalpriceout = document.createElement("h2"); // 새로운 <h1> 요소 생성
+            totalpriceout.textContent = "총 합 : " + totalprice + "원"; // 내용 설정
+            container.appendChild(totalpriceout); // 새로운 <li> 요소를 <ul id="resultlist"> 하위에 추가
+
+        });
+
+    </script>
+</div>
+
+</html>
