@@ -274,7 +274,7 @@ public class DwgReader {
                     partList2.add(partList.get(i)); // B에 담고
                     partList.remove(i); // A에서 삭제
                     i = -1;
-                    continue; // 현재 스캔 종료 후 다시 다음스캔 시작
+                    // 현재 스캔 종료 후 다시 다음스캔 시작
                 }
             }
 
@@ -321,8 +321,8 @@ public class DwgReader {
         double mainMaxY = 0;
         double mainMinX = 0;
         double mainMinY = 0;
-        double canvasX = 0;
-        double canvasY = 0;
+        double Xsize = 0;
+        double Ysize = 0;
 
         // 모든 점들의 X 최대, 최소값, Y 최대, 최소값 구하기
         for (CadObject A : mainObject.objectlist) {
@@ -355,11 +355,11 @@ public class DwgReader {
         }
 
         // x축, y축 최대 길이 각각 저장
-        canvasX = mainMaxX - mainMinX;
-        canvasY = mainMaxY - mainMinY;
+        Xsize = mainMaxX - mainMinX;
+        Ysize = mainMaxY - mainMinY;
 
-        mainObject.canvassizeX = canvasX+20; // 직경 10mm 엔드밀 2회분
-        mainObject.canvassizeY = canvasY+20;
+        mainObject.canvassizeX = Xsize+20; // 직경 10mm 엔드밀 2회분
+        mainObject.canvassizeY = Ysize+20;
 
         moveAll(finalList, -mainMinX+10, -mainMinY+10); // X양수,Y양수영역으로 이동
         // moveAll(finalList, 1000, 1000); // 2000x2000 캔버스 중심으로 이동
