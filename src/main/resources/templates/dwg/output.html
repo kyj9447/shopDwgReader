@@ -53,15 +53,14 @@
                 const canvassizeY = jsonObject[0].canvassizeY;
 
                 // canvassizeX : "1500px" 비율로 scaler값 지정
-                const scaler = 1500 / jsonObject[0].canvassizeX;
-                const padding = 1 * scaler;
+                const scaler = 1500 / canvassizeX;
 
                 // 캔버스 사이즈 재조정
                 canvas.width = jsonObject[0].canvassizeX * scaler;
                 canvas.height = jsonObject[0].canvassizeY * scaler;
 
                 // 선 두께 사전 설정 (원판용)
-                ctx.lineWidth = scaler * 2;
+                ctx.lineWidth = scaler * 1;
 
                 // 가격 총합 보관용 변수
                 let totalprice = 0;
@@ -83,7 +82,7 @@
                 totalprice += canvassizeX * canvassizeY * plateprice;
 
                 // 선 두께 사전 설정 (본 객체용)
-                ctx.lineWidth = scaler * 1;
+                ctx.lineWidth = scaler * 0.5;
 
                 // 2중 for문으로 도형 그리기
                 for (let i = 0; i < jsonObject.length; i++) {

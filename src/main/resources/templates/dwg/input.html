@@ -63,7 +63,7 @@
     </style>
 </th:block>
 <div layout:fragment="content">
-    <img class="rounded repImg" id="loadingImage" th:alt="처리중" th:src="${loading}">
+    <img id="loadingImage" th:alt="처리중" th:src="${loading}">
     <form action="/dwg" enctype="multipart/form-data" method="post" onsubmit="showLoading()">
         <div>
             .dwg파일 : <input accept=".dwg" name="dwgFile" type="file">

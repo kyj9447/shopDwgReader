@@ -4,7 +4,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -115,75 +114,58 @@ public class KakaoAPI {
         return userInfo;
     }
 
-    // 카카오 사용자 로그아웃
-    public void kakaoLogout(String access_Token) {
-        String reqURL = "https://kapi.kakao.com/v1/user/logout";
-        try {
-            URL url = new URL(reqURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
-
-            int responseCode = conn.getResponseCode();
-            System.out.println("responseCode : " + responseCode);
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-            String result = "";
-            String line = "";
-
-            while ((line = br.readLine()) != null) {
-                result += line;
-            }
-            System.out.println(result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // 카카오 계정과 함께 로그아웃
-    public void kakaoLogout2() throws IOException {
-
-        String reqURL = "https://kauth.kakao.com/oauth/logout";
-        URL url = new URL(reqURL);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-        // GET 요청
-        conn.setRequestMethod("GET");
-        conn.setDoOutput(true);
-
-        // 요청에 포함할 파라미터
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-        StringBuilder sb = new StringBuilder();
-        sb.append("client_id=0ea9af982ecb374ececf50d24a8894d6");
-        sb.append("&logout_redirect_uri=http://localhost");
-        bw.write(sb.toString());
-        bw.flush();
-
-        // 결과 코드가 302이라면 성공
-        int responseCode = conn.getResponseCode();
-        System.out.println("logout responseCode : " + responseCode);
-
-        //응답 메시지 출력
-        //String responseMessage = conn.getResponseMessage();
-        System.out.println("Response Message: " + conn.getResponseMessage());
-
-    }
-
-    // 카카오 계정과 함께 로그아웃
-    public String kakaoLogout3() {
-        // RestTemplate 객체 생성
-        RestTemplate restTemplate = new RestTemplate();
-
-        // ! 미완성 !
-        // 응답 null
-        // 로그아웃 창 안뜸
-        // HTTP 요청 보내고 응답 받기
-        String url = "https://kauth.kakao.com/oauth/logout?client_id=0ea9af982ecb374ececf50d24a8894d6&logout_redirect_uri=http://localhost/kakaologout";
-        String responseBody = restTemplate.getForObject(url, String.class);
-
-        // 응답 내용 출력
-        System.out.println("Response: " + responseBody);
-        return url;
-    }
+//    // 카카오 사용자 로그아웃
+//    public void kakaoLogout(String access_Token) {
+//        String reqURL = "https://kapi.kakao.com/v1/user/logout";
+//        try {
+//            URL url = new URL(reqURL);
+//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//            conn.setRequestMethod("POST");
+//            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+//
+//            int responseCode = conn.getResponseCode();
+//            System.out.println("responseCode : " + responseCode);
+//
+//            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//
+//            String result = "";
+//            String line = "";
+//
+//            while ((line = br.readLine()) != null) {
+//                result += line;
+//            }
+//            System.out.println(result);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    // 카카오 계정과 함께 로그아웃
+//    public void kakaoLogout2() throws IOException {
+//
+//        String reqURL = "https://kauth.kakao.com/oauth/logout";
+//        URL url = new URL(reqURL);
+//        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//
+//        // GET 요청
+//        conn.setRequestMethod("GET");
+//        conn.setDoOutput(true);
+//
+//        // 요청에 포함할 파라미터
+//        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("client_id=0ea9af982ecb374ececf50d24a8894d6");
+//        sb.append("&logout_redirect_uri=http://localhost");
+//        bw.write(sb.toString());
+//        bw.flush();
+//
+//        // 결과 코드가 302이라면 성공
+//        int responseCode = conn.getResponseCode();
+//        System.out.println("logout responseCode : " + responseCode);
+//
+//        //응답 메시지 출력
+//        //String responseMessage = conn.getResponseMessage();
+//        System.out.println("Response Message: " + conn.getResponseMessage());
+//
+//    }
 }

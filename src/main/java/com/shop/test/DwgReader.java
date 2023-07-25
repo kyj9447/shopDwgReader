@@ -252,7 +252,6 @@ public class DwgReader {
                 double nextStartY = partList.get(i).startY;
                 double nextEndX = partList.get(i).endX;
                 double nextEndY = partList.get(i).endY;
-                ;
 
                 if (lastEndX == nextStartX && lastEndY == nextStartY) {
                     // B의 마지막 객체의 끝점 == A의 객체의 시작점 (시작-끝-시작-끝 / 순방향)

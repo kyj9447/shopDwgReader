@@ -83,7 +83,7 @@ public class MainController {
 //        System.out.println("removeAttribute : \"userId\"");
 //        session.removeAttribute("userId");
 
-        kakao.kakaoLogout3();
+        //kakao.kakaoLogout3();
         //return "redirect:/members/logout";
         return "redirect:https://kauth.kakao.com/oauth/logout?client_id=0ea9af982ecb374ececf50d24a8894d6&logout_redirect_uri=http://localhost/members/logout";
     }
