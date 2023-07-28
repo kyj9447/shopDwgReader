@@ -2,6 +2,16 @@ html {
     position: relative;
     min-height: 100%;
     margin: 0;
+    min-width: 640px;
+
+}
+
+.header {
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    z-index: 9999;
+    height: 40px;
 }
 
 body {
@@ -20,19 +30,37 @@ body {
 
 .content {
     margin-bottom: 100px;
-    margin-top: 50px;
+    margin-top: 90px;
     margin-left: 200px;
     margin-right: 200px;
+}
+
+#test-blank {
+    height: 3000px;
 }
 
 .nav-btn {
     border-left: 1px solid gray;
     font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.navbar {
+    white-space: nowrap !important;
 }
 
 .padding-top-bottom-0 {
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.margin-top-bottom-0 {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.margin-top-60 {
+    margin-top: 60px !important;
 }
 
 .search-box {
@@ -41,5 +69,64 @@ body {
 
 .search-button {
     border-radius: 0 0 0 0;
+}
 
+.border-radius-0 {
+    border-radius: 0 0 0 0;
+}
+
+.height-40 {
+    height: 40px;
+}
+
+.line-height-24 {
+    line-height: 24px;
+}
+
+/* 사이드바 */
+#sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 40px;
+    left: -250px;
+    background-color: white;
+    transition: left 0.3s ease-in;
+
+    border-right: 1px solid grey;
+    z-index: 10;
+}
+
+#sidebar.show {
+    left: 0;
+}
+
+/* 사이드바 버튼 */
+.sidebar-btn {
+    z-index: 100;
+    width: 80px;
+    height: 35px;
+    position: fixed;
+    top: 50px;
+    left: 10px;
+    cursor: pointer;
+    color: #fff;
+    float: left;
+    font-size: 0.8rem;
+}
+
+/* 스크롤 버튼 */
+#scrollToTop {
+    z-index: 100;
+    display: block;
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    bottom: 0px;
+    right: 0px;
+    background-color: lightgrey;
+    color: darkgrey;
+    border: 2px solid gray;
+    cursor: pointer;
+    border-radius: 4px;
 }

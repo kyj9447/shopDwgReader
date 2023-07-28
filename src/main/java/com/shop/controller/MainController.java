@@ -60,8 +60,14 @@ public class MainController {
         if (userInfo.get("email") != null) {
             System.out.println("setAttribute : \"userId\" : " + userInfo.get("email"));
             session.setAttribute("userId", userInfo.get("email"));
+
             System.out.println("setAttribute : \"access_Token\" : " + access_Token);
             session.setAttribute("access_Token", access_Token);
+
+            System.out.println("setAttribute : \"thumbnail_image\" : " + userInfo.get("thumbnail_image"));
+            String profileUrl = userInfo.get("thumbnail_image").toString();
+            session.setAttribute("userImage",profileUrl); // 프사 추가
+
             session.setAttribute("kakaoLoggedInUser", "true"); // 'kakaoUser'는 카카오 로그인한 사용자 정보를 나타내는 객체
         }
 
