@@ -73,6 +73,18 @@
             <input class="form-control" placeholder="상품명을 입력해주세요." th:field="*{itemNm}" type="text">
         </div>
         <p class="fieldError" th:errors="*{itemNm}" th:if="${#fields.hasErrors('itemNm')}">Incorrect data</p>
+
+        <div class="form-group">
+            <select class="custom-select" th:field="*{itemCategory}">
+                <option value="">--분류를 선택하세요--</option>
+                <option value="material">재료 - material</option>
+                <option value="motor">동력 - motor</option>
+                <option value="electric">전기재료 - electric</option>
+                <option value="tool">공구 - tool</option>
+            </select>
+        </div>
+        <p class="fieldError" th:errors="*{itemCategory}" th:if="${#fields.hasErrors('itemCategory')}">Incorrect data</p>
+
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">가격</span>

@@ -66,7 +66,11 @@ class ItemRepositoryTest {
         List<Item> itemList = itemRepository.findByItemNmOrItemDetail("테스트 상품1", "테스트 상품 상세 설명5");
         for (Item item : itemList) {
             System.out.println("check2");
-            System.out.println("결과" + item.toString());
+            System.out.println("결과");
+            System.out.println("아이템 이름 :" + item.getItemNm());
+            System.out.println("아이템 가격 :" + item.getPrice());
+            System.out.println("아이템 재고 :" + item.getStockNumber());
+            System.out.println("아이템 설명 :" + item.getItemDetail());
         }
     }
 
@@ -76,7 +80,12 @@ class ItemRepositoryTest {
         this.createItemList();
         List<Item> itemList = itemRepository.findByPriceLessThan(10005);
         for (Item item : itemList) {
-            System.out.println(item.toString());
+            System.out.println("check1");
+            System.out.println("결과");
+            System.out.println("아이템 이름 :" + item.getItemNm());
+            System.out.println("아이템 가격 :" + item.getPrice());
+            System.out.println("아이템 재고 :" + item.getStockNumber());
+            System.out.println("아이템 설명 :" + item.getItemDetail());
         }
     }
 
@@ -86,7 +95,12 @@ class ItemRepositoryTest {
         this.createItemList();
         List<Item> itemList = itemRepository.findByPriceLessThanOrderByPriceDesc(10005);
         for (Item item : itemList) {
-            System.out.println(item.toString());
+            System.out.println("check1");
+            System.out.println("결과");
+            System.out.println("아이템 이름 :" + item.getItemNm());
+            System.out.println("아이템 가격 :" + item.getPrice());
+            System.out.println("아이템 재고 :" + item.getStockNumber());
+            System.out.println("아이템 설명 :" + item.getItemDetail());
         }
     }
 
@@ -96,7 +110,12 @@ class ItemRepositoryTest {
         this.createItemList();
         List<Item> itemList = itemRepository.findByItemDetail("테스트 상품 상세 설명");
         for (Item item : itemList) {
-            System.out.println(item.toString());
+            System.out.println("check1");
+            System.out.println("결과");
+            System.out.println("아이템 이름 :" + item.getItemNm());
+            System.out.println("아이템 가격 :" + item.getPrice());
+            System.out.println("아이템 재고 :" + item.getStockNumber());
+            System.out.println("아이템 설명 :" + item.getItemDetail());
         }
     }
 
@@ -106,7 +125,12 @@ class ItemRepositoryTest {
         this.createItemList();
         List<Item> itemList = itemRepository.findByItemDetailByNative("테스트 상품 상세 설명");
         for (Item item : itemList) {
-            System.out.println(item.toString());
+            System.out.println("check1");
+            System.out.println("결과");
+            System.out.println("아이템 이름 :" + item.getItemNm());
+            System.out.println("아이템 가격 :" + item.getPrice());
+            System.out.println("아이템 재고 :" + item.getStockNumber());
+            System.out.println("아이템 설명 :" + item.getItemDetail());
         }
     }
 
@@ -123,7 +147,12 @@ class ItemRepositoryTest {
         List<Item> itemList = query.fetch();
 
         for (Item item : itemList) {
-            System.out.println(item.toString());
+            System.out.println("check1");
+            System.out.println("결과");
+            System.out.println("아이템 이름 :" + item.getItemNm());
+            System.out.println("아이템 가격 :" + item.getPrice());
+            System.out.println("아이템 재고 :" + item.getStockNumber());
+            System.out.println("아이템 설명 :" + item.getItemDetail());
         }
     }
 
@@ -179,7 +208,12 @@ class ItemRepositoryTest {
 
         List<Item> resultItemList = itemPagingResult.getContent();
         for (Item resultItem : resultItemList) {
-            System.out.println(resultItem.toString());
+            System.out.println("check1");
+            System.out.println("결과");
+            System.out.println("아이템 이름 :" + resultItem.getItemNm());
+            System.out.println("아이템 가격 :" + resultItem.getPrice());
+            System.out.println("아이템 재고 :" + resultItem.getStockNumber());
+            System.out.println("아이템 설명 :" + resultItem.getItemDetail());
         }
     }
 

@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -17,21 +16,31 @@ import java.util.List;
 @Setter
 @ToString
 public class Item extends BaseEntity{
+
     @Id // 기본키
     @Column(name = "item_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Column(nullable = false, length = 50)
     private String itemNm;
+
+    @Column(name = "category", nullable = false)
+    private String itemCategory;
+
     @Column(name = "price", nullable = false)
     private int price;
+
     @Column(nullable = false)
     private int stockNumber;
+
     @Lob
     @Column(nullable = false)
     private String itemDetail;
+
     @Lob
     private String itemRequest;
+
     @Enumerated(EnumType.STRING)
     private ItemSellStatus itemSellStatus;
 

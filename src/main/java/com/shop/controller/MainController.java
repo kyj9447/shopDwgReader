@@ -2,6 +2,7 @@ package com.shop.controller;
 
 import com.shop.dto.ItemSearchDto;
 import com.shop.dto.MainItemDto;
+import com.shop.repository.ItemRepository;
 import com.shop.service.ItemService;
 import com.shop.service.KakaoAPI;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -66,7 +68,7 @@ public class MainController {
 
             System.out.println("setAttribute : \"thumbnail_image\" : " + userInfo.get("thumbnail_image"));
             String profileUrl = userInfo.get("thumbnail_image").toString();
-            session.setAttribute("userImage",profileUrl); // 프사 추가
+            session.setAttribute("userImage", profileUrl); // 프사 추가
 
             session.setAttribute("kakaoLoggedInUser", "true"); // 'kakaoUser'는 카카오 로그인한 사용자 정보를 나타내는 객체
         }
@@ -92,5 +94,36 @@ public class MainController {
         //kakao.kakaoLogout3();
         //return "redirect:/members/logout";
         return "redirect:https://kauth.kakao.com/oauth/logout?client_id=0ea9af982ecb374ececf50d24a8894d6&logout_redirect_uri=http://localhost/members/logout";
+    }
+
+    //카테고리 선택
+    @GetMapping(value = "/category/{category}")
+    public String category(@PathVariable("category") String category, ItemSearchDto itemSearchDto, Optional<Integer> page, Model model) {
+        System.out.println("category "+category);
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
+
+//        if (itemSearchDto.getSearchQuery() == null) {
+//            itemSearchDto.setSearchQuery("");
+//        }
+
+        if(category.equals("all")){
+            // Dto 에 카테고리 이름 세팅
+            itemSearchDto.setSearchCategory(category);
+
+            Page<MainItemDto> items = itemService.getMainItemPage(itemSearchDto, pageable);
+            model.addAttribute("items", items);
+        }
+        else {
+            // Dto 에 카테고리 이름 세팅
+            itemSearchDto.setSearchCategory(category);
+
+            // itemservice에 dto로 카테고리 아이템들 요청
+            Page<MainItemDto> items = itemService.getCategoryPage(itemSearchDto, pageable);
+            model.addAttribute("items", items);
+        }
+
+        model.addAttribute("itemSearchDto", itemSearchDto);
+        model.addAttribute("maxPage", 5);
+        return "category";
     }
 }
