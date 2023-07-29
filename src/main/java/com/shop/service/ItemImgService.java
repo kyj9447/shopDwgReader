@@ -32,9 +32,7 @@ public class ItemImgService {
             System.out.println(imgName);
             imgUrl = "/images/item/" + imgName;
         }
-        System.out.println("1111");
         itemImg.updateItemImg(oriImgName, imgName, imgUrl);
-        System.out.println("(((((");
         itemImgRepository.save(itemImg);
     }
 

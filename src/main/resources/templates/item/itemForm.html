@@ -17,11 +17,8 @@
         function bindDomEvent(){
             $(".custom-file-input").on("change", function(){
                 // a.jpg
-                alert($(this).val());
                 var fileName = $(this).val().split("\\").pop();
-                alert(fileName);
                 var fileExt = fileName.substring(fileName.lastIndexOf(".")+1);
-                alert(fileExt);
                 //확장자 추출
                 fileExt = fileExt.toLowerCase(); // 소문자 소환
 
