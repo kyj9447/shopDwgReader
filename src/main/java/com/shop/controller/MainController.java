@@ -2,7 +2,6 @@ package com.shop.controller;
 
 import com.shop.dto.ItemSearchDto;
 import com.shop.dto.MainItemDto;
-import com.shop.repository.ItemRepository;
 import com.shop.service.ItemService;
 import com.shop.service.KakaoAPI;
 import lombok.RequiredArgsConstructor;

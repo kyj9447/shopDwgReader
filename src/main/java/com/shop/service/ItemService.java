@@ -86,4 +86,20 @@ public class ItemService {
     public Page<MainItemDto> getCategoryPage(ItemSearchDto itemSearchDto, Pageable pageable){
         return itemRepository.getCategoryPage(itemSearchDto,pageable);
     }
+
+    public Long saveCustomItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
+        Item item = itemFormDto.createItem();
+        itemRepository.save(item);
+
+        for ( int i = 0 ; i<itemImgFileList.size() ; i++ ){
+            ItemImg itemImg = new ItemImg();
+            itemImg.setItem(item);
+            if(i==0)
+                itemImg.setRepImgYn("Y");
+            else
+                itemImg.setRepImgYn("N");
+            itemImgService.saveItemImg(itemImg,itemImgFileList.get(i));
+        }
+        return item.getId();
+    }
 }

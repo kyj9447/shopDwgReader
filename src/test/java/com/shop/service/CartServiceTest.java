@@ -8,7 +8,6 @@ import com.shop.entity.Member;
 import com.shop.repository.CartItemRepository;
 import com.shop.repository.ItemRepository;
 import com.shop.repository.MemberRepository;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

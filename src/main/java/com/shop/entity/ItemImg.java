@@ -3,7 +3,6 @@ package com.shop.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ManyToAny;
 
 import javax.persistence.*;
 
