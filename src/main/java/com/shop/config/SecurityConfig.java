@@ -37,7 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeHttpRequests()
 
-                .mvcMatchers("/", "/members/**", "/item/**", "/images/**","/image/**","/favicon.ico","/kakaologin","/category/**") // 홈,회원관련,상품,이미지 + 파비콘 + 카카오로그인
+                // 홈,회원관련,상품,이미지 + 파비콘 + 카카오로그인 + 카테고리
+                .mvcMatchers("/", "/members/**", "/item/**", "/images/**","/image/**","/favicon.ico","/kakaologin","/category/**")
                 .permitAll() // 아무나 접근 가능
 
                 .mvcMatchers("/admin/**") // 관리자 페이지

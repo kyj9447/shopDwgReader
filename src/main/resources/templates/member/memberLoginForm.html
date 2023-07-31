@@ -19,6 +19,14 @@
     </style>
 </th:block>
 <div layout:fragment="content">
+
+    <!--로그인 필요로 리다이렉트시 출력-->
+    <div th:if="${session.loginMessage}">
+        <script th:inline="javascript">
+            alert([[${session.loginMessage}]]);
+        </script>
+    </div>
+
     <form action="/members/login" method="post" role="form">
         <div class="form-group">
             <label th:for="email">이메일 주소</label>
