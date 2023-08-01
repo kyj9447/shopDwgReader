@@ -25,7 +25,7 @@ public class CustomItem extends Item{
     @Column(name = "price", nullable = false)
     private int price;
 
-    @Column(nullable = false)
+    @Column
     private int thick;
 
     @OneToMany

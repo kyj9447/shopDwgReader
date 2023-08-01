@@ -48,7 +48,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
     }
 
     private BooleanExpression searchByLike(String searchBy, String searchQuery) {
-        if (StringUtils.equals("itemNm", searchBy)) {
+        if (StringUtils.equals("itemName", searchBy)) {
             return QItem.item.itemName.like("%" + searchQuery + "%");
         } else if (StringUtils.equals("createdBy", searchBy)) {
             return QItem.item.createdBy.like("%" + searchQuery + "%");
@@ -60,7 +60,12 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
     public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
         QueryResults<Item> results = queryFactory
                 .selectFrom(QItem.item)
-                .where(regDtsAfter(itemSearchDto.getSearchDateType()), searchSellStatusEq(itemSearchDto.getSearchSellStatus()), searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery()))
+                .where(
+                        regDtsAfter(itemSearchDto.getSearchDateType()),
+                        searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
+                        searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery()),
+                        categoryNotLike("custom") // 상품관리 페이지에 custom 카테고리는 제외
+                )
                 .orderBy(QItem.item.id.desc())
                 .offset(pageable.getOffset()).limit(pageable.getPageSize()).fetchResults();
         List<Item> content = results.getResults();
@@ -74,6 +79,10 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 
     private BooleanExpression categoryLike(String searchCategory){
         return StringUtils.isEmpty(searchCategory) ? null : QItem.item.itemCategory.like("%"+searchCategory+"%");
+    }
+
+    private BooleanExpression categoryNotLike(String searchCategory){
+        return StringUtils.isEmpty(searchCategory) ? null : QItem.item.itemCategory.notLike("%"+searchCategory+"%");
     }
 
     @Override

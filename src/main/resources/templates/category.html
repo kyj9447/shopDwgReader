@@ -33,16 +33,16 @@
 
   <input type="hidden" name="searchCategory" th:value="${itemSearchDto.searchCategory}">
 
-  <div th:if="${not #strings.isEmpty(itemSearchDto.searchCategory)}" class="center">
+  <div th:if="${not #strings.isEmpty(itemSearchDto.searchCategory)}" class="margin">
     <p class="h3 font-weight-bold" th:text="'카테고리 : ' + ${itemSearchDto.searchCategory}"></p>
   </div>
 
   <div class="row">
     <th:block th:each="item, status: ${items.getContent()}">
-      <div class="col-md-4-margin">
+      <div class="col-md-4 margin">
         <div class="card">
           <a th:href="'/item/' + ${item.id}" class="text-dark">
-            <img th:src="${item.imgUrl}" class="card-img-top" th:alt="${item.itemName}" height="400">
+            <img th:src="${item.imgUrl}" class="card-img-top" th:alt="${item.itemName}" width="400" height="400">
             <div class="card-body">
               <h4 class="card-title">[[${item.itemCategory}]]</h4>
               <h4 class="card-title">[[${item.itemName}]]</h4>

@@ -31,6 +31,14 @@
         }
     </style>
 </th:block>
+<th:block layout:fragment="script">
+  <script th:inline="javascript">
+    var alertMessage = /*[[${alertMessage}]]*/ null;
+        if (alertMessage) {
+            alert(alertMessage);
+        }
+  </script>
+</th:block>
 
 <div layout:fragment="content">
 
@@ -50,7 +58,7 @@
 
   <div class="row">
     <th:block th:each="item, status: ${items.getContent()}">
-      <div class="col-md-4-margin">
+      <div class="col-md-4 margin">
         <div class="card">
           <a th:href="'/item/' + ${item.id}" class="text-dark">
             <img th:src="${item.imgUrl}" class="card-img-top" th:alt="${item.itemName}" height="400">

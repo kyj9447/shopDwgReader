@@ -36,24 +36,27 @@ public class ItemService {
         Item item = itemFormDto.createItem();
         itemRepository.save(item);
 
-        for ( int i = 0 ; i<itemImgFileList.size() ; i++ ){
+        for (int i = 0; i < itemImgFileList.size(); i++) {
             ItemImg itemImg = new ItemImg();
             itemImg.setItem(item);
-            if(i==0)
+            if (i == 0)
                 itemImg.setRepImgYn("Y");
             else
                 itemImg.setRepImgYn("N");
-            itemImgService.saveItemImg(itemImg,itemImgFileList.get(i));
+            if (itemImgFileList.get(i).getSize() != 0) { // 내용이 있을때만 등록
+                System.out.println("이미지 사이즈" + itemImgFileList.get(i).getSize());
+                itemImgService.saveItemImg(itemImg, itemImgFileList.get(i));
+            }
         }
         return item.getId();
     }
 
     @Transactional(readOnly = true)
-    public ItemFormDto getItemDtl(Long itemId){
+    public ItemFormDto getItemDtl(Long itemId) {
         List<ItemImg> itemImgList = itemImgRepository.findByItemIdOrderByIdAsc(itemId);
         List<ItemImgDto> itemImgDtoList = new ArrayList<>();
 
-        for (ItemImg itemimg : itemImgList){
+        for (ItemImg itemimg : itemImgList) {
             ItemImgDto itemImgDto = ItemImgDto.of(itemimg);
             itemImgDtoList.add(itemImgDto);
         }
@@ -64,31 +67,31 @@ public class ItemService {
         return itemFormDto;
     }
 
-    public  Long updateItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
+    public Long updateItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
         Item item = itemRepository.findById(itemFormDto.getId()).orElseThrow(EntityNotFoundException::new);
         item.updateItem(itemFormDto);
 
         List<Long> itemImgIds = itemFormDto.getItemImgIds();
 
-        for ( int i = 0 ; i<itemImgFileList.size() ; i++ ){
+        for (int i = 0; i < itemImgFileList.size(); i++) {
             itemImgService.updateItemImg(itemImgIds.get(i), itemImgFileList.get(i));
         }
         return item.getId();
     }
 
     @Transactional(readOnly = true)
-    public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
-        return itemRepository.getAdminItemPage(itemSearchDto,pageable);
+    public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+        return itemRepository.getAdminItemPage(itemSearchDto, pageable);
     }
 
     @Transactional(readOnly = true)
-    public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
-        return itemRepository.getMainItemPage(itemSearchDto,pageable);
+    public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+        return itemRepository.getMainItemPage(itemSearchDto, pageable);
     }
 
     @Transactional(readOnly = true)
-    public Page<MainItemDto> getCategoryPage(ItemSearchDto itemSearchDto, Pageable pageable){
-        return itemRepository.getCategoryPage(itemSearchDto,pageable);
+    public Page<MainItemDto> getCategoryPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+        return itemRepository.getCategoryPage(itemSearchDto, pageable);
     }
 
     public Long saveCustomItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
@@ -98,16 +101,16 @@ public class ItemService {
         customItemRepository.save(item);
         System.out.println("saveCustomItem - check3");
 
-        for ( int i = 0 ; i<itemImgFileList.size() ; i++ ){
+        for (int i = 0; i < itemImgFileList.size(); i++) {
             System.out.println("saveCustomItem - check4");
             ItemImg itemImg = new ItemImg();
             System.out.println("saveCustomItem - check5");
             itemImg.setCustomItem(item);
-            if(i==0)
+            if (i == 0)
                 itemImg.setRepImgYn("Y");
             else
                 itemImg.setRepImgYn("N");
-            itemImgService.saveCustomItemImg(itemImg,itemImgFileList.get(i));
+            itemImgService.saveCustomItemImg(itemImg, itemImgFileList.get(i));
             System.out.println("saveCustomItem - check6");
         }
         System.out.println("saveCustomItem - check7");

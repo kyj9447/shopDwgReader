@@ -1,5 +1,6 @@
 package com.shop.dto;
 
+import com.shop.constant.Role;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Email;
@@ -23,5 +24,7 @@ public class MemberFormDto {
     private String address;
     @NotEmpty(message = "전화번호는 필수 입력 값입니다.")
     private String number;
+    //@NotEmpty(message = "[테스트용] ADMIN, USER 선택")
+    private Role role;
 }
 

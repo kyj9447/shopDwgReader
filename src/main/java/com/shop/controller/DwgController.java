@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
@@ -76,16 +77,16 @@ public class DwgController {
 
     // 커스텀 상품 등록 + 해당상품 즉시 주문
     @PostMapping(value = "/dwg/output")
-    public void buyCustomItem(
-            @RequestParam("testNumber") int testNumber,
+    public String buyCustomItem(
             @RequestParam("orderPrice") int orderPrice,
             @RequestParam("canvasImage") String canvasImage,
             @RequestParam("dwgFile") String dwgFile,
             @RequestParam("thick") int thick,
             Model model,
             Principal principal,
-            ItemFormDto itemFormDto
-    ) throws IOException {
+            ItemFormDto itemFormDto,
+            RedirectAttributes redirectAttributes
+            ) throws IOException {
 
         //        try {
         //            itemService.saveCustomItem(itemFormDto, itemImgFileList);
@@ -96,8 +97,6 @@ public class DwgController {
 
         System.out.println("받은 바이트 " + dwgFile); // 받은 긴 스트링
 
-        //System.out.println("제이슨 결과 = " + json);
-        System.out.println("testNumber : " + testNumber);
         System.out.println("canvasImage : " + canvasImage);
         System.out.println("orderPrice : " + orderPrice);
         System.out.println("dwgFile : " + dwgFile);
@@ -158,7 +157,11 @@ public class DwgController {
 
         String email = principal.getName();
 
-        Long orderId = orderService.customOrder(customOrderDto, email);
+        orderService.customOrder(customOrderDto, email);
 
+        String alertMessage = "주문이 완료됬습니다.";
+        redirectAttributes.addFlashAttribute("alertMessage", alertMessage);
+
+        return "redirect:/";
     }
 }
