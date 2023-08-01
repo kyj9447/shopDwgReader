@@ -23,7 +23,7 @@ public class Item extends BaseEntity{
     private Long id;
 
     @Column(nullable = false, length = 50)
-    private String itemNm;
+    private String itemName;
 
     @Column(name = "category", nullable = false)
     private String itemCategory;
@@ -49,7 +49,7 @@ public class Item extends BaseEntity{
     private List<Member> member;
 
     public void updateItem(ItemFormDto itemFormDto){
-        this.itemNm = itemFormDto.getItemNm();
+        this.itemName = itemFormDto.getItemName();
         this.price = itemFormDto.getPrice();
         this.stockNumber = itemFormDto.getStockNumber();
         this.itemDetail = itemFormDto.getItemDetail();

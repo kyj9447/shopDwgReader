@@ -92,7 +92,7 @@ public class MainController {
 
         //kakao.kakaoLogout3();
         //return "redirect:/members/logout";
-        return "redirect:https://kauth.kakao.com/oauth/logout?client_id=0ea9af982ecb374ececf50d24a8894d6&logout_redirect_uri=http://localhost/members/logout";
+        return "redirect:https://kauth.kakao.com/oauth/logout?client_id=0ea9af982ecb374ececf50d24a8894d6&logout_redirect_uri=https://localhost/members/logout";
     }
 
     //카테고리 선택

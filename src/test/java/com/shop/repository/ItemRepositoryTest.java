@@ -33,7 +33,7 @@ class ItemRepositoryTest {
     @DisplayName("상품 저장 테스트")
     public void createItemTest() {
         Item item = new Item();
-        item.setItemNm("테스트 상품");
+        item.setItemName("테스트 상품");
         item.setPrice(10000);
         item.setItemDetail("테스트 상품 상세 설명");
         item.setItemSellStatus(ItemSellStatus.SELL);
@@ -47,7 +47,7 @@ class ItemRepositoryTest {
     public void createItemList() {
         for (int i = 1; i <= 10; i++) {
             Item item = new Item();
-            item.setItemNm("테스트 상품" + i);
+            item.setItemName("테스트 상품" + i);
             item.setPrice(10000 + i);
             item.setItemDetail("테스트 상품 상세 설명" + i);
             item.setItemSellStatus(ItemSellStatus.SELL);
@@ -60,14 +60,14 @@ class ItemRepositoryTest {
 
     @Test
     @DisplayName("상품명, 상품상세설명 or 테스트")
-    public void findByItemNmOrItemDetailTest() {
+    public void findByItemNameOrItemDetailTest() {
         System.out.println("check1");
         this.createItemList();
-        List<Item> itemList = itemRepository.findByItemNmOrItemDetail("테스트 상품1", "테스트 상품 상세 설명5");
+        List<Item> itemList = itemRepository.findByItemNameOrItemDetail("테스트 상품1", "테스트 상품 상세 설명5");
         for (Item item : itemList) {
             System.out.println("check2");
             System.out.println("결과");
-            System.out.println("아이템 이름 :" + item.getItemNm());
+            System.out.println("아이템 이름 :" + item.getItemName());
             System.out.println("아이템 가격 :" + item.getPrice());
             System.out.println("아이템 재고 :" + item.getStockNumber());
             System.out.println("아이템 설명 :" + item.getItemDetail());
@@ -82,7 +82,7 @@ class ItemRepositoryTest {
         for (Item item : itemList) {
             System.out.println("check1");
             System.out.println("결과");
-            System.out.println("아이템 이름 :" + item.getItemNm());
+            System.out.println("아이템 이름 :" + item.getItemName());
             System.out.println("아이템 가격 :" + item.getPrice());
             System.out.println("아이템 재고 :" + item.getStockNumber());
             System.out.println("아이템 설명 :" + item.getItemDetail());
@@ -97,7 +97,7 @@ class ItemRepositoryTest {
         for (Item item : itemList) {
             System.out.println("check1");
             System.out.println("결과");
-            System.out.println("아이템 이름 :" + item.getItemNm());
+            System.out.println("아이템 이름 :" + item.getItemName());
             System.out.println("아이템 가격 :" + item.getPrice());
             System.out.println("아이템 재고 :" + item.getStockNumber());
             System.out.println("아이템 설명 :" + item.getItemDetail());
@@ -112,7 +112,7 @@ class ItemRepositoryTest {
         for (Item item : itemList) {
             System.out.println("check1");
             System.out.println("결과");
-            System.out.println("아이템 이름 :" + item.getItemNm());
+            System.out.println("아이템 이름 :" + item.getItemName());
             System.out.println("아이템 가격 :" + item.getPrice());
             System.out.println("아이템 재고 :" + item.getStockNumber());
             System.out.println("아이템 설명 :" + item.getItemDetail());
@@ -127,7 +127,7 @@ class ItemRepositoryTest {
         for (Item item : itemList) {
             System.out.println("check1");
             System.out.println("결과");
-            System.out.println("아이템 이름 :" + item.getItemNm());
+            System.out.println("아이템 이름 :" + item.getItemName());
             System.out.println("아이템 가격 :" + item.getPrice());
             System.out.println("아이템 재고 :" + item.getStockNumber());
             System.out.println("아이템 설명 :" + item.getItemDetail());
@@ -149,7 +149,7 @@ class ItemRepositoryTest {
         for (Item item : itemList) {
             System.out.println("check1");
             System.out.println("결과");
-            System.out.println("아이템 이름 :" + item.getItemNm());
+            System.out.println("아이템 이름 :" + item.getItemName());
             System.out.println("아이템 가격 :" + item.getPrice());
             System.out.println("아이템 재고 :" + item.getStockNumber());
             System.out.println("아이템 설명 :" + item.getItemDetail());
@@ -161,7 +161,7 @@ class ItemRepositoryTest {
     public void createItemList2() {
         for (int i = 1; i <= 5; i++) {
             Item item = new Item();
-            item.setItemNm("테스트 상품" + i);
+            item.setItemName("테스트 상품" + i);
             item.setPrice(10000 + i);
             item.setItemDetail("테스트 상품 상세 설명" + i);
             item.setItemSellStatus(ItemSellStatus.SELL);
@@ -172,7 +172,7 @@ class ItemRepositoryTest {
         }
         for (int i = 6; i <= 10; i++) {
             Item item = new Item();
-            item.setItemNm("테스트 상품" + i);
+            item.setItemName("테스트 상품" + i);
             item.setPrice(10000 + i);
             item.setItemDetail("테스트 상품 상세 설명" + i);
             item.setItemSellStatus(ItemSellStatus.SOLD_OUT);
@@ -210,7 +210,7 @@ class ItemRepositoryTest {
         for (Item resultItem : resultItemList) {
             System.out.println("check1");
             System.out.println("결과");
-            System.out.println("아이템 이름 :" + resultItem.getItemNm());
+            System.out.println("아이템 이름 :" + resultItem.getItemName());
             System.out.println("아이템 가격 :" + resultItem.getPrice());
             System.out.println("아이템 재고 :" + resultItem.getStockNumber());
             System.out.println("아이템 설명 :" + resultItem.getItemDetail());

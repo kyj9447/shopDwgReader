@@ -49,7 +49,7 @@ class ItemServiceTest {
     @WithMockUser(username = "admin", roles = "ADMIN")
     void saveItem() throws Exception {
         ItemFormDto itemFormDto = new ItemFormDto();
-        itemFormDto.setItemNm("테스트상품");
+        itemFormDto.setItemName("테스트상품");
         itemFormDto.setItemSellStatus(ItemSellStatus.SELL);
         itemFormDto.setItemDetail("테스트 상품입니다.");
         itemFormDto.setPrice(1000);
@@ -61,7 +61,7 @@ class ItemServiceTest {
         List<ItemImg> itemImgList = itemImgRepository.findByItemIdOrderByIdAsc(itemId);
         Item item = itemRepository.findById(itemId).orElseThrow(EntityNotFoundException::new);
 
-        assertEquals(itemFormDto.getItemNm(), item.getItemNm());
+        assertEquals(itemFormDto.getItemName(), item.getItemName());
         assertEquals(itemFormDto.getItemSellStatus(), item.getItemSellStatus());
         assertEquals(itemFormDto.getItemDetail(), item.getItemDetail());
         assertEquals(itemFormDto.getPrice(), item.getPrice());

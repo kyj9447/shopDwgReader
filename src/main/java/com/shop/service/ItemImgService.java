@@ -17,6 +17,8 @@ import javax.persistence.EntityNotFoundException;
 public class ItemImgService {
     @Value("${itemImgLocation}")
     private String itemImgLocation;
+    @Value("${customItemImgLocation}")
+    private String customItemImgLocation;
     private final ItemImgRepository itemImgRepository;
     private final FileService fileService;
 
@@ -34,6 +36,22 @@ public class ItemImgService {
         itemImg.updateItemImg(oriImgName, imgName, imgUrl);
         itemImgRepository.save(itemImg);
     }
+
+    public void saveCustomItemImg(ItemImg itemImg, MultipartFile itemImgFile) throws Exception {
+        String oriImgName = itemImgFile.getOriginalFilename();
+        String imgName = "";
+        String imgUrl = "";
+        System.out.println(oriImgName);
+        if (!StringUtils.isEmpty(oriImgName)) {
+            System.out.println("******");
+            imgName = fileService.uploadFile(customItemImgLocation, oriImgName, itemImgFile.getBytes());
+            System.out.println(imgName);
+            imgUrl = "/images/custom/" + imgName;
+        }
+        itemImg.updateItemImg(oriImgName, imgName, imgUrl);
+        itemImgRepository.save(itemImg);
+    }
+
 
     public void updateItemImg (Long itemImgId, MultipartFile itemImgFile) throws Exception {
         if(!itemImgFile.isEmpty()){

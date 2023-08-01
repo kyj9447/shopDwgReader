@@ -41,7 +41,7 @@ class OrderServiceTest {
 
     public Item saveItem() {
         Item item = new Item();
-        item.setItemNm("테스트 상품");
+        item.setItemName("테스트 상품");
         item.setItemSellStatus(ItemSellStatus.SELL);
         item.setItemDetail("테스트 상품입니다");
         item.setPrice(1000);

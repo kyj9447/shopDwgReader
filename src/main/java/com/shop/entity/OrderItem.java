@@ -36,6 +36,15 @@ public class OrderItem extends BaseEntity {
         return orderItem;
     }
 
+    // 커스텀 주문 아이템 생성
+    public static OrderItem createCustomOrderItem(CustomItem customItem, int count){
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(customItem);
+        orderItem.setCount(count);
+        orderItem.setOrderPrice(customItem.getPrice());
+        return orderItem;
+    }
+
     public int getTotalPrice(){
         return orderPrice*count;
     }

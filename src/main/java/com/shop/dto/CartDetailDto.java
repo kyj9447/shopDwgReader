@@ -7,14 +7,14 @@ import lombok.Setter;
 @Setter
 public class CartDetailDto {
     private Long cartItemId;
-    private String itemNm;
+    private String itemName;
     private int price;
     private int count;
     private String imgUrl;
 
-    public CartDetailDto(Long cartItemId, String itemNm, int price, int count, String imgUrl){
+    public CartDetailDto(Long cartItemId, String itemName, int price, int count, String imgUrl){
         this.cartItemId = cartItemId;
-        this.itemNm = itemNm;
+        this.itemName = itemName;
         this.price = price;
         this.imgUrl = imgUrl;
         this.count = count;

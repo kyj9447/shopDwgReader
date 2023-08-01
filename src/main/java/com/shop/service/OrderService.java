@@ -5,10 +5,7 @@ import com.shop.dto.OrderDto;
 import com.shop.dto.OrderHistDto;
 import com.shop.dto.OrderItemDto;
 import com.shop.entity.*;
-import com.shop.repository.ItemImgRepository;
-import com.shop.repository.ItemRepository;
-import com.shop.repository.MemberRepository;
-import com.shop.repository.OrderRepository;
+import com.shop.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -30,6 +27,8 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final OrderRepository orderRepository;
     private final ItemImgRepository itemImgRepository;
+    private final CustomItemRepository customItemRepository;
+
 
     public Long order(OrderDto orderDto, String email) {
         Item item = itemRepository.findById(orderDto.getItemId()).orElseThrow(EntityNotFoundException::new);
@@ -56,6 +55,9 @@ public class OrderService {
             List<OrderItem> orderItems = order.getOrderItems();
             for (OrderItem orderItem : orderItems) {
                 ItemImg itemImg = itemImgRepository.findByItemIdAndRepImgYn(orderItem.getItem().getId(), "Y");
+                if (itemImg == null){ // itemId로 itemImg를 못찾으면 -> customItemId로 찾는다
+                    itemImg = itemImgRepository.findByCustomItemIdAndRepImgYn(orderItem.getItem().getId(), "Y");
+                }
                 OrderItemDto orderItemDto = new OrderItemDto(orderItem, itemImg.getImgUrl());
                 orderHistDto.addOrderItemDto(orderItemDto);
             }
@@ -91,6 +93,21 @@ public class OrderService {
             OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
             orderItemList.add(orderItem);
         }
+
+        Order order = Order.createOrder(member, orderItemList);
+        orderRepository.save(order);
+
+        return order.getId();
+    }
+
+    // 커스텀 주문
+    public Long customOrder(OrderDto orderDto, String email) {
+        CustomItem customItem = customItemRepository.findById(orderDto.getItemId()).orElseThrow(EntityNotFoundException::new);
+        Member member = memberRepository.findByEmail(email);
+
+        List<OrderItem> orderItemList = new ArrayList<>();
+        OrderItem orderItem = OrderItem.createCustomOrderItem(customItem, orderDto.getCount());
+        orderItemList.add(orderItem);
 
         Order order = Order.createOrder(member, orderItemList);
         orderRepository.save(order);

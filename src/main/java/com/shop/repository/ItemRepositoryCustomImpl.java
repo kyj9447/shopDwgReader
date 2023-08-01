@@ -49,7 +49,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 
     private BooleanExpression searchByLike(String searchBy, String searchQuery) {
         if (StringUtils.equals("itemNm", searchBy)) {
-            return QItem.item.itemNm.like("%" + searchQuery + "%");
+            return QItem.item.itemName.like("%" + searchQuery + "%");
         } else if (StringUtils.equals("createdBy", searchBy)) {
             return QItem.item.createdBy.like("%" + searchQuery + "%");
         }
@@ -68,8 +68,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
         return new PageImpl<>(content, pageable, total);
     }
 
-    private BooleanExpression itemNmLike(String searchQuery){
-        return StringUtils.isEmpty(searchQuery) ? null : QItem.item.itemNm.like("%"+searchQuery+"%");
+    private BooleanExpression itemNameLike(String searchQuery){
+        return StringUtils.isEmpty(searchQuery) ? null : QItem.item.itemName.like("%"+searchQuery+"%");
     }
 
     private BooleanExpression categoryLike(String searchCategory){
@@ -81,10 +81,10 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
         QItem item = QItem.item;
         QItemImg itemImg = QItemImg.itemImg;
 
-        QueryResults<MainItemDto> results = queryFactory.select(new QMainItemDto(item.id, item.itemNm, item.itemDetail, itemImg.imgUrl, item.price, item.itemCategory))
+        QueryResults<MainItemDto> results = queryFactory.select(new QMainItemDto(item.id, item.itemName, item.itemDetail, itemImg.imgUrl, item.price, item.itemCategory))
                 .from(itemImg).join(itemImg.item , item)
                 .where(itemImg.repImgYn.eq("Y"))
-                .where(itemNmLike(itemSearchDto.getSearchQuery()))
+                .where(itemNameLike(itemSearchDto.getSearchQuery()))
                 .orderBy(item.id.desc()).offset(pageable.getOffset()).limit(pageable.getPageSize()).fetchResults();
         List<MainItemDto> content = results.getResults();
         long total = results.getTotal();
@@ -97,7 +97,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
         QItem item = QItem.item;
         QItemImg itemImg = QItemImg.itemImg;
 
-        QueryResults<MainItemDto> results = queryFactory.select(new QMainItemDto(item.id, item.itemNm, item.itemDetail, itemImg.imgUrl, item.price, item.itemCategory))
+        QueryResults<MainItemDto> results = queryFactory.select(new QMainItemDto(item.id, item.itemName, item.itemDetail, itemImg.imgUrl, item.price, item.itemCategory))
                 .from(itemImg).join(itemImg.item, item)
                 .where(itemImg.repImgYn.eq("Y"))
                 .where(categoryLike(itemSearchDto.getSearchCategory()))

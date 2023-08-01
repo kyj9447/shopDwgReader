@@ -2,6 +2,7 @@ package com.shop.dto;
 
 
 import com.shop.constant.ItemSellStatus;
+import com.shop.entity.CustomItem;
 import com.shop.entity.Item;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,7 @@ import java.util.List;
 public class ItemFormDto {
     private Long id;
     @NotBlank(message = "상품명은 필수 입력 값입니다.")
-    private String itemNm;
+    private String itemName;
     @NotBlank(message = "분류를 선택해주세요")
     private String itemCategory;
     @NotNull(message = "가격은 필수 입력 값입니다.")
@@ -28,12 +29,17 @@ public class ItemFormDto {
     @NotNull(message = "재고는 필수 입력 값입니다.")
     private Integer stockNumber;
     private ItemSellStatus itemSellStatus;
+    private Integer thick;
     private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
     private List<Long> itemImgIds = new ArrayList<>();
     private static ModelMapper modelMapper = new ModelMapper();
 
     public Item createItem() {
         return modelMapper.map(this, Item.class);
+    }
+
+    public CustomItem createCustomItem() {
+        return modelMapper.map(this, CustomItem.class);
     }
 
     public static ItemFormDto of(Item item) {

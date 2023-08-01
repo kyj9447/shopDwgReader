@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 public class ItemDto {
     private Long id;
-    private String itemNm;
+    private String itemName;
     private String itemCategory;
     private Integer price;
     private String itemDetail;

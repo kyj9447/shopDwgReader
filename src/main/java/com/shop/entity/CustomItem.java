@@ -8,11 +8,11 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "customitem")
+@Table(name = "customItem")
 @Getter
 @Setter
 @ToString
-public class CustomItem extends BaseEntity{
+public class CustomItem extends Item{
 
     @Id // 기본키
     @Column(name = "item_id")
@@ -20,14 +20,13 @@ public class CustomItem extends BaseEntity{
     private Long id;
 
     @Column(nullable = false, length = 50)
-    private String itemNm;
+    private String itemName;
 
     @Column(name = "price", nullable = false)
     private int price;
 
-    @Lob
     @Column(nullable = false)
-    private String itemDetail;
+    private int thick;
 
     @OneToMany
     @JoinTable(name = "member_item", joinColumns = @JoinColumn(name = "member_id"),inverseJoinColumns = @JoinColumn(name = "item_id"))

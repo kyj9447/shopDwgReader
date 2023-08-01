@@ -5,8 +5,10 @@ import com.shop.dto.ItemFormDto;
 import com.shop.dto.ItemImgDto;
 import com.shop.dto.ItemSearchDto;
 import com.shop.dto.MainItemDto;
+import com.shop.entity.CustomItem;
 import com.shop.entity.Item;
 import com.shop.entity.ItemImg;
+import com.shop.repository.CustomItemRepository;
 import com.shop.repository.ItemImgRepository;
 import com.shop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,8 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final ItemImgService itemImgService;
     private final ItemImgRepository itemImgRepository;
+    private final CustomItemRepository customItemRepository;
+
 
     public Long saveItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
         Item item = itemFormDto.createItem();
@@ -88,18 +92,25 @@ public class ItemService {
     }
 
     public Long saveCustomItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
-        Item item = itemFormDto.createItem();
-        itemRepository.save(item);
+        System.out.println("saveCustomItem - check1");
+        CustomItem item = itemFormDto.createCustomItem();
+        System.out.println("saveCustomItem - check2");
+        customItemRepository.save(item);
+        System.out.println("saveCustomItem - check3");
 
         for ( int i = 0 ; i<itemImgFileList.size() ; i++ ){
+            System.out.println("saveCustomItem - check4");
             ItemImg itemImg = new ItemImg();
-            itemImg.setItem(item);
+            System.out.println("saveCustomItem - check5");
+            itemImg.setCustomItem(item);
             if(i==0)
                 itemImg.setRepImgYn("Y");
             else
                 itemImg.setRepImgYn("N");
-            itemImgService.saveItemImg(itemImg,itemImgFileList.get(i));
+            itemImgService.saveCustomItemImg(itemImg,itemImgFileList.get(i));
+            System.out.println("saveCustomItem - check6");
         }
+        System.out.println("saveCustomItem - check7");
         return item.getId();
     }
 }

@@ -9,9 +9,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredicateExecutor<Item>, ItemRepositoryCustom {
-    List<Item> findByItemNm(String itemNm);
+    List<Item> findByItemName(String itemName);
 
-    List<Item> findByItemNmOrItemDetail(String itemNm, String itemDetail);
+    List<Item> findByItemNameOrItemDetail(String itemName, String itemDetail);
 
     // select  * from Item where ItemNm = itemNm or ItemDetail = itemDetail;
     List<Item> findByPriceLessThan(Integer price);
