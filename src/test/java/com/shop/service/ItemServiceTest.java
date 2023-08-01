@@ -54,6 +54,8 @@ class ItemServiceTest {
         itemFormDto.setItemDetail("테스트 상품입니다.");
         itemFormDto.setPrice(1000);
         itemFormDto.setStockNumber(100);
+        itemFormDto.setItemCategory("TEST");
+
 
         List<MultipartFile> multipartFileList = createMultipartFiles();
         Long itemId = itemService.saveItem(itemFormDto,multipartFileList);

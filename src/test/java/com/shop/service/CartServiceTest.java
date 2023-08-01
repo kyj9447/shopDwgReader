@@ -40,6 +40,7 @@ class CartServiceTest {
         item.setItemDetail("테스트 상품입니다.");
         item.setPrice(1000);
         item.setStockNumber(100);
+        item.setItemCategory("TEST");
         return itemRepository.save(item);
     }
 

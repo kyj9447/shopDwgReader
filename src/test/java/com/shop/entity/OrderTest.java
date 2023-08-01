@@ -42,6 +42,7 @@ class OrderTest {
         item.setItemDetail("상세 설명");
         item.setItemSellStatus(ItemSellStatus.SELL);
         item.setStockNumber(100);
+        item.setItemCategory("TEST");
         item.setRegTime(LocalDateTime.now());
         item.setUpdateTime(LocalDateTime.now());
         return item;

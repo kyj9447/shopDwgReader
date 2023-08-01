@@ -1,6 +1,7 @@
 package com.shop.controller;
 
 
+import com.shop.constant.Role;
 import com.shop.dto.MemberFormDto;
 import com.shop.entity.Member;
 import com.shop.service.MemberService;
@@ -39,6 +40,7 @@ class MemberControllerTest {
         memberFormDto.setAddress("서울시 마포구 합정동");
         memberFormDto.setPassword(password);
         memberFormDto.setNumber("010-010");
+        memberFormDto.setRole(Role.ADMIN);
         Member member = Member.createMember(memberFormDto, passwordEncoder);
         return memberService.saveMember(member);
     }
