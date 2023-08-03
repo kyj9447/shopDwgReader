@@ -36,7 +36,7 @@ body {
 }
 
 #test-blank {
-    height: 3000px;
+    height: 0px;
 }
 
 .nav-btn {

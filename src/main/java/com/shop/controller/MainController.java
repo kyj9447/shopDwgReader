@@ -112,6 +112,7 @@ public class MainController {
             Page<MainItemDto> items = itemService.getMainItemPage(itemSearchDto, pageable);
             model.addAttribute("items", items);
         }
+
         else {
             // Dto 에 카테고리 이름 세팅
             itemSearchDto.setSearchCategory(category);
@@ -120,6 +121,7 @@ public class MainController {
             Page<MainItemDto> items = itemService.getCategoryPage(itemSearchDto, pageable);
             model.addAttribute("items", items);
         }
+
 
         model.addAttribute("itemSearchDto", itemSearchDto);
         model.addAttribute("maxPage", 5);

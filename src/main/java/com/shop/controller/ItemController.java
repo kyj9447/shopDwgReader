@@ -11,10 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
@@ -100,4 +97,18 @@ public class ItemController {
         model.addAttribute("item", itemFormDto);
         return "item/itemDtl";
     }
+
+    @GetMapping(value = "/item/{itemId}/images")
+    @ResponseBody
+    public List<String> getItemImgsByItemId(@RequestParam("itemId") Long itemId) {
+        List<String> imgUrls = itemService.getItemImgsByItemId(itemId);
+
+        System.out.println("이미지 리스트 출력 테스트");
+        for (int i = 0; i < imgUrls.size(); i++) {
+            System.out.println("이미지 "+i+"번째 "+imgUrls.get(i));
+        }
+
+        return imgUrls;
+    }
 }
+

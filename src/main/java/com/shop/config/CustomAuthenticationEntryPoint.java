@@ -16,9 +16,9 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         final String loginPageUrl = "/members/login"; // 리다이렉트할 로그인 페이지의 URL
         final String message = "로그인이 필요합니다"; // 로그인 필요시 메세지
 
-        request.getSession().setAttribute("loginMessage", message); // 세션에 메시지 저장
-        response.sendRedirect(loginPageUrl); // 로그인 페이지 url 지정
-        //response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+        //request.getSession().setAttribute("loginMessage", message); // 세션에 메시지 저장
+        //response.sendRedirect(loginPageUrl); // 로그인 페이지 url 지정
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }
 }
 

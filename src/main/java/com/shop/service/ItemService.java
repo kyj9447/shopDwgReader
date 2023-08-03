@@ -116,4 +116,15 @@ public class ItemService {
         System.out.println("saveCustomItem - check7");
         return item.getId();
     }
+
+    //Transactional(readOnly = true)
+    public List<String> getItemImgsByItemId(Long id) {
+        List<ItemImg> itemImgList = itemImgRepository.findImgUrlByItemId(id);
+        List<String> itemImgUrlList = new ArrayList<>();
+        for (ItemImg itemImg : itemImgList) {
+            itemImgUrlList.add(itemImg.getImgUrl());
+        }
+
+        return itemImgUrlList;
+    }
 }

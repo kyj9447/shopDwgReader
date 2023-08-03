@@ -55,15 +55,9 @@
             <p th:if="${#fields.hasErrors('number')}" th:errors="*{number}" class="fieldError">Incorrect date</p>
         </div>
 
-        <div class="form-group">
-            <label th:for="role">[TEST] Role 선택 [TEST]</label><br>
-            <label>
-                <input type="radio" th:field="*{role}" value="USER" checked>
-            </label> USER
-            <label>
-                <input type="radio" th:field="*{role}" value="ADMIN">
-            </label> ADMIN
-        </div>
+        <p>[TEST] Role 선택</p>
+        <input type="radio" value="ADMIN" id="role2" name="role" checked="checked">ADMIN
+        <input type="radio" value="USER" id="role1" name="role">USER
 
         <div style="text-align: center">
             <button type="submit" class="btn btn-primary" style="">Submit</button>

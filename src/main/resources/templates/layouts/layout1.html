@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -19,12 +20,11 @@
     <th:block layout:fragment="script"></th:block>
     <th:block layout:fragment="css"></th:block>
     <script>
-    <!--사이드바 토글-->
+
     function toggleSidebar() {
       $('#sidebar').toggleClass('show');
     }
 
-    <!--스크롤 버튼 작동-->
     function scrollToTop() {
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
@@ -63,8 +63,11 @@
         <li class="list-group-item border-radius-0">
             <a href="/category/tool">공구</a>
         </li>
-        <li class="list-group-item border-radius-0">
+        <li class="list-group-item border-radius-0" sec:authorize="isAuthenticated()">
             <a href="/dwg">도면 주문</a>
+        </li>
+        <li class="list-group-item border-radius-0" sec:authorize="isAnonymous()">
+            <a href="/members/login">도면 주문<br>로그인 후 이용해주세요!</a>
         </li>
     </ul>
 </div>

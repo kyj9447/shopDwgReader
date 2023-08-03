@@ -91,14 +91,17 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
         QItemImg itemImg = QItemImg.itemImg;
 
         QueryResults<MainItemDto> results = queryFactory.select(new QMainItemDto(item.id, item.itemName, item.itemDetail, itemImg.imgUrl, item.price, item.itemCategory))
-                .from(itemImg).join(itemImg.item , item)
-                .where(itemImg.repImgYn.eq("Y"))
+                .from(itemImg)
+                .join(itemImg.item , item)
+                .where(itemImg.repImgYn.eq("Y")) //대표 이미지 가져옴
                 .where(itemNameLike(itemSearchDto.getSearchQuery()))
-                .orderBy(item.id.desc()).offset(pageable.getOffset()).limit(pageable.getPageSize()).fetchResults();
+                .orderBy(item.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
         List<MainItemDto> content = results.getResults();
         long total = results.getTotal();
         return new PageImpl<>(content, pageable, total);
-
     }
 
     @Override
@@ -107,7 +110,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
         QItemImg itemImg = QItemImg.itemImg;
 
         QueryResults<MainItemDto> results = queryFactory.select(new QMainItemDto(item.id, item.itemName, item.itemDetail, itemImg.imgUrl, item.price, item.itemCategory))
-                .from(itemImg).join(itemImg.item, item)
+                .from(itemImg)
+                .join(itemImg.item, item)
                 .where(itemImg.repImgYn.eq("Y"))
                 .where(categoryLike(itemSearchDto.getSearchCategory()))
                 .orderBy(item.id.desc())

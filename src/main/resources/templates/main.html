@@ -1,42 +1,65 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout1}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout1}">
 
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
   <style>
-        .carousel-inner > .item {
-            height : 350px;
-        }
-        .margin{
-            margin-bottom : 30px;
-        }
-        .banner{
-            height: 300px;
-            position: absolute; top:0; left:0;
-            width: 100%;
-            height: 100%;
-        }
-        .card-text{
-            text-overflow : ellipsis;
-            white-space : nowrap;
-            overflow : hidden;
-        }
-        a:hover{
-            text-decoration:none;
-        }
-        .center{
-            text-align:center;
-        }
-    </style>
+    .row{
+      justify-content: space-between;
+    }
+    .carousel-inner>.item {
+      height: 350px;
+    }
+
+    .margin {
+      margin: 10px;
+    }
+
+    .banner {
+      height: 300px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .card {
+      width: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .card-text {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .card-img-top {
+      height: 200px;
+      width: auto;
+    }
+
+    a:hover {
+      text-decoration: none;
+    }
+
+    .center {
+      text-align: center;
+    }
+  </style>
 </th:block>
 <th:block layout:fragment="script">
   <script th:inline="javascript">
     var alertMessage = /*[[${alertMessage}]]*/ null;
-        if (alertMessage) {
-            alert(alertMessage);
-        }
+    if (alertMessage) {
+      alert(alertMessage);
+    }
   </script>
 </th:block>
 
@@ -46,7 +69,7 @@
     <div class="carousel-inner">
       <div class="carousel-item active item">
         <img src="https://user-images.githubusercontent.com/13268420/112147492-1ab76200-8c20-11eb-8649-3d2f282c3c02.png"
-             class="d-block w-100 banner" alt="First slide">
+          class="d-block w-100 banner" alt="First slide">
       </div>
     </div>
   </div>
@@ -58,13 +81,12 @@
 
   <div class="row">
     <th:block th:each="item, status: ${items.getContent()}">
-      <div class="col-md-4 margin">
+      <div class="margin">
         <div class="card">
           <a th:href="'/item/' + ${item.id}" class="text-dark">
-            <img th:src="${item.imgUrl}" class="card-img-top" th:alt="${item.itemName}" height="400">
+            <img th:src="${item.imgUrl}" class="card-img-top" th:alt="${item.itemName}">
             <div class="card-body">
               <h4 class="card-title">[[${item.itemName}]]</h4>
-              <p class="card-text">[[${item.itemDetail}]]</p>
               <h3 class="card-title text-danger">[[${item.price}]]원</h3>
             </div>
           </a>
@@ -79,18 +101,18 @@
     <ul class="pagination justify-content-center">
       <li class="page-item" th:classappend="${items.number eq 0}?'disabled'">
         <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number-1}}"
-           aria-label='Previous' class="page-link">
+          aria-label='Previous' class="page-link">
           <span aria-hidden="true">Previous</span>
         </a>
       </li>
       <li class="page-item" th:each="page: ${#numbers.sequence(start,end)}"
-          th:classappend="${items.number eq page-1}?'active':''">
-        <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' +${page -1}}"
-           th:inline="text" class="page-link">[[${page}]]</a>
+        th:classappend="${items.number eq page-1}?'active':''">
+        <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' +${page -1}}" th:inline="text"
+          class="page-link">[[${page}]]</a>
       </li>
       <li class="page-item" th:classappend="${items.number+1 ge items.totalPages}?'disabled'">
         <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number + 1}}"
-           aria-label="Next" class="page-link">
+          aria-label="Next" class="page-link">
           <span aria-hidden="true">Next</span>
         </a>
       </li>
