@@ -82,6 +82,7 @@ class OrderTest {
             order.getOrderItems().add(orderItem);
         }
         Member member = new Member();
+        member.setLoginType("test");
         memberRepository.save(member);
         order.setMember(member);
         orderRepository.save(order);

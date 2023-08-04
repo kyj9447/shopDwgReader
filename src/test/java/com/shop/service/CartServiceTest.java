@@ -47,6 +47,7 @@ class CartServiceTest {
     public Member saveMember() {
         Member member = new Member();
         member.setEmail("test@test.com");
+        member.setLoginType("test");
         return memberRepository.save(member);
     }
 
