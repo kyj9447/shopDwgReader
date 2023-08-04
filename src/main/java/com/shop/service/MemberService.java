@@ -22,7 +22,7 @@ public class MemberService implements UserDetailsService {
     }
 
     private void validateDuplicateMember(Member member) {
-        Member findMember = memberRepository.findByEmail(member.getEmail());
+        Member findMember = memberRepository.findByEmailAndLoginType(member.getEmail(), member.getLoginType());
         if (findMember != null) {
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
@@ -30,6 +30,7 @@ public class MemberService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        System.out.println("!!!!!!!!!!!!!!!!!!!loadUserByUsername!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         Member member = memberRepository.findByEmail(email);
         if (member == null){
             throw new UsernameNotFoundException(email);

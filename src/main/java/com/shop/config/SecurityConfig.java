@@ -1,5 +1,6 @@
 package com.shop.config;
 
+import com.shop.service.CustomUserDetailsService;
 import com.shop.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    CustomUserDetailsService customUserDetailsService;
+
     private final CustomOAuth2UserService customOAuth2UserService;
 
     @Override
@@ -63,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(memberService)
+        auth.userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
 
