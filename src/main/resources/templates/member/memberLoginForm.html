@@ -40,9 +40,11 @@
         <button class="btn btn-primary">로그인</button>
         <button class="btn btn-primary" onclick="location.href='/members/new'" type="button">회원가입</button>
         <br>
-        <button class="btn kakao" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=0ea9af982ecb374ececf50d24a8894d6&redirect_uri=https://localhost/kakaologin&response_type=code'" type="button"></button>
         <!--로그인마다 로그인창 출력 원할시 href 끝에 &prompt=login 추가--->
         <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden">
+        <button class="btn btn-primary" onclick="location.href='/oauth2/authorization/google'" type="button">Google</button>
+        <button class="btn btn-primary" onclick="location.href='/oauth2/authorization/naver'" type="button">Naver</button>
+        <button class="btn btn-primary" onclick="location.href='/oauth2/authorization/kakao'" type="button">Kakao</button>
     </form>
 </div>
 </html>

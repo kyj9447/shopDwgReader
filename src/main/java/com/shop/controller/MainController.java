@@ -32,7 +32,7 @@ public class MainController {
 
     @GetMapping(value = "/")
     public String main(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model) {
-        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
         if (itemSearchDto.getSearchQuery() == null) {
             itemSearchDto.setSearchQuery("");
         }
@@ -43,7 +43,7 @@ public class MainController {
 
         model.addAttribute("items", items);
         model.addAttribute("itemSearchDto", itemSearchDto);
-        model.addAttribute("maxPage", 5);
+        model.addAttribute("maxPage", 10);
         return "main";
     }
 
@@ -99,7 +99,7 @@ public class MainController {
     @GetMapping(value = "/category/{category}")
     public String category(@PathVariable("category") String category, ItemSearchDto itemSearchDto, Optional<Integer> page, Model model) {
         System.out.println("category "+category);
-        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 
 //        if (itemSearchDto.getSearchQuery() == null) {
 //            itemSearchDto.setSearchQuery("");
@@ -124,7 +124,7 @@ public class MainController {
 
 
         model.addAttribute("itemSearchDto", itemSearchDto);
-        model.addAttribute("maxPage", 5);
+        model.addAttribute("maxPage", 10);
         return "category";
     }
 }

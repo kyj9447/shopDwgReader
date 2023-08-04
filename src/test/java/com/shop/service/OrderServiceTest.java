@@ -53,6 +53,7 @@ class OrderServiceTest {
     public Member saveMember() {
         Member member = new Member();
         member.setEmail("test@test.com");
+        member.setLoginType("normal");
         return memberRepository.save(member);
     }
 

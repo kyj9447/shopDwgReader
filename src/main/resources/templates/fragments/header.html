@@ -40,6 +40,7 @@
                 <!-- 카카오 로그인 사용자인 경우 -->
                 <img alt="Image" class="height-40" th:src="${session.userImage}"/>
             </li>
+            <p style="color : white">Login Type: <span th:text="${session.loginType}"></span><span th:text="${loginType}"></span></p>
         </ul>
     </nav>
 </div>

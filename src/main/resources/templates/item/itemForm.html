@@ -54,8 +54,9 @@
 </th:block>
 
 <div layout:fragment="content">
+    <h2 class="mb-4">상품 등록</h2>
+
     <form enctype="multipart/form-data" method="post" role="form" th:object="${itemFormDto}">
-        <p class="h2">상품 등록</p>
 
         <input th:field="*{id}" type="hidden">
 

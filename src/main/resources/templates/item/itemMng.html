@@ -35,6 +35,7 @@
 </th:block>
 
 <div layout:fragment="content">
+    <h2 class="mb-4">상품 관리</h2>
     <form th:action="@{'/admin/items/'+${items.number}}" role="form" method="get" th:object="${items}">
         <table class="table">
             <thead>
