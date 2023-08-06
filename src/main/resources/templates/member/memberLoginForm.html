@@ -1,21 +1,57 @@
 <!DOCTYPE html>
-<html layout:decorate="~{layouts/layout1}"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org">
+<html layout:decorate="~{layouts/layout1}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:th="http://www.thymeleaf.org">
 <!-- 사용자 CSS 추가 -->
+
 <th:block layout:fragment="css">
     <style>
-    .error{
-      color: #bd2130;
-     }
+        .error {
+            color: #bd2130;
+        }
 
-     .kakao{
-     width: 183px;
-     height: 45px;
-     background-image:url("/image/kakao_login_medium_narrow.png");
-     margin-top: 5px;
-     }
+        .loginWindow {
+            width: 300px;
+            text-align: center;
+            margin: 0 auto;
+        }
 
+        .socialbutton {
+            width: 300px;
+            height: 50px;
+            margin: 5px 0px;
+            border-width: 1px;
+            border-color: lightgray;
+            border-radius: 4px;
+        }
+
+        .socialbutton img {
+            margin-left: 10px;
+            height: 20px;
+            float: left;
+            vertical-align: middle;
+        }
+
+        .loginbutton {
+            width: 147px;
+        }
+
+        .google {
+            color: #000000 54%;
+            background-color: white;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .naver {
+            color: white;
+            background-color: #03C75A;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .kakao {
+            background-color: #FEE500;
+            color: #000000 85%;
+            font-family: 'Roboto', sans-serif;
+        }
     </style>
 </th:block>
 <div layout:fragment="content">
@@ -23,28 +59,43 @@
     <!--로그인 필요로 리다이렉트시 출력-->
     <div th:if="${session.loginMessage}">
         <script th:inline="javascript">
-            alert([[${session.loginMessage}]]);
+            alert([[${ session.loginMessage }]]);
         </script>
     </div>
+    <div class="loginWindow">
 
-    <form action="/members/login" method="post" role="form">
-        <div class="form-group">
-            <label th:for="email">이메일 주소</label>
-            <input class="form-control" name="email" placeholder="이메일을 입력해주세요." type="email">
-        </div>
-        <div class="form-group">
-            <label th:for="password">비밀번호</label>
-            <input class="form-control" name="password" placeholder="비밀번호 입력" type="password">
-        </div>
-        <p class="error" th:if="${loginErrorMsg}" th:text="${loginErrorMsg}"></p>
-        <button class="btn btn-primary">로그인</button>
-        <button class="btn btn-primary" onclick="location.href='/members/new'" type="button">회원가입</button>
-        <br>
-        <!--로그인마다 로그인창 출력 원할시 href 끝에 &prompt=login 추가--->
-        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden">
-        <button class="btn btn-primary" onclick="location.href='/oauth2/authorization/google'" type="button">Google</button>
-        <button class="btn btn-primary" onclick="location.href='/oauth2/authorization/naver'" type="button">Naver</button>
-        <button class="btn btn-primary" onclick="location.href='/oauth2/authorization/kakao'" type="button">Kakao</button>
-    </form>
+        <form action="/members/login" method="post" role="form">
+            <h2>Log In</h2>
+            <br>
+            <hr>
+            <p th:for="email">Email</p>
+            <input class="form-control" name="email" placeholder="Email" type="email">
+            <br>
+            <hr>
+            <p th:for="password">Password</p>
+            <input class="form-control" name="password" placeholder="Password" type="password">
+            <br>
+            <hr>
+            <p class="error" th:if="${loginErrorMsg}" th:text="${loginErrorMsg}"></p>
+            <button class="btn btn-secondary loginbutton">로그인</button>
+            <button class="btn btn-secondary loginbutton" onclick="location.href='/members/new'"
+                type="button">회원가입</button>
+            <br>
+            <hr>
+            <!--로그인마다 로그인창 출력 원할시 href 끝에 &prompt=login 추가--->
+            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden">
+            <button class="socialbutton google" onclick="location.href='/oauth2/authorization/google'" type="button">
+                <img src="../image/googleicon.png">
+                Sign in with Google</button>
+            <button class="socialbutton naver" onclick="location.href='/oauth2/authorization/naver'" type="button">
+                <img src="../image/navericon2.png">
+                네이버 로그인</button>
+            <button class="socialbutton kakao" onclick="location.href='/oauth2/authorization/kakao'" type="button">
+                <img src="../image/kakaoicon.png">
+                카카오 로그인</button>
+        </form>
+
+    </div>
 </div>
+
 </html>

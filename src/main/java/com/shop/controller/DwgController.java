@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.shop.constant.ItemSellStatus;
 import com.shop.dto.ItemFormDto;
 import com.shop.dto.OrderDto;
+import com.shop.service.AuthTokenParser;
 import com.shop.service.ItemService;
 import com.shop.service.OrderService;
 import com.shop.test.DwgReader;
@@ -155,9 +156,10 @@ public class DwgController {
         customOrderDto.setItemId(itemId);
         customOrderDto.setCount(1);
 
-        String email = principal.getName();
+        String email = AuthTokenParser.getParseToken(principal)[0];
+        String loginType = AuthTokenParser.getParseToken(principal)[1];
 
-        orderService.customOrder(customOrderDto, email);
+        orderService.customOrder(customOrderDto, email, loginType);
 
         String alertMessage = "주문이 완료됬습니다.";
         redirectAttributes.addFlashAttribute("alertMessage", alertMessage);

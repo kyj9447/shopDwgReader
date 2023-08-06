@@ -32,14 +32,12 @@ public class MainController {
 
     @GetMapping(value = "/")
     public String main(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model) {
+        System.out.println("SearchQuery : "+itemSearchDto.getSearchQuery());
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
         if (itemSearchDto.getSearchQuery() == null) {
             itemSearchDto.setSearchQuery("");
         }
         Page<MainItemDto> items = itemService.getMainItemPage(itemSearchDto, pageable);
-
-        System.out.println(items.getNumber() + "!!!!!!!");
-        System.out.println(items.getTotalPages() + "########");
 
         model.addAttribute("items", items);
         model.addAttribute("itemSearchDto", itemSearchDto);

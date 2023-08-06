@@ -61,7 +61,7 @@ class CartServiceTest {
         cartItemDto.setCount(5);
         cartItemDto.setItemId(item.getId());
 
-        Long cartItemId = cartService.addCart(cartItemDto, member.getEmail());
+        Long cartItemId = cartService.addCart(cartItemDto, member.getEmail(), member.getLoginType());
 
         CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(EntityNotFoundException::new);
 

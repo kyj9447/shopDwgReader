@@ -34,6 +34,7 @@ public class MemberController {
         }
         try{
             Member member = Member.createMember(memberFormDto, passwordEncoder);
+            member.setLoginType("normal"); // 홈페이지 가입은 normal
             memberService.saveMember(member);
         }
         catch (IllegalStateException e){

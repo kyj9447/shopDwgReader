@@ -67,7 +67,7 @@ class OrderServiceTest {
         orderDto.setCount(10);
         orderDto.setItemId(item.getId());
 
-        Long orderId = orderService.order(orderDto, member.getEmail());
+        Long orderId = orderService.order(orderDto, member.getEmail(), member.getLoginType());
 
         Order order = orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
         List<OrderItem> orderItems = order.getOrderItems();
@@ -85,7 +85,7 @@ class OrderServiceTest {
         OrderDto orderDto = new OrderDto();
         orderDto.setCount(10);
         orderDto.setItemId(item.getId());
-        Long orderId = orderService.order(orderDto, member.getEmail());
+        Long orderId = orderService.order(orderDto, member.getEmail(), member.getLoginType());
 
         Order order = orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
         orderService.cancelOrder(orderId);

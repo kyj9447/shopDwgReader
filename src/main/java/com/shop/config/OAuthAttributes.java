@@ -4,7 +4,6 @@ import com.shop.constant.Role;
 import com.shop.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.security.core.userdetails.User;
 
 import java.util.Map;
 
@@ -16,15 +15,17 @@ public class OAuthAttributes {
     private final String email;
     private final String picture;
     private final String loginType;
+    private final Role role;
 
     @Builder
-    public OAuthAttributes(Map<String,Object> attributes, String nameAttributeKey, String name, String email, String picture, String loginType){
+    public OAuthAttributes(Map<String,Object> attributes, String nameAttributeKey, String name, String email, String picture, String loginType, Role role){
         this.attributes =attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.name = name;
         this.email = email;
         this.picture = picture;
         this.loginType = loginType;
+        this.role = role;
     }
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String,Object> attributes){
@@ -44,6 +45,7 @@ public class OAuthAttributes {
                 .loginType("google")
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
+                .role(Role.GOOGLE)
                 .build();
     }
     private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String,Object> attributes){
@@ -55,6 +57,7 @@ public class OAuthAttributes {
                 .loginType("naver")
                 .attributes(response)
                 .nameAttributeKey(userNameAttributeName)
+                .role(Role.NAVER)
                 .build();
     }
 
@@ -69,6 +72,7 @@ public class OAuthAttributes {
                 .loginType("kakao")
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
+                .role(Role.KAKAO)
                 .build();
     }
 
@@ -78,7 +82,7 @@ public class OAuthAttributes {
                 .email(email)
                 .picture(picture)
                 .loginType(loginType)
-                .role(Role.USER)
+                .role(role)
                 .build();
     }
 }

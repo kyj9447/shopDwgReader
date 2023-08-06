@@ -30,9 +30,10 @@ public class OrderService {
     private final CustomItemRepository customItemRepository;
 
 
-    public Long order(OrderDto orderDto, String email) {
+    public Long order(OrderDto orderDto, String email, String loginType) {
+
         Item item = itemRepository.findById(orderDto.getItemId()).orElseThrow(EntityNotFoundException::new);
-        Member member = memberRepository.findByEmail(email);
+        Member member = memberRepository.findByEmailAndLoginType(email,loginType);
 
         List<OrderItem> orderItemList = new ArrayList<>();
         OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
@@ -45,8 +46,8 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
-    public Page<OrderHistDto> getOrderList(String email, Pageable pageable) {
-        List<Order> orders = orderRepository.findOrders(email, pageable);
+    public Page<OrderHistDto> getOrderList(String email,String loginType, Pageable pageable) {
+        List<Order> orders = orderRepository.findOrdersByEmailAndLoginType(email,loginType, pageable);
         Long totalCount = orderRepository.countOrder(email);
         List<OrderHistDto> orderHistDtos = new ArrayList<>();
 
@@ -67,8 +68,8 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
-    public boolean validateOrder(Long orderId, String email){
-        Member curMember = memberRepository.findByEmail(email);
+    public boolean validateOrder(Long orderId, String email, String loginType){
+        Member curMember = memberRepository.findByEmailAndLoginType(email, loginType);
         Order order = orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
         Member savedMember = order.getMember();
 
@@ -83,8 +84,8 @@ public class OrderService {
         order.cancelOrder();
     }
 
-    public Long orders(List<OrderDto> orderDtoList, String email){
-        Member member = memberRepository.findByEmail(email);
+    public Long orders(List<OrderDto> orderDtoList, String email, String loginType){
+        Member member = memberRepository.findByEmailAndLoginType(email,loginType);
 
         List<OrderItem> orderItemList = new ArrayList<>();
 
@@ -101,9 +102,9 @@ public class OrderService {
     }
 
     // 커스텀 주문
-    public Long customOrder(OrderDto orderDto, String email) {
+    public Long customOrder(OrderDto orderDto, String email, String loginType) {
         CustomItem customItem = customItemRepository.findById(orderDto.getItemId()).orElseThrow(EntityNotFoundException::new);
-        Member member = memberRepository.findByEmail(email);
+        Member member = memberRepository.findByEmailAndLoginType(email, loginType);
 
         List<OrderItem> orderItemList = new ArrayList<>();
         OrderItem orderItem = OrderItem.createCustomOrderItem(customItem, orderDto.getCount());

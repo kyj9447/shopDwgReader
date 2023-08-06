@@ -95,25 +95,18 @@ public class ItemService {
     }
 
     public Long saveCustomItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
-        System.out.println("saveCustomItem - check1");
         CustomItem item = itemFormDto.createCustomItem();
-        System.out.println("saveCustomItem - check2");
         customItemRepository.save(item);
-        System.out.println("saveCustomItem - check3");
 
         for (int i = 0; i < itemImgFileList.size(); i++) {
-            System.out.println("saveCustomItem - check4");
             ItemImg itemImg = new ItemImg();
-            System.out.println("saveCustomItem - check5");
             itemImg.setCustomItem(item);
             if (i == 0)
                 itemImg.setRepImgYn("Y");
             else
                 itemImg.setRepImgYn("N");
             itemImgService.saveCustomItemImg(itemImg, itemImgFileList.get(i));
-            System.out.println("saveCustomItem - check6");
         }
-        System.out.println("saveCustomItem - check7");
         return item.getId();
     }
 
