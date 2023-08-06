@@ -62,12 +62,6 @@
             </tbody>
         </table>
 
-        <a th:text="${items.number}"></a>
-
-        <a th:text="${items.totalPages}"></a>
-
-        <a th:text="${(items.number/maxPage)*maxPage +1}"></a>
-
         <div th:with="start=${(items.number/maxPage)*maxPage +1},
         end=(${(items.totalPages == 0) ? 1 : (start + (maxPage-1) < items.totalPages ? start + (maxPage - 1) : items.totalPages)})">
             <ul class="pagination justify-content-center">
