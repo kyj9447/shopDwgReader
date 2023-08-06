@@ -40,7 +40,7 @@ public class DwgController {
     public String dwgIn(Model model) {
         String imagePath = "/image/reload.gif";
         model.addAttribute("loading", imagePath);
-        return "/dwg/input";
+        return "dwg/input";
     }
 
     @PostMapping(value = "/dwg")
@@ -73,7 +73,7 @@ public class DwgController {
         model.addAttribute("itemFormDto", new ItemFormDto()); // 주문버튼을 누를때를 대비해 Dto 도 추가
         model.addAttribute("thick", thick); // 상품명 생성을 위한 thick 값 추가
 
-        return "/dwg/output";
+        return "dwg/output";
     }
 
     // 커스텀 상품 등록 + 해당상품 즉시 주문

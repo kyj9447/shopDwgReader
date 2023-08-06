@@ -24,7 +24,7 @@ public class MemberController {
     @GetMapping(value = "/new")
     public String memberFrom(Model model){
         model.addAttribute("memberFormDto",new MemberFormDto());
-        return "/member/memberForm";
+        return "member/memberForm";
     }
 
     @PostMapping(value = "/new")
@@ -41,7 +41,7 @@ public class MemberController {
             System.out.println("check1");
             model.addAttribute("errorMessage",e.getMessage());
             System.out.println(model.getAttribute("errorMessage"));
-            return "/member/memberForm";
+            return "member/memberForm";
         }
         System.out.println("check4");
         return "redirect:/";
@@ -49,13 +49,13 @@ public class MemberController {
 
     @GetMapping(value = "/login")
     public String loginMember(){
-        return "/member/memberLoginForm";
+        return "member/memberLoginForm";
     }
 
     @GetMapping(value = "/login/error")
     public String loginError(Model model){
         model.addAttribute("loginErrorMsg","아이디 혹은 비밀번호를 확인해주세요");
-        return "/member/memberLoginForm";
+        return "member/memberLoginForm";
     }
 
 }

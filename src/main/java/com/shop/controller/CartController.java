@@ -54,7 +54,7 @@ public class CartController {
         System.out.println("principal : "+principal.toString());
         List<CartDetailDto> cartDetailDtoList = cartService.getCartList(userInfo[0],userInfo[1]);
         model.addAttribute("cartItems", cartDetailDtoList);
-        return "/cart/cartList";
+        return "cart/cartList";
     }
 
     @PatchMapping(value = "/cartItem/{cartItemId}")

@@ -45,39 +45,6 @@ public class MainController {
         return "main";
     }
 
-    // 카카오로그인 테스트
-    @RequestMapping(value = "/kakaologin")
-    public String kakaologin(@RequestParam("code") String code, HttpSession session) {
-
-        String access_Token = kakao.getAccessToken(code);
-        HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);
-        System.out.println("code : " + code);
-        System.out.println("controller access_token : " + access_Token);
-        System.out.println("login Controller : " + userInfo);
-
-        // 클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
-        if (userInfo.get("email") != null) {
-            System.out.println("setAttribute : \"userId\" : " + userInfo.get("email"));
-            session.setAttribute("userId", userInfo.get("email"));
-
-            System.out.println("setAttribute : \"access_Token\" : " + access_Token);
-            session.setAttribute("access_Token", access_Token);
-
-            System.out.println("setAttribute : \"thumbnail_image\" : " + userInfo.get("thumbnail_image"));
-            String profileUrl = userInfo.get("thumbnail_image").toString();
-            session.setAttribute("userImage", profileUrl); // 프사 추가
-
-            session.setAttribute("kakaoLoggedInUser", "true"); // 'kakaoUser'는 카카오 로그인한 사용자 정보를 나타내는 객체
-        }
-
-        // 토큰으로 받은 유저정보로 인증객체 생성
-        Authentication authentication = new UsernamePasswordAuthenticationToken(userInfo, null, null);
-        // 인증객체를 사용자목록에 추가
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        return "redirect:/";
-    }
-
     // 카카오로그아웃 테스트
     @RequestMapping(value = "/kakaologout")
     public String kakaologout(HttpSession session) {
