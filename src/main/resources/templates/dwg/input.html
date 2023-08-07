@@ -33,12 +33,14 @@
                 $(this).siblings(".custom-file-label").html(fileName);
             });
         }
+
     </script>
     <script>
         function showLoading() {
-        var element = document.getElementById("loadingImage");
+            var element = document.getElementById("loadingImage");
             element.style.height = '200px';
         }
+
     </script>
 </th:block>
 <th:block layout:fragment="css">
@@ -55,25 +57,55 @@
             color: #bd2130;
         }
 
-        #loadingImage{
-            display: block;
+        #loadingImage {
             height: 0px;
             transition: 1s;
+            margin: auto;
+        }
+
+        #dwnInputForm {
+            text-align: center;
+            width: 800px;
+            margin: auto;
+        }
+
+        .dwnInputBanner {
+            max-height: 400px;
+            margin-top: 50px;
+            width: 100%;
         }
     </style>
 </th:block>
 <div layout:fragment="content">
-    <img id="loadingImage" th:alt="처리중" th:src="${loading}">
-    <form action="/dwg" enctype="multipart/form-data" method="post" onsubmit="showLoading()">
-        <div>
-            .dwg파일 : <input accept=".dwg" name="dwgFile" type="file">
-        </div>
-        <input type="radio" name="thick" value="2" checked> 2T [원판단가: 20000원/m2(=0.2원/mm2) , 가공단가: 20원/mm, 드릴단가: 500원/개]<br>
-        <input type="radio" name="thick" value="5"> 5T [원판단가: 50000원/m2(=0.5원/mm2) , 가공단가: 50원/mm, 드릴단가: 1300원/개]<br>
-        <input type="radio" name="thick" value="10"> 10T [원판단가: 100000원/m2(=1원/mm2) , 가공단가: 100원/mm, 드릴단가: 2800원/개]<br>
-        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden">
-        <button type="submit">업로드</button>
-    </form>
+    <div id="dwnInputForm">
+        <h2>도면 주문</h2>
+        <img class="dwnInputBanner" src="../image/cnc.png">
+        <br>
+        <img id="loadingImage" th:alt="처리중" th:src="${loading}">
+        <hr>
+        <form action="/dwg" enctype="multipart/form-data" method="post" onsubmit="showLoading()">
+
+            <div class="form-group">
+                <div class="custom-file img-div">
+                    <label class="custom-file-label">.dwg 파일 선택</label>
+                    <input accept=".dwg" class="custom-file-input" name="dwgFile" type="file" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <select class="custom-select" name="thick" required>
+                    <option value="" style="text-align: center;">--재료를 선택하세요--</option>
+                    <option value="2">2T [원판단가: 20000원/m2(=0.2원/mm2) , 가공단가: 20원/mm, 드릴단가: 500원/개]</option>
+                    <option value="5">5T [원판단가: 50000원/m2(=0.5원/mm2) , 가공단가: 50원/mm, 드릴단가: 1300원/개]</option>
+                    <option value="10">10T [원판단가: 100000원/m2(=1원/mm2) , 가공단가: 100원/mm, 드릴단가: 2800원/개]</option>
+                </select>
+            </div>
+
+            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden">
+            <button class="btn btn-secondary loginbutton" type="submit">업로드</button>
+        </form>
+    </div>
+
 </div>
 
 </html>

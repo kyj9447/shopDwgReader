@@ -38,9 +38,9 @@
         <canvas id="canvas"></canvas>
 
         <div>
-            <h2> 가공비용 계산</h2>
+            <h2 style="text-align: center;"> 가공비용 계산</h2>
             <ul id="resultlist"></ul>
-            <div id="totalprice"></div>
+            <div style="text-align: center;" id="totalprice"></div>
         </div>
     </div>
 
@@ -55,7 +55,9 @@
 
         <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden">
 
-        <button class="btn btn-primary" th:formaction="@{/dwg/output}" type="submit">주문하기</button>
+        <div style="text-align: center; margin: 50px;">
+            <button class="btn btn-secondary" th:formaction="@{/dwg/output}" type="submit">주문하기</button>
+        </div>
     </form>
     <!--------------------------------------아이템 생성용 입력 form END------------------------>
 

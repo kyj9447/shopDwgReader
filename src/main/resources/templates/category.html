@@ -535,9 +535,9 @@
         start + (maxPage - 1) : items.totalPages)})">
     <ul class="pagination justify-content-center">
       <li class="page-item" th:classappend="${items.number eq 0}?'disabled'">
-        <a aria-label='Previous' class="page-link"
+        <a aria-label='Prev' class="page-link"
           th:href="@{'/category/' + ${itemSearchDto.searchCategory} + '?searchCategory=' + ${itemSearchDto.searchCategory} + '&page=' + ${items.number-1}}">
-          <span aria-hidden="true">Previous</span>
+          <span aria-hidden="true">Prev</span>
         </a>
       </li>
       <li class="page-item" th:classappend="${items.number eq page-1}?'active':''"

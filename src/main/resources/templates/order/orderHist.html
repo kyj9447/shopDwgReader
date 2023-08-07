@@ -126,8 +126,8 @@
         start + (maxPage - 1) : orders.totalPages)})">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${orders.number eq 0}?'disabled' : ''">
-                <a aria-label='Previous' class="page-link" th:href="@{'/orders/'+ ${orders.number-1}}">
-                    <span aria-hidden="true">Previous</span>
+                <a aria-label='Prev' class="page-link" th:href="@{'/orders/'+ ${orders.number-1}}">
+                    <span aria-hidden="true">Prev</span>
                 </a>
             </li>
             <li class="page-item" th:classappend="${orders.number eq page-1}?'active':''"

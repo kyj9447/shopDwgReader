@@ -18,6 +18,11 @@ body {
     min-height: 100%;
 }
 
+.page-item.active .page-link {
+    background-color: gray;
+    border-color: gray;
+}
+
 .footer {
     position: absolute;
     left: 0;

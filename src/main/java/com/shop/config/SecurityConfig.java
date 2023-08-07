@@ -1,5 +1,18 @@
 package com.shop.config;
 
+import com.shop.service.AuthTokenParser;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.security.Principal;
+import java.util.Map;
+
 import com.shop.service.CustomUserDetailsService;
 import com.shop.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +24,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableWebSecurity
@@ -41,15 +57,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
-                .logoutSuccessUrl("/")
+
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    // 인증 정보 확인
+                    if (authentication != null && authentication.isAuthenticated()) {
+                        String redirectUrl = determineRedirectUrl(authentication);
+
+                        // 로그아웃 후에 리다이렉트
+                        response.sendRedirect(redirectUrl);
+                    } else {
+                        // 인증되지 않았거나 인증 정보가 없는 경우
+                        response.sendRedirect("/");
+                    }
+                })
+
+                //.logoutSuccessUrl("/")
                 .and()
                 .oauth2Login()
-                .userInfoEndpoint().userService(customOAuth2UserService);;
+                .userInfoEndpoint().userService(customOAuth2UserService);
+        ;
 
         http.authorizeHttpRequests()
 
                 // 홈,회원관련,상품,이미지 + 파비콘 + 카카오로그인 + 카테고리
-                .mvcMatchers("/", "/members/**","/member/**", "/item/**", "/images/**","/image/**","/favicon.ico","/category/**")
+                .mvcMatchers("/", "/members/**", "/member/**", "/item/**", "/images/**", "/image/**", "/favicon.ico", "/category/**")
                 .permitAll() // 아무나 접근 가능
 
                 .mvcMatchers("/admin/**") // 관리자 페이지
@@ -76,4 +107,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**", "/js/**", "/img/**"); // css, js, img 관련 요청은 무시
     }
+
+    private String determineRedirectUrl(Authentication authentication) throws IOException {
+
+
+        if (authentication instanceof UsernamePasswordAuthenticationToken) { // 일반 로그인의 경우
+            return "/";
+
+        } else { // 소셜로그인의 경우
+            OAuth2AuthenticationToken authToken = (OAuth2AuthenticationToken) authentication;
+            String[] parsedToken = AuthTokenParser.getParseToken(authToken);
+            // role 확인
+            System.out.println("!OAuth2 role-loginType! : " + parsedToken[1]);
+
+            if(parsedToken[1].equals("google")){
+               //return "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=https://localhost/members/logout";
+
+            } else if (parsedToken[1].equals("naver")) {
+               //return "http://nid.naver.com/nidlogin.logout?";
+
+            }else if (parsedToken[1].equals("kakao")) {
+                return "https://kauth.kakao.com/oauth/logout/?client_id=0ea9af982ecb374ececf50d24a8894d6&logout_redirect_uri=https://localhost/members/logout";
+            }
+
+        }
+        return "/";
+    }
 }
+
+
+

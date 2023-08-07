@@ -66,8 +66,8 @@
         end=(${(items.totalPages == 0) ? 1 : (start + (maxPage-1) < items.totalPages ? start + (maxPage - 1) : items.totalPages)})">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:classappend="${items.first}?'disabled'">
-                    <a th:onclick="'javascript:page('+${items.number - 1} + ')'" aria-label='Previous' class="page-link">
-                        <span aria-hidden="true">Previous</span>
+                    <a th:onclick="'javascript:page('+${items.number - 1} + ')'" aria-label='Prev' class="page-link">
+                        <span aria-hidden="true">Prev</span>
                     </a>
                 </li>
                 <li class="page-item" th:each="page: ${#numbers.sequence(start,end)}" th:classappend="${items.number eq page-1}?'active':''">
