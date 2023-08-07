@@ -2,14 +2,8 @@ package com.shop.test;
 
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Base64;
-import java.util.Scanner;
 
 public class ConvertMultipartFile {
     MockMultipartFile mockMultipartFile;
