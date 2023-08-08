@@ -2,15 +2,16 @@ package com.shop.controller;
 
 import com.shop.dto.MemberFormDto;
 import com.shop.entity.Member;
+import com.shop.service.MailService;
 import com.shop.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -20,6 +21,10 @@ import javax.validation.Valid;
 public class MemberController {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
+
+    private final MailService mailService;
+    String confirm = "";
+    boolean confirmCheck = false;
 
     @GetMapping(value = "/new")
     public String memberFrom(Model model){
@@ -56,6 +61,25 @@ public class MemberController {
     public String loginError(Model model){
         model.addAttribute("loginErrorMsg","아이디 혹은 비밀번호를 확인해주세요");
         return "member/memberLoginForm";
+    }
+
+    // 메일인증
+    @PostMapping(value = "/{email}/emailConfirm")
+    public @ResponseBody ResponseEntity emailConfirm(@PathVariable("email") String email) throws Exception{
+        System.out.println("인증요청 메일 : "+email);
+        confirm = mailService.sendSimpleMessage(email);
+        return new ResponseEntity<String>("인증 메일을 보냈습니다.", HttpStatus.OK);
+    }
+
+    // 메일인증 코드 체크
+    @PostMapping(value = "/{code}/codeCheck")
+    public @ResponseBody ResponseEntity codeConfirm(@PathVariable("code") String code) throws Exception {
+        System.out.println("인증요청 코드 : "+code);
+        if (code.equals(confirm)) {
+            confirmCheck=true;
+            return new ResponseEntity<String>("인증 성공하였습니다.",HttpStatus.OK);
+        }
+        return new ResponseEntity<String>("인증 코드를 확인해주세요.", HttpStatus.BAD_REQUEST);
     }
 
 }

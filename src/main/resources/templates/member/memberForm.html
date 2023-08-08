@@ -2,6 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+</head>
+
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
     <style>
@@ -18,6 +24,79 @@
                 alert(err);
             }
         });
+
+        function mailSend() {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            var mail = $("#sendmail").val();
+
+            var url = "/members/" + mail + "/emailConfirm";
+            var paramData = {
+                email : mail
+            }
+            var param = JSON.stringify(paramData);
+
+            alert("이메일 확인 요청을 보냅니다 : " + mail);
+
+            $.ajax({
+                url         : url,
+                type        : "POST",
+                contentType : "application/json",
+                data        : param,
+                beforeSend  : function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                dataType    : "json",
+                cache       : false,
+                success     : function(result, status) {
+                    
+                },
+                error       : function(jqXHR, status, error) {
+                    if(jqXHR.status=='401'){
+                        location.href='/members/login';
+                    } else{
+                        alert(jqXHR.responseText);
+                    }
+                }
+            });
+        }
+
+        function codeCheck() {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            var code = $("#codeCheck").val();
+
+            var url = "/members/" + code + "/codeCheck";
+            var paramData = {
+                code : code
+            }
+            var param = JSON.stringify(paramData);
+
+            $.ajax({
+                url         : url,
+                type        : "POST",
+                contentType : "application/json",
+                data        : param,
+                beforeSend  : function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                dataType    : "json",
+                cache       : false,
+                success     : function(result, status) {
+                    
+                },
+                error       : function(jqXHR, status, error) {
+                    if(jqXHR.status=='401'){
+                        location.href='/members/new';
+                    } else{
+                        alert(jqXHR.responseText);
+                    }
+                }
+            });
+        }
+        
     </script>
 </th:block>
 
@@ -35,7 +114,14 @@
             <label th:for="email">이메일 주소</label>
             <input id="sendmail" type="text" th:field="*{email}" class="form-control" placeholder="이메일을 입력해주세요.">
             <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect date</p>
+<!--            <a class="btn btn-secondary" onclick="mailSend()">인증 메일 보내기</a>-->
         </div>
+
+<!--        <div class="form-group">-->
+<!--            <label th:for="codeCheck">인증 코드</label>-->
+<!--            <input type="text" id="codeCheck" class="form-control" placeholder="인증 코드 입력 후 인증 확인 버튼을 눌러주세요">-->
+<!--            <a class="btn btn-secondary" onclick="codeCheck()">인증 확인</a>-->
+<!--        </div>-->
 
         <div class="form-group">
             <label th:for="password">비밀번호</label>
