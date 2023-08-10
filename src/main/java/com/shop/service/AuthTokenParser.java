@@ -16,7 +16,7 @@ public class AuthTokenParser {
             OAuth2AuthenticationToken authToken = (OAuth2AuthenticationToken) principal;
 
             // role 확인
-            parsedToken[1] = authToken.getAuthorities().iterator().next().getAuthority().toLowerCase(); // Get the authority as a String
+            parsedToken[1] = authToken.getAuthorities().iterator().next().getAuthority().toLowerCase();
             System.out.println("!OAuth2 role-loginType! : "+parsedToken[1]);
 
             // email 확인

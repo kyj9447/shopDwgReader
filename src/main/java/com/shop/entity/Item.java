@@ -16,8 +16,7 @@ import java.util.List;
 @Setter
 @ToString
 public class Item extends BaseEntity{
-
-    @Id // 기본키
+    @Id
     @Column(name = "item_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
