@@ -16,16 +16,43 @@
 
             function send() {
 
+                // 웹소켓으로 보내기
                 let msg = document.getElementById("msg");
-
                 console.log(msg.value);
                 websocket.send(msg.value);
+
+                // html에 추가
+                let messageArea = document.getElementById("message-area");
+                let sentMessage = `<div class="d-flex flex-row justify-content-end mb-4">
+                                    <div class="p-3 me-3 border"
+                                        style="border-radius: 15px; background-color: #fbfbfb;">
+                                        <p class="small mb-0">`+ msg.value + `</p>
+                                    </div>
+                                    <img src="../image/operator.png" alt="avatar 1"
+                                        style="width: 45px; height: 100%; border: 1px solid gray; border-radius: 5px; margin: 10px;">
+                                </div>`;
+                messageArea.innerHTML += sentMessage;
+
                 msg.value = '';
             }
 
             function onMessage(msg) {
+
+                // 웹소켓으로 받은 메세지
                 var data = msg.data;
-                console.log("data "+data);
+                console.log("data " + data);
+
+                // html에 추가
+                let messageArea = document.getElementById("message-area");
+                let receivedMessage = `<div class="d-flex flex-row justify-content-start mb-4">
+                                    <img src="../image/operator.png" alt="avatar 1"
+                                        style="width: 45px; height: 100%; border: 1px solid gray; border-radius: 5px; margin: 10px;">
+                                    <div class="p-3 ms-3"
+                                        style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                                        <p class="small mb-0">`+ data + `</p>
+                                    </div>
+                                </div>`;
+                messageArea.innerHTML += receivedMessage;
             }
         })
     </script>
@@ -48,7 +75,8 @@
                         <div class="card-body">
 
                             <div id="message-area">
-                                <!--받는 메세지-->
+                                <!--
+                                받는 메세지
                                 <div class="d-flex flex-row justify-content-start mb-4">
                                     <img src="../image/operator.png" alt="avatar 1"
                                         style="width: 45px; height: 100%; border: 1px solid gray; border-radius: 5px; margin: 10px;">
@@ -61,7 +89,7 @@
                                     </div>
                                 </div>
 
-                                <!--보내는 메세지-->
+                                보내는 메세지
                                 <div class="d-flex flex-row justify-content-end mb-4">
                                     <div class="p-3 me-3 border"
                                         style="border-radius: 15px; background-color: #fbfbfb;">
@@ -70,6 +98,7 @@
                                     <img th:src="${session.picture}" alt="avatar 1"
                                         style="width: 45px; height: 100%; border: 1px solid gray; border-radius: 5px; margin: 10px;">
                                 </div>
+                                -->
                             </div>
 
                             <!--입력 부분-->
