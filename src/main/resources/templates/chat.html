@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layouts/layout1}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<div layout:fragment="content">
+
+    <script th:inline="javascript">
+        $(document).ready(function () {
+
+            $("#button-send").on("click", (e) => {
+                send();
+            });
+
+            const websocket = new WebSocket("wss://localhost:443/ws/chat");
+
+            websocket.onmessage = onMessage;
+
+            function send() {
+
+                let msg = document.getElementById("msg");
+
+                console.log(msg.value);
+                websocket.send(msg.value);
+                msg.value = '';
+            }
+
+            function onMessage(msg) {
+                var data = msg.data;
+                console.log("data "+data);
+            }
+        })
+    </script>
+
+    <h1>채팅 상담</h1>
+
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8 col-lg-6 col-xl-4">
+
+                    <div class="card" id="chat1" style="border-radius: 15px;">
+                        <div class="card-header d-flex justify-content-between align-items-center p-3 bg-info text-white border-bottom-0"
+                            style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                            <i class="fas fa-angle-left"></i>
+                            <p class="mb-0 fw-bold">Live chat</p>
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <div class="card-body">
+
+                            <div id="message-area">
+                                <!--받는 메세지-->
+                                <div class="d-flex flex-row justify-content-start mb-4">
+                                    <img src="../image/operator.png" alt="avatar 1"
+                                        style="width: 45px; height: 100%; border: 1px solid gray; border-radius: 5px; margin: 10px;">
+                                    <div class="p-3 ms-3"
+                                        style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                                        <p class="small mb-0">Hello and thank you for visiting MDBootstrap. Please click
+                                            the
+                                            video
+                                            below.</p>
+                                    </div>
+                                </div>
+
+                                <!--보내는 메세지-->
+                                <div class="d-flex flex-row justify-content-end mb-4">
+                                    <div class="p-3 me-3 border"
+                                        style="border-radius: 15px; background-color: #fbfbfb;">
+                                        <p class="small mb-0">Thank you, I really like your product.</p>
+                                    </div>
+                                    <img th:src="${session.picture}" alt="avatar 1"
+                                        style="width: 45px; height: 100%; border: 1px solid gray; border-radius: 5px; margin: 10px;">
+                                </div>
+                            </div>
+
+                            <!--입력 부분-->
+                            <div class="form-outline" id="input">
+                                <textarea class="form-control" id="msg" rows="4"></textarea>
+                                <label class="form-label" for="textAreaExample">Type your message</label>
+                                <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</div>
