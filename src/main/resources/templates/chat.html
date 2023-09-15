@@ -3,6 +3,25 @@
 
 <div layout:fragment="content">
 
+    <style>
+        #chatArea {
+            justify-content: center;
+        }
+
+        .card {
+            width: 350px;
+            display: inline-block;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .messageText{
+           width: 220px;
+        }
+    </style>
+
+
     <script th:inline="javascript">
         $(document).ready(function () {
 
@@ -23,15 +42,15 @@
 
                 // html에 추가
                 let messageArea = document.getElementById("message-area");
-                let sentMessage = `<div class="d-flex flex-row justify-content-end mb-4">
-                                    <div class="p-3 me-3 border"
-                                        style="border-radius: 15px; background-color: #fbfbfb;">
-                                        <p class="small mb-0">`+ msg.value + `</p>
-                                    </div>
-                                    <img src="../image/operator.png" alt="avatar 1"
-                                        style="width: 45px; height: 100%; border: 1px solid gray; border-radius: 5px; margin: 10px;">
-                                </div>`;
-                messageArea.innerHTML += sentMessage;
+                    let sentMessage = `<div class="d-flex flex-row justify-content-end mb-4">
+        <div class="p-3 me-3 border"
+            style="border-radius: 15px; background-color: #fbfbfb;">
+            <p class="small mb-0 messageText">`+ msg.value + `</p>
+        </div>
+        <img src="../image/operator.png" alt="avatar 1"
+            style="width: 45px; height: 100%; border: 1px solid gray; border-radius: 5px; margin: 10px;">
+    </div>`;
+                    messageArea.innerHTML += sentMessage;
 
                 msg.value = '';
             }
@@ -49,7 +68,7 @@
                                         style="width: 45px; height: 100%; border: 1px solid gray; border-radius: 5px; margin: 10px;">
                                     <div class="p-3 ms-3"
                                         style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
-                                        <p class="small mb-0">`+ data + `</p>
+                                        <p class="small mb-0 messageText">`+ data + `</p>
                                     </div>
                                 </div>`;
                 messageArea.innerHTML += receivedMessage;

@@ -39,19 +39,25 @@ public class ChatSocketHandler extends TextWebSocketHandler {
 
         if (isAdmin) { // 관리자 -> 특정 사용자
 
-            String[] Message = message.getPayload().split(","); // {이메일,type,내용}
-            System.out.println("name : " + Message[0]);
-            System.out.println("type : " + Message[1]);
-            System.out.println("message : " + Message[2]);
+            try {
+                String[] Message = message.getPayload().split(",", 3); // {이메일,type,내용} 내용에 쉼표가 있어도 나누지 않고 하나로 처리
+                System.out.println("name : " + Message[0]);
+                System.out.println("type : " + Message[1]);
+                System.out.println("message : " + Message[2]);
 
-            String targetUser = Message[0]+","+Message[1]; // "email,type" 형식으로 한개의 String 생성
-            WebSocketSession targetSession = userList.get(targetUser); // 해당 String을 key로 하여 value(=session) 찾음
-            if(targetSession==null){ // 타겟 세션이 없으면
-                WebSocketMessage<String> errorMessage = new TextMessage("상담 대상이 없습니다.");
-                session.sendMessage(errorMessage); // 관리자에게 에러메세지를 되돌려 보낸다
+                String targetUser = Message[0] + "," + Message[1]; // "email,type" 형식으로 한개의 String 생성
+                WebSocketSession targetSession = userList.get(targetUser); // 해당 String을 key로 하여 value(=session) 찾음
+                if (targetSession == null) { // 타겟 세션이 없으면
+                    WebSocketMessage<String> errorMessage = new TextMessage("상담 대상이 없습니다.");
+                    session.sendMessage(errorMessage); // 관리자에게 에러메세지를 되돌려 보낸다
+                } else { // 타겟 세션이 있으면 메세지 내용물 보냄
+                    //targetSession.sendMessage(new TextMessage(Message[0]+",admin,"+Message[2])); //{이메일,admin,내용}
+                    targetSession.sendMessage(new TextMessage(Message[0] + ",admin," + Message[2])); //{내용}
+                }
             }
-            else { // 타겟 세션이 있으면 메세지 내용물 보냄
-                targetSession.sendMessage(new TextMessage(Message[0]+",admin,"+Message[2])); //{이메일,admin,내용}
+            catch (Exception e){ // 메세지 전송 실패시
+                WebSocketMessage<String> errorMessage = new TextMessage("메세지 전송에 실패했습니다.");
+                session.sendMessage(errorMessage); // 관리자에게 에러메세지를 되돌려 보낸다
             }
 
         } else { // 사용자 -> 관리자
@@ -111,10 +117,20 @@ public class ChatSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 
-        if (AuthTokenParser.isAdmin(session.getPrincipal())) {
-            adminList.remove(session);
-        } else {
-            userList.remove(session);
+        if (AuthTokenParser.isAdmin(session.getPrincipal())) { // 관리자가 연결 종료시
+            adminList.remove(session); // 관리자 목록에서 삭제
+        } else { // 사용자가 연결 종료시
+            String[] userInfo = AuthTokenParser.getParseToken(session.getPrincipal());
+            String userInfoString = userInfo[0]+","+userInfo[1]; // "이메일,type" 형식
+            System.out.println("사용자 연결 종료 : "+userInfoString);
+            for (WebSocketSession sessions : adminList) { // 모든 admin에게 알리고
+                WebSocketMessage<String> endUserMessage =
+                        // {이메일, type, 메세지 내용}
+                        new TextMessage(userInfo[0] + "," + userInfo[1] + "," + userInfo[0] + " 님이 상담을 종료했습니다.");
+                sessions.sendMessage(endUserMessage);
+            }
+
+            userList.remove(session); // 목록에서 삭제
         }
         System.out.println(session + " 클라이언트 접속 해제");
     }
