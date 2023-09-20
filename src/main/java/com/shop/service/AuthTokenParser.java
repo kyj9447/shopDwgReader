@@ -51,7 +51,7 @@ public class AuthTokenParser {
         return false;
     }
 
-    // 새방식 테스트 결과 처리시간 증가 ( 800ns -> 4000ns )
+    // 새 방식 테스트 결과 처리시간 증가 ( 800ns -> 4000ns )
     // 테스트 필요시 아래 코드 주석 해제
 
 //    public static boolean isAdmin2(Principal principal) { // 새 방식
