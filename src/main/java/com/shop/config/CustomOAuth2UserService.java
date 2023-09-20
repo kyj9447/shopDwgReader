@@ -46,7 +46,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService implements
     }
 
     public Member saveOrUpdate(OAuthAttributes attributes) {
-        System.out.println("attributes.getLoginType() : "+attributes.getLoginType());
+        //System.out.println("attributes.getLoginType() : "+attributes.getLoginType());
         Member member = memberRepository.findByEmailAndLoginType(attributes.getEmail(),attributes.getLoginType());
 
         if (member != null) {

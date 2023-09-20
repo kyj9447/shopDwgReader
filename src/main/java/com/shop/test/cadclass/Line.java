@@ -12,7 +12,7 @@ public class Line extends CadObject {
         length = roundcut(Math.sqrt((X - x) * (X - x) + (Y - y) * (Y - y)));
 
         // 생성시 정보출력
-        System.out.println("start   " + startX + ",     " + startY);
-        System.out.println("end     " + endX + ",       " + endY);
+        //System.out.println("start   " + startX + ",     " + startY);
+        //System.out.println("end     " + endX + ",       " + endY);
     }
 }

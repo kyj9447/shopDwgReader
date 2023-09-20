@@ -44,7 +44,7 @@ public class ItemService {
             else
                 itemImg.setRepImgYn("N");
             if (itemImgFileList.get(i).getSize() != 0) { // 내용이 있을때만 등록
-                System.out.println("이미지 사이즈" + itemImgFileList.get(i).getSize());
+                //System.out.println("이미지 사이즈" + itemImgFileList.get(i).getSize());
                 itemImgService.saveItemImg(itemImg, itemImgFileList.get(i));
             }
         }

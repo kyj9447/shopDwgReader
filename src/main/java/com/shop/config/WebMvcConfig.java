@@ -12,7 +12,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         String currentWorkingDir = System.getProperty("user.dir");
-        System.out.println(currentWorkingDir);
+        //System.out.println(currentWorkingDir);
 
         registry.addResourceHandler("/images/**")
                 .addResourceLocations("file:///" + currentWorkingDir + "/");

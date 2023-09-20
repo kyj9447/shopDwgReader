@@ -17,11 +17,11 @@ public class ChatController {
             Object[] role = authToken.getAuthorities().toArray();
             String role2 = role[0].toString();
             if (role2.equals("ROLE_ADMIN")) {
-                System.out.println("admin 채팅 return");
+                //System.out.println("admin 채팅 return");
                 return "chatAdmin";
             }
         }
-        System.out.println("일반 채팅 return");
+        //System.out.println("일반 채팅 return");
 
         return "chat";
     }

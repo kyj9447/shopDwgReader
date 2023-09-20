@@ -26,11 +26,11 @@ public class ItemImgService {
         String oriImgName = itemImgFile.getOriginalFilename();
         String imgName = "";
         String imgUrl = "";
-        System.out.println(oriImgName);
+        //System.out.println(oriImgName);
         if (!StringUtils.isEmpty(oriImgName)) {
-            System.out.println("******");
+            //System.out.println("******");
             imgName = fileService.uploadFile(itemImgLocation, oriImgName, itemImgFile.getBytes());
-            System.out.println(imgName);
+            //System.out.println(imgName);
             imgUrl = "/images/item/" + imgName;
         }
         itemImg.updateItemImg(oriImgName, imgName, imgUrl);
@@ -41,11 +41,11 @@ public class ItemImgService {
         String oriImgName = itemImgFile.getOriginalFilename();
         String imgName = "";
         String imgUrl = "";
-        System.out.println(oriImgName);
+        //System.out.println(oriImgName);
         if (!StringUtils.isEmpty(oriImgName)) {
-            System.out.println("******");
+            //System.out.println("******");
             imgName = fileService.uploadFile(customItemImgLocation, oriImgName, itemImgFile.getBytes());
-            System.out.println(imgName);
+            //System.out.println(imgName);
             imgUrl = "/images/custom/" + imgName;
         }
         itemImg.updateItemImg(oriImgName, imgName, imgUrl);

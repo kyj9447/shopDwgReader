@@ -46,8 +46,8 @@ public class DwgController {
 
         // Gson 사용
         String json = new Gson().toJson(DwgReader.parseDwg(dwgFile));
-        //System.out.println("제이슨 결과 = " + json);
-        System.out.println("thick : " + thick);
+        ////System.out.println("제이슨 결과 = " + json);
+        //System.out.println("thick : " + thick);
         if (thick == 2) {
             model.addAttribute("plateprice", 0.2);
             model.addAttribute("cutprice", 20);
@@ -63,7 +63,7 @@ public class DwgController {
         }
 
         String dwgString = Arrays.toString(dwgFile.getBytes()); // 파일을 바이트 배열로 바꾸고 긴 스트링으로 바꿈
-        // System.out.println(dwgString);
+        // //System.out.println(dwgString);
 
         model.addAttribute("finalObjectList", json);
 
@@ -94,41 +94,41 @@ public class DwgController {
         //            return "redirect:/dwg";
         //        }
 
-        System.out.println("받은 바이트 " + dwgFile); // 받은 긴 스트링
+        //System.out.println("받은 바이트 " + dwgFile); // 받은 긴 스트링
 
-        System.out.println("canvasImage : " + canvasImage);
-        System.out.println("orderPrice : " + orderPrice);
-        System.out.println("dwgFile : " + dwgFile);
-        System.out.println("thick : " + thick);
-        System.out.println("------------------------------------------------");
+        //System.out.println("canvasImage : " + canvasImage);
+        //System.out.println("orderPrice : " + orderPrice);
+        //System.out.println("dwgFile : " + dwgFile);
+        //System.out.println("thick : " + thick);
+        //System.out.println("------------------------------------------------");
 
         // 캔버스 Base64 -> byte[]
         // byte[] canvasByteArray = Base64.getUrlDecoder().decode(canvasImage);
-        //System.out.println(Arrays.toString(canvasByteArray));
+        ////System.out.println(Arrays.toString(canvasByteArray));
 
         //byte[] canvasByteArray2 = Base64.getDecoder().decode(canvasImage);
-        //System.out.println(Arrays.toString(canvasByteArray2));
+        ////System.out.println(Arrays.toString(canvasByteArray2));
 
         // 캔버스 Base64 -> byte[]
         String[] canvasImage2 = canvasImage.split(","); // 앞부분 제거 (data:image/png;base64,)
         byte[] canvasByteArray = DatatypeConverter.parseBase64Binary(canvasImage2[1]);
-        System.out.println("canvasImage2 : " + Arrays.toString(canvasByteArray));
+        //System.out.println("canvasImage2 : " + Arrays.toString(canvasByteArray));
 
         // dwg String -> byte[]
         byte[] dwgByteArray = stringToByteArray(dwgFile);
-        System.out.println("dwgByteArray : " + Arrays.toString(dwgByteArray));
+        //System.out.println("dwgByteArray : " + Arrays.toString(dwgByteArray));
 
-        System.out.println("Make MultipartFile");
+        //System.out.println("Make MultipartFile");
         MultipartFile canvasFile = convertToMultipartFile(canvasByteArray,"canvasImage.png","image/png");
         MultipartFile dwgFinalFile = convertToMultipartFile(dwgByteArray,"dwgFinalFile.dwg","application/acad");
 
         // Custom 아이템 추가
-        System.out.println("Add to List<MultipartFile>");
+        //System.out.println("Add to List<MultipartFile>");
         List<MultipartFile> itemFileList = new ArrayList<>();
         itemFileList.add(canvasFile);
         itemFileList.add(dwgFinalFile);
 
-        System.out.println("setPrice itemFormDto");
+        //System.out.println("setPrice itemFormDto");
         itemFormDto.setPrice(orderPrice);
         itemFormDto.setThick(thick);
         itemFormDto.setItemName(thick + "T 철판 주문 제작");
@@ -138,17 +138,17 @@ public class DwgController {
 
         Long itemId = 1L;
         try {
-            System.out.println("itemService saveCustomItem");
+            //System.out.println("itemService saveCustomItem");
             itemId = itemService.saveCustomItem(itemFormDto, itemFileList);
-            System.out.println("!itemId : " + itemId);
+            //System.out.println("!itemId : " + itemId);
         } catch (Exception e) {
             model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다.");
         }
-        System.out.println("try catch end");
+        //System.out.println("try catch end");
 
         /*--------------------------------------------------------------*/
         //커스텀 상품 등록 끝 -> 해당상품 즉시 주문
-        System.out.println("주문할 상품 Id : " + itemId);
+        //System.out.println("주문할 상품 Id : " + itemId);
 
         OrderDto customOrderDto = new OrderDto();
         customOrderDto.setItemId(itemId);

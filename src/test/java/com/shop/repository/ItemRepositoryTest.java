@@ -42,7 +42,7 @@ class ItemRepositoryTest {
         item.setRegTime(LocalDateTime.now());
         item.setUpdateTime(LocalDateTime.now());
         Item savedItem = itemRepository.save(item);
-        System.out.println("결과 : " + savedItem.toString());
+        //System.out.println("결과 : " + savedItem.toString());
     }
 
     public void createItemList() {
@@ -63,16 +63,16 @@ class ItemRepositoryTest {
     @Test
     @DisplayName("상품명, 상품상세설명 or 테스트")
     public void findByItemNameOrItemDetailTest() {
-        System.out.println("check1");
+        //System.out.println("check1");
         this.createItemList();
         List<Item> itemList = itemRepository.findByItemNameOrItemDetail("테스트 상품1", "테스트 상품 상세 설명5");
         for (Item item : itemList) {
-            System.out.println("check2");
-            System.out.println("결과");
-            System.out.println("아이템 이름 :" + item.getItemName());
-            System.out.println("아이템 가격 :" + item.getPrice());
-            System.out.println("아이템 재고 :" + item.getStockNumber());
-            System.out.println("아이템 설명 :" + item.getItemDetail());
+            //System.out.println("check2");
+            //System.out.println("결과");
+            //System.out.println("아이템 이름 :" + item.getItemName());
+            //System.out.println("아이템 가격 :" + item.getPrice());
+            //System.out.println("아이템 재고 :" + item.getStockNumber());
+            //System.out.println("아이템 설명 :" + item.getItemDetail());
         }
     }
 
@@ -82,12 +82,12 @@ class ItemRepositoryTest {
         this.createItemList();
         List<Item> itemList = itemRepository.findByPriceLessThan(10005);
         for (Item item : itemList) {
-            System.out.println("check1");
-            System.out.println("결과");
-            System.out.println("아이템 이름 :" + item.getItemName());
-            System.out.println("아이템 가격 :" + item.getPrice());
-            System.out.println("아이템 재고 :" + item.getStockNumber());
-            System.out.println("아이템 설명 :" + item.getItemDetail());
+            //System.out.println("check1");
+            //System.out.println("결과");
+            //System.out.println("아이템 이름 :" + item.getItemName());
+            //System.out.println("아이템 가격 :" + item.getPrice());
+            //System.out.println("아이템 재고 :" + item.getStockNumber());
+            //System.out.println("아이템 설명 :" + item.getItemDetail());
         }
     }
 
@@ -97,12 +97,12 @@ class ItemRepositoryTest {
         this.createItemList();
         List<Item> itemList = itemRepository.findByPriceLessThanOrderByPriceDesc(10005);
         for (Item item : itemList) {
-            System.out.println("check1");
-            System.out.println("결과");
-            System.out.println("아이템 이름 :" + item.getItemName());
-            System.out.println("아이템 가격 :" + item.getPrice());
-            System.out.println("아이템 재고 :" + item.getStockNumber());
-            System.out.println("아이템 설명 :" + item.getItemDetail());
+            //System.out.println("check1");
+            //System.out.println("결과");
+            //System.out.println("아이템 이름 :" + item.getItemName());
+            //System.out.println("아이템 가격 :" + item.getPrice());
+            //System.out.println("아이템 재고 :" + item.getStockNumber());
+            //System.out.println("아이템 설명 :" + item.getItemDetail());
         }
     }
 
@@ -112,12 +112,12 @@ class ItemRepositoryTest {
         this.createItemList();
         List<Item> itemList = itemRepository.findByItemDetail("테스트 상품 상세 설명");
         for (Item item : itemList) {
-            System.out.println("check1");
-            System.out.println("결과");
-            System.out.println("아이템 이름 :" + item.getItemName());
-            System.out.println("아이템 가격 :" + item.getPrice());
-            System.out.println("아이템 재고 :" + item.getStockNumber());
-            System.out.println("아이템 설명 :" + item.getItemDetail());
+            //System.out.println("check1");
+            //System.out.println("결과");
+            //System.out.println("아이템 이름 :" + item.getItemName());
+            //System.out.println("아이템 가격 :" + item.getPrice());
+            //System.out.println("아이템 재고 :" + item.getStockNumber());
+            //System.out.println("아이템 설명 :" + item.getItemDetail());
         }
     }
 
@@ -127,12 +127,12 @@ class ItemRepositoryTest {
         this.createItemList();
         List<Item> itemList = itemRepository.findByItemDetailByNative("테스트 상품 상세 설명");
         for (Item item : itemList) {
-            System.out.println("check1");
-            System.out.println("결과");
-            System.out.println("아이템 이름 :" + item.getItemName());
-            System.out.println("아이템 가격 :" + item.getPrice());
-            System.out.println("아이템 재고 :" + item.getStockNumber());
-            System.out.println("아이템 설명 :" + item.getItemDetail());
+            //System.out.println("check1");
+            //System.out.println("결과");
+            //System.out.println("아이템 이름 :" + item.getItemName());
+            //System.out.println("아이템 가격 :" + item.getPrice());
+            //System.out.println("아이템 재고 :" + item.getStockNumber());
+            //System.out.println("아이템 설명 :" + item.getItemDetail());
         }
     }
 
@@ -149,12 +149,12 @@ class ItemRepositoryTest {
         List<Item> itemList = query.fetch();
 
         for (Item item : itemList) {
-            System.out.println("check1");
-            System.out.println("결과");
-            System.out.println("아이템 이름 :" + item.getItemName());
-            System.out.println("아이템 가격 :" + item.getPrice());
-            System.out.println("아이템 재고 :" + item.getStockNumber());
-            System.out.println("아이템 설명 :" + item.getItemDetail());
+            //System.out.println("check1");
+            //System.out.println("결과");
+            //System.out.println("아이템 이름 :" + item.getItemName());
+            //System.out.println("아이템 가격 :" + item.getPrice());
+            //System.out.println("아이템 재고 :" + item.getStockNumber());
+            //System.out.println("아이템 설명 :" + item.getItemDetail());
         }
     }
 
@@ -208,16 +208,16 @@ class ItemRepositoryTest {
         Pageable pageable = PageRequest.of(0, 5);
         Page<Item> itemPagingResult = itemRepository.findAll(booleanBuilder,pageable);
 
-        System.out.println("total elements : " + itemPagingResult.getTotalElements());
+        //System.out.println("total elements : " + itemPagingResult.getTotalElements());
 
         List<Item> resultItemList = itemPagingResult.getContent();
         for (Item resultItem : resultItemList) {
-            System.out.println("check1");
-            System.out.println("결과");
-            System.out.println("아이템 이름 :" + resultItem.getItemName());
-            System.out.println("아이템 가격 :" + resultItem.getPrice());
-            System.out.println("아이템 재고 :" + resultItem.getStockNumber());
-            System.out.println("아이템 설명 :" + resultItem.getItemDetail());
+            //System.out.println("check1");
+            //System.out.println("결과");
+            //System.out.println("아이템 이름 :" + resultItem.getItemName());
+            //System.out.println("아이템 가격 :" + resultItem.getPrice());
+            //System.out.println("아이템 재고 :" + resultItem.getStockNumber());
+            //System.out.println("아이템 설명 :" + resultItem.getItemDetail());
         }
     }
 

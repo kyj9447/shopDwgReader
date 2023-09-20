@@ -50,7 +50,7 @@ public class CartController {
 
         String[] userInfo = AuthTokenParser.getParseToken(principal);
 
-        System.out.println("principal : "+principal.toString());
+        //System.out.println("principal : "+principal.toString());
         List<CartDetailDto> cartDetailDtoList = cartService.getCartList(userInfo[0],userInfo[1]);
         model.addAttribute("cartItems", cartDetailDtoList);
         return "cart/cartList";
@@ -61,7 +61,7 @@ public class CartController {
 
         String[] userInfo = AuthTokenParser.getParseToken(principal);
 
-        System.out.println(cartItemId);
+        //System.out.println(cartItemId);
         if (count <= 0) {
             return new ResponseEntity<String>("최소 1개 이상 담아주세요.", HttpStatus.BAD_REQUEST);
         } else if (!cartService.validateCartItem(cartItemId, userInfo[0], userInfo[1])) {
@@ -87,9 +87,9 @@ public class CartController {
     @PostMapping(value = "/cart/orders")
     public @ResponseBody ResponseEntity orderCartItem(@RequestBody CartOrderDto cartOrderDto, Principal principal) {
         String[] userInfo = AuthTokenParser.getParseToken(principal);
-        System.out.println("장바구니 주문");
+        //System.out.println("장바구니 주문");
 
-        System.out.println(cartOrderDto.getCartItemId());
+        //System.out.println(cartOrderDto.getCartItemId());
         List<CartOrderDto> cartOrderDtoList = cartOrderDto.getCartOrderDtoList();
 
         if (cartOrderDtoList == null || cartOrderDtoList.size() == 0) {

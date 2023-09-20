@@ -19,14 +19,14 @@ public class Arc extends CadObject {
         area = roundcut((R * R * Math.PI) * Math.abs(startA - endA) / 360); // 면적 * (일부각도 / 전체각도)
 
         // 생성시 정보출력
-        System.out.println("중심점 X:  " + centerX + " Y:  " + centerY);
-        System.out.println("반지름 R:  " + radius);
-        System.out.println("시작각 : " + roundcut(startA) + "º");
-        System.out.println("끝도 : " + roundcut(endA) + "º");
-        System.out.println("각도 : " + roundcut(Math.abs(startA - endA)) + "º");
+        //System.out.println("중심점 X:  " + centerX + " Y:  " + centerY);
+        //System.out.println("반지름 R:  " + radius);
+        //System.out.println("시작각 : " + roundcut(startA) + "º");
+        //System.out.println("끝도 : " + roundcut(endA) + "º");
+        //System.out.println("각도 : " + roundcut(Math.abs(startA - endA)) + "º");
 
-        System.out.println("start   " + startX + ",     " + startY);
-        System.out.println("end     " + endX + ",   " + endY);
-        System.out.println("길이     " + length);
+        //System.out.println("start   " + startX + ",     " + startY);
+        //System.out.println("end     " + endX + ",   " + endY);
+        //System.out.println("길이     " + length);
     }
 }

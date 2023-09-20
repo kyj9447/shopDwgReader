@@ -19,11 +19,11 @@ public class Circle extends CadObject {
         length = roundcut((R + R) * Math.PI);
 
         // 생성시 정보출력
-        System.out.println("중심점 X:  " + centerX + " Y:  " + centerY);
-        System.out.println("반지름 R:  " + radius);
-        System.out.println("드릴가능 :  " + drillable);
+        //System.out.println("중심점 X:  " + centerX + " Y:  " + centerY);
+        //System.out.println("반지름 R:  " + radius);
+        //System.out.println("드릴가능 :  " + drillable);
 
-        System.out.println("길이 :  " + length);
-        System.out.println("면적 :  " + area);
+        //System.out.println("길이 :  " + length);
+        //System.out.println("면적 :  " + area);
     }
 }

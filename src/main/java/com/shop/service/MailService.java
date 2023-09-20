@@ -18,8 +18,8 @@ public class MailService {
 
     private MimeMessage createMessage(String to) throws Exception{
         ePw = createKey();
-        System.out.println("보내는 대상 : "+ to);
-        System.out.println("인증 번호 : "+ ePw);
+        //System.out.println("보내는 대상 : "+ to);
+        //System.out.println("인증 번호 : "+ ePw);
         MimeMessage message = emailSender.createMimeMessage();
 
         message.addRecipients(Message.RecipientType.TO, to); // 보내는 대상

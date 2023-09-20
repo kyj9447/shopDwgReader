@@ -91,15 +91,15 @@ public class FinalObject{
         }
 
         // // 배열 출력 TEST
-        // System.out.println("check1");
+        // //System.out.println("check1");
         // for (double X : shoeX) {
-        //     System.out.printf(X+",");
+        //     //System.out.printf(X+",");
         // }
-        // System.out.println();
+        // //System.out.println();
         // for (double Y : shoeY) {
-        //     System.out.printf(Y+",");
+        //     //System.out.printf(Y+",");
         // }
-        // System.out.println("\ncheck2");
+        // //System.out.println("\ncheck2");
 
         return roundcut(result);
     }

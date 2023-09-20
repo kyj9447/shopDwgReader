@@ -9,12 +9,14 @@ import com.aspose.cad.fileformats.cad.cadobjects.CadLine;
 import com.aspose.cad.fileformats.cad.cadobjects.polylines.CadPolyline;
 import com.aspose.cad.fileformats.cad.cadobjects.vertices.Cad2DVertex;
 import com.shop.test.cadclass.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class DwgReader {
 
     static String openclose(Short a) {
@@ -101,12 +103,12 @@ public class DwgReader {
 //        File directory = new File(directoryPath);
 //        if (!directory.exists()) {
 //            if (directory.mkdirs()) {
-//                System.out.println("디렉터리 생성함");
+//                //System.out.println("디렉터리 생성함");
 //            } else {
-//                System.out.println("디렉터리 생성 실패함");
+//                //System.out.println("디렉터리 생성 실패함");
 //            }
 //        } else {
-//            System.out.println("디렉터리 존재함");
+//            //System.out.println("디렉터리 존재함");
 //        }
 //
 //        // 임시파일 지정
@@ -125,15 +127,15 @@ public class DwgReader {
 
         // CAD 이미지의 엔티티 수를 확인
         int entityCount = cadImage.getEntities().length;
-        System.out.println("Entity count: " + entityCount);
+        //System.out.println("Entity count: " + entityCount);
 
         // 엔티티들을 배열에 입력
         CadBaseEntity[] objectlist = cadImage.getEntities();
 
         // 모든 엔티티 클래스 확인
-        System.out.println("CHECK1");
+        //System.out.println("CHECK1");
         for (CadBaseEntity cadBaseEntity : objectlist) {
-            System.out.println(cadBaseEntity.getClass());
+            //System.out.println(cadBaseEntity.getClass());
         }
 
         // 사용할 리스트들 작성
@@ -141,13 +143,13 @@ public class DwgReader {
         List<CadObject> partList2 = new ArrayList<>(); // 조립작업용
         List<FinalObject> finalList = new ArrayList<>(); // 조립 완성된 최종객체들
 
-        System.out.println("CHECK2");
+        //System.out.println("CHECK2");
 
         // 클래스별 정보출력 및 처리
         for (int i = 0; i < objectlist.length; i++) {
             // CadLine
             if (objectlist[i] instanceof CadLine) {
-                System.out.println("\n[캐드라인] " + objectlist[i]);
+                //System.out.println("\n[캐드라인] " + objectlist[i]);
 
                 partList.add(new Line(
                         (((CadLine) objectlist[i]).getFirstPoint().getX()),
@@ -160,7 +162,7 @@ public class DwgReader {
             // !순서 중요!
             // CadArc -> CadCircle 순
             else if (objectlist[i] instanceof CadArc) {
-                System.out.println("\n[캐드아크] " + objectlist[i]);
+                //System.out.println("\n[캐드아크] " + objectlist[i]);
 
                 partList.add(new Arc(
                         ((CadArc) objectlist[i]).getCenterPoint().getX(),
@@ -177,7 +179,7 @@ public class DwgReader {
             // (오른쪽이 객체가 없음 / CadCircle.getClass() 안됨)
             // objectlist[i].getClass().toString() == "CadCircle" 안됨
             else if (objectlist[i] instanceof CadCircle) {
-                System.out.println("\n[캐드서클] " + objectlist[i]);
+                //System.out.println("\n[캐드서클] " + objectlist[i]);
 
                 partList.add(new Circle(
                         ((CadCircle) objectlist[i]).getCenterPoint().getX(),
@@ -187,7 +189,7 @@ public class DwgReader {
 
             // CadPolyline
             else if (objectlist[i] instanceof CadPolyline) {
-                System.out.println("\n[캐드폴리라인] " + objectlist[i] + "\n");
+                //System.out.println("\n[캐드폴리라인] " + objectlist[i] + "\n");
                 CadPolyline x = (CadPolyline) objectlist[i];
 
                 // PolyLine line으로 분해
@@ -203,7 +205,7 @@ public class DwgReader {
                 }
 
                 // 닫혀있는지 확인 // CadPolyline.getFlag() = 1 (닫힘) / 0 (열림)
-                System.out.println(openclose(x.getFlag()));
+                //System.out.println(openclose(x.getFlag()));
                 // 닫힌 PolyLine 마지막 line 추가
                 if (x.getFlag() == 1) {
 
@@ -219,14 +221,14 @@ public class DwgReader {
 
             // 기타
             else {
-                System.out.println("\nother " + objectlist[i]);
+                //System.out.println("\nother " + objectlist[i]);
             }
         }
 
-        System.out.println("check1");
+        //System.out.println("check1");
 
         for (int i = 0; i < partList.size(); i++) {
-            System.out.println(partList.get(i));
+            //System.out.println(partList.get(i));
         }
 
         // Circle을 모두 찾아서 FinalObject 만든 후 partList에서 제거
@@ -363,10 +365,10 @@ public class DwgReader {
         moveAll(finalList, -mainMinX+10, -mainMinY+10); // X양수,Y양수영역으로 이동
         // moveAll(finalList, 1000, 1000); // 2000x2000 캔버스 중심으로 이동
 
-        System.out.println("\n최종출력");
-        System.out.println("partList " + partList);
-        System.out.println("partList2 " + partList2);
-        System.out.println("finalList " + finalList);
+        //System.out.println("\n최종출력");
+        //System.out.println("partList " + partList);
+        //System.out.println("partList2 " + partList2);
+        //System.out.println("finalList " + finalList);
 
         // 메모리 해제
         cadImage.dispose();

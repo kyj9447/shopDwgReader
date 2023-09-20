@@ -19,7 +19,7 @@ public class FileService {
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
         String savedFileName = uuid.toString() + extension;
         String fileUploadFullUrl = uploadPath + "/" + savedFileName;
-        System.out.println(fileUploadFullUrl);
+        //System.out.println(fileUploadFullUrl);
 
         Path path = Paths.get(fileUploadFullUrl);
         Path parentDir = path.getParent();
