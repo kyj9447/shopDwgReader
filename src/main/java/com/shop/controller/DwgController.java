@@ -46,7 +46,7 @@ public class DwgController {
 
         // Gson 사용
         String json = new Gson().toJson(DwgReader.parseDwg(dwgFile));
-        ////System.out.println("제이슨 결과 = " + json);
+        //System.out.println("제이슨 결과 = " + json);
         //System.out.println("thick : " + thick);
         if (thick == 2) {
             model.addAttribute("plateprice", 0.2);
@@ -104,10 +104,10 @@ public class DwgController {
 
         // 캔버스 Base64 -> byte[]
         // byte[] canvasByteArray = Base64.getUrlDecoder().decode(canvasImage);
-        ////System.out.println(Arrays.toString(canvasByteArray));
+        //System.out.println(Arrays.toString(canvasByteArray));
 
         //byte[] canvasByteArray2 = Base64.getDecoder().decode(canvasImage);
-        ////System.out.println(Arrays.toString(canvasByteArray2));
+        //System.out.println(Arrays.toString(canvasByteArray2));
 
         // 캔버스 Base64 -> byte[]
         String[] canvasImage2 = canvasImage.split(","); // 앞부분 제거 (data:image/png;base64,)

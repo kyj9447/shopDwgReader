@@ -30,8 +30,8 @@ public class ChatSocketHandler extends TextWebSocketHandler {
         String payload = message.getPayload();
         boolean isAdmin = AuthTokenParser.isAdmin(session.getPrincipal());
 
-        ////System.out.println("sessionId : " + sessionId);
-        ////System.out.println("identification : " + identificationRaw[0] + " / type : " + identificationRaw[1]);
+        //System.out.println("sessionId : " + sessionId);
+        //System.out.println("identification : " + identificationRaw[0] + " / type : " + identificationRaw[1]);
         //System.out.println("payload : " + payload);
         //System.out.println("admin? : " + isAdmin);
 
@@ -101,14 +101,14 @@ public class ChatSocketHandler extends TextWebSocketHandler {
             }
         }
 
-        ////System.out.println("현재 접속 session");
+        //System.out.println("현재 접속 session");
 
-        ////System.out.println("admin session");
+        //System.out.println("admin session");
         //for (WebSocketSession sessions : adminList) {
         //    //System.out.println(sessions);
         //}
 
-        ////System.out.println("user session");
+        //System.out.println("user session");
         //userList.forEach((key, value) -> //System.out.println("키: " + key + "/ 값: " + value));
 
     }
