@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.shop.service.AuthTokenParser.isAdmin;
-import static com.shop.service.AuthTokenParser.isAdmin2;
+//import static com.shop.service.AuthTokenParser.isAdmin2;
 
 
 @SpringBootTest
@@ -58,18 +58,6 @@ public class AuthTokenParserTest {
 
             // 결과 출력
             System.out.println("isAdmin 실행 시간 (나노초): " + duration);
-
-        }
-
-        for (int i = 0 ; i<10 ; i++ ) {
-            // isAdmin2 메서드 실행 시간 측정
-            long startTime = System.nanoTime();
-            boolean isAdmin2Result = isAdmin2(principal);
-            long endTime = System.nanoTime();
-            long duration = endTime - startTime;
-
-            // 결과 출력
-            System.out.println("isAdmin2 실행 시간 (나노초): " + duration);
         }
 
         for (int i = 0 ; i<10 ; i++ ) {
@@ -81,18 +69,6 @@ public class AuthTokenParserTest {
 
             // 결과 출력
             System.out.println("isAdmin 실행 시간 (나노초): " + duration);
-
-        }
-
-        for (int i = 0 ; i<10 ; i++ ) {
-            // isAdmin2 메서드 실행 시간 재측정
-            long startTime = System.nanoTime();
-            boolean isAdmin2Result = isAdmin2(principal);
-            long endTime = System.nanoTime();
-            long duration = endTime - startTime;
-
-            // 결과 출력
-            System.out.println("isAdmin2 실행 시간 (나노초): " + duration);
         }
     }
 
@@ -111,18 +87,6 @@ public class AuthTokenParserTest {
 
             // 결과 출력
             System.out.println("isAdmin 실행 시간 (나노초): " + duration);
-
-        }
-
-        for (int i = 0 ; i<10 ; i++ ) {
-            // isAdmin2 메서드 실행 시간 측정
-            long startTime = System.nanoTime();
-            boolean isAdmin2Result = isAdmin2(principal);
-            long endTime = System.nanoTime();
-            long duration = endTime - startTime;
-
-            // 결과 출력
-            System.out.println("isAdmin2 실행 시간 (나노초): " + duration);
         }
 
         for (int i = 0 ; i<10 ; i++ ) {
@@ -134,19 +98,6 @@ public class AuthTokenParserTest {
 
             // 결과 출력
             System.out.println("isAdmin 실행 시간 (나노초): " + duration);
-
-        }
-
-        for (int i = 0 ; i<10 ; i++ ) {
-            // isAdmin2 메서드 실행 시간 재측정
-            long startTime = System.nanoTime();
-            boolean isAdmin2Result = isAdmin2(principal);
-            long endTime = System.nanoTime();
-            long duration = endTime - startTime;
-
-            // 결과 출력
-            System.out.println("isAdmin2 실행 시간 (나노초): " + duration);
         }
     }
-
 }
