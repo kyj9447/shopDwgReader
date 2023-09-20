@@ -16,8 +16,8 @@ import java.util.Map;
 public class ChatSocketHandler extends TextWebSocketHandler {
 
     //private static List<WebSocketSession> userList = new ArrayList<>();
-    private static Map<String, WebSocketSession> userList = new HashMap<>(); // <메일+type : 세션>
-    private static List<WebSocketSession> adminList = new ArrayList<>();
+    private static final Map<String, WebSocketSession> userList = new HashMap<>(); // <메일+type : 세션>
+    private static final List<WebSocketSession> adminList = new ArrayList<>();
 
     // 메세지 처리
     @Override
@@ -135,8 +135,4 @@ public class ChatSocketHandler extends TextWebSocketHandler {
         System.out.println(session + " 클라이언트 접속 해제");
     }
 
-    // 이메일+type 으로 session 찾는 메서드
-    public WebSocketSession findSession(String email, String type){
-        return userList.get(new String[]{email, type});
-    }
 }
