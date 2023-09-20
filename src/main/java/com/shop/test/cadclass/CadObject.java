@@ -20,7 +20,6 @@ public class CadObject {
 
     // 공용 반올림 메서드
     double roundcut(double input) { // 1.123456789 -> 1.12 (소수 셋째자리 반올림)
-        double output = (double) Math.round(input * 100) / 100;
-        return output;
+        return (double) Math.round(input * 100) / 100;
     }
 }

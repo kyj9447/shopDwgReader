@@ -3,10 +3,7 @@ package com.shop.test;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
 public class ConvertMultipartFile {
-    MockMultipartFile mockMultipartFile;
 
     // String -> byte[]
     public static byte[] stringToByteArray(String input) {
@@ -26,20 +23,7 @@ public class ConvertMultipartFile {
         return byteArray;
     }
 
-    // byte[] -> MultipartFile
-    public static MultipartFile byteToMultipart(byte[] input) {
-
-        //byte[] -> inputStream
-        // InputStream inputStream = new ByteArrayInputStream(decodedBytes);
-
-        String fileName = "TEMP_NAME";
-        // String contentType = "";
-        MultipartFile multipartFile = new MockMultipartFile(fileName, input);
-
-        return multipartFile;
-    }
-
-    public static MultipartFile convertToMultipartFile(byte[] bytes, String originalFileName, String contentType) throws IOException {
+    public static MultipartFile convertToMultipartFile(byte[] bytes, String originalFileName, String contentType) {
         return new MockMultipartFile(originalFileName, originalFileName, contentType, bytes);
     }
 

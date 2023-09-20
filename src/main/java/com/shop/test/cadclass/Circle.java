@@ -8,12 +8,9 @@ public class Circle extends CadObject {
         centerY = roundcut(Y);
         radius = roundcut(R);
 
-        if (radius*2 == 2 || radius*2 == 3 || radius*2 == 4 || radius*2 == 5 || radius*2 == 6 || radius*2 == 8 || radius*2 == 10
-                || radius*2 == 12) { // 사용 가능한 드릴 직경들
-            drillable = true;
-        } else {
-            drillable = false;
-        }
+        // 사용 가능한 드릴 직경들
+        drillable = radius * 2 == 2 || radius * 2 == 3 || radius * 2 == 4 || radius * 2 == 5 || radius * 2 == 6 || radius * 2 == 8 || radius * 2 == 10
+                || radius * 2 == 12;
 
         area = roundcut(R * R * Math.PI);
         length = roundcut((R + R) * Math.PI);

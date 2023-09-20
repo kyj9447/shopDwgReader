@@ -23,17 +23,15 @@ public class FinalObject{
 
     public FinalObject(List<CadObject> A) { // 완성된 닫힌 리스트 들어올경우
         objectlist = new ArrayList<>();
-        for (int i = 0; i < A.size(); i++) {
-            objectlist.add(A.get(i));
-        }
+        objectlist.addAll(A);
         totallength = calcLength();
         totalarea = calcArea();
     }
 
     double calcLength() { // 총 길이 계산
         double result = 0;
-        for (int i = 0; i < objectlist.size(); i++) {
-            result += objectlist.get(i).length;
+        for (CadObject cadObject : objectlist) {
+            result += cadObject.length;
         }
         return result;
     }
@@ -44,8 +42,8 @@ public class FinalObject{
 
         // 필요한 배열 길이 계산
         int count = 1; // 좌표 갯수 카운트 / 시작점 1개
-        for (int i = 0; i < objectlist.size(); i++) {
-            if (objectlist.get(i) instanceof Arc) { // Arc인 경우
+        for (CadObject cadObject : objectlist) {
+            if (cadObject instanceof Arc) { // Arc인 경우
                 count += 2; // 중심점, 끝점 추가
             } else { // Line인 경우
                 count += 1; // 끝점 추가
@@ -56,16 +54,16 @@ public class FinalObject{
 
         // 배열에 좌표 대입
         int j = 0;
-        for (int i = 0; i < objectlist.size(); i++) {
-            if (objectlist.get(i) instanceof Arc) { // Arc인 경우 중심점, 끝점 추가
-                shoeX[j] = objectlist.get(i).centerX;
-                shoeY[j] = objectlist.get(i).centerY;
-                shoeX[j + 1] = objectlist.get(i).endX;
-                shoeY[j + 1] = objectlist.get(i).endY;
+        for (CadObject cadObject : objectlist) {
+            if (cadObject instanceof Arc) { // Arc인 경우 중심점, 끝점 추가
+                shoeX[j] = cadObject.centerX;
+                shoeY[j] = cadObject.centerY;
+                shoeX[j + 1] = cadObject.endX;
+                shoeY[j + 1] = cadObject.endY;
                 j += 2;
             } else { // Line인 경우 끝점 추가
-                shoeX[j] = objectlist.get(i).endX;
-                shoeY[j] = objectlist.get(i).endY;
+                shoeX[j] = cadObject.endX;
+                shoeY[j] = cadObject.endY;
                 j += 1;
             }
         }
@@ -84,9 +82,9 @@ public class FinalObject{
         result += Math.abs(sumA-sumB)/2; // 계산결과를 result에 추가
 
         // Object중 Arc 면적 합산
-        for (int i = 0 ; i < objectlist.size() ; i++ ){
-            if (objectlist.get(i) instanceof Arc){
-                result += objectlist.get(i).area;
+        for (CadObject cadObject : objectlist) {
+            if (cadObject instanceof Arc) {
+                result += cadObject.area;
             }
         }
 
@@ -106,7 +104,6 @@ public class FinalObject{
 
     // 반올림 메서드 (불필요한 멤버 상속을 피하기 위한 메서드)
     double roundcut(double input) { // 1.123456789 -> 1.12 (소수 셋째자리 반올림)
-        double output = (double) Math.round(input * 100) / 100;
-        return output;
+        return (double) Math.round(input * 100) / 100;
     }
 }
