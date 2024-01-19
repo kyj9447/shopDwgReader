@@ -3,6 +3,8 @@ package com.shop.service;
 import com.shop.entity.ItemImg;
 import com.shop.repository.ItemImgRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +16,7 @@ import javax.persistence.EntityNotFoundException;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class ItemImgService {
     @Value("${itemImgLocation}")
     private String itemImgLocation;
@@ -26,11 +29,10 @@ public class ItemImgService {
         String oriImgName = itemImgFile.getOriginalFilename();
         String imgName = "";
         String imgUrl = "";
-        //System.out.println(oriImgName);
+        log.info(oriImgName);
         if (!StringUtils.isEmpty(oriImgName)) {
-            //System.out.println("******");
             imgName = fileService.uploadFile(itemImgLocation, oriImgName, itemImgFile.getBytes());
-            //System.out.println(imgName);
+            log.info("imgName "+imgName);
             imgUrl = "/images/item/" + imgName;
         }
         itemImg.updateItemImg(oriImgName, imgName, imgUrl);
@@ -41,11 +43,10 @@ public class ItemImgService {
         String oriImgName = itemImgFile.getOriginalFilename();
         String imgName = "";
         String imgUrl = "";
-        //System.out.println(oriImgName);
+        log.info("oriImgName " + oriImgName);
         if (!StringUtils.isEmpty(oriImgName)) {
-            //System.out.println("******");
             imgName = fileService.uploadFile(customItemImgLocation, oriImgName, itemImgFile.getBytes());
-            //System.out.println(imgName);
+            log.info("imgName " + imgName);
             imgUrl = "/images/custom/" + imgName;
         }
         itemImg.updateItemImg(oriImgName, imgName, imgUrl);

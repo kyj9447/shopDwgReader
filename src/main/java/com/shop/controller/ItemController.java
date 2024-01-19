@@ -5,6 +5,8 @@ import com.shop.dto.ItemSearchDto;
 import com.shop.entity.Item;
 import com.shop.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class ItemController {
     private final ItemService itemService;
 
@@ -103,10 +106,10 @@ public class ItemController {
     public List<String> getItemImgsByItemId(@RequestParam("itemId") Long itemId) {
         List<String> imgUrls = itemService.getItemImgsByItemId(itemId);
 
-        // System.out.println("이미지 리스트 출력 테스트");
-        // for (int i = 0; i < imgUrls.size(); i++) {
-        //     System.out.println("이미지 "+i+"번째 "+imgUrls.get(i));
-        // }
+        log.debug("이미지 리스트 출력 테스트");
+        for (int i = 0; i < imgUrls.size(); i++) {
+            log.debug("이미지 "+i+"번째 "+imgUrls.get(i));
+        }
 
         return imgUrls;
     }

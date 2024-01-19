@@ -19,7 +19,7 @@ public class FileService {
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
         String savedFileName = uuid.toString() + extension;
         String fileUploadFullUrl = uploadPath + "/" + savedFileName;
-        //System.out.println(fileUploadFullUrl);
+        log.info(fileUploadFullUrl);
 
         Path path = Paths.get(fileUploadFullUrl);
         Path parentDir = path.getParent();
@@ -51,7 +51,7 @@ public class FileService {
     //     try {
     //         // 파일 이동
     //         Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-    //         System.out.println("파일이 성공적으로 이동되었습니다.");
+    //         log.info("파일이 성공적으로 이동되었습니다.");
     //     } catch (IOException e) {
     //         System.err.println("파일 이동 중 오류 발생: " + e.getMessage());
     //     }

@@ -89,15 +89,14 @@ public class FinalObject{
         }
 
         // // 배열 출력 TEST
-        // //System.out.println("check1");
         // for (double X : shoeX) {
-        //     //System.out.printf(X+",");
+        //     //log.debug(X+",");
         // }
-        // //System.out.println();
+        // //log.debug();
         // for (double Y : shoeY) {
-        //     //System.out.printf(Y+",");
+        //     //log.debug(Y+",");
         // }
-        // //System.out.println("\ncheck2");
+        // //log.debug("\ncheck2");
 
         return roundcut(result);
     }

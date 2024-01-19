@@ -12,6 +12,8 @@ import com.shop.repository.CustomItemRepository;
 import com.shop.repository.ItemImgRepository;
 import com.shop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class ItemService {
     private final ItemRepository itemRepository;
     private final ItemImgService itemImgService;
@@ -44,7 +47,7 @@ public class ItemService {
             else
                 itemImg.setRepImgYn("N");
             if (itemImgFileList.get(i).getSize() != 0) { // 내용이 있을때만 등록
-                //System.out.println("이미지 사이즈" + itemImgFileList.get(i).getSize());
+                log.info("이미지 사이즈 " + itemImgFileList.get(i).getSize());
                 itemImgService.saveItemImg(itemImg, itemImgFileList.get(i));
             }
         }

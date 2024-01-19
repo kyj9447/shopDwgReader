@@ -3,6 +3,8 @@ package com.shop.config;
 import com.shop.entity.Member;
 import com.shop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -17,6 +19,7 @@ import java.util.Collections;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class CustomOAuth2UserService extends DefaultOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final MemberRepository memberRepository;
     private final HttpSession httpSession;
@@ -46,7 +49,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService implements
     }
 
     public Member saveOrUpdate(OAuthAttributes attributes) {
-        //System.out.println("attributes.getLoginType() : "+attributes.getLoginType());
+        log.info("attributes.getLoginType() : "+attributes.getLoginType());
         Member member = memberRepository.findByEmailAndLoginType(attributes.getEmail(),attributes.getLoginType());
 
         if (member != null) {

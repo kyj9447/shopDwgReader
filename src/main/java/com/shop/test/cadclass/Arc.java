@@ -1,5 +1,8 @@
 package com.shop.test.cadclass;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Arc extends CadObject {
 
     // 생성자
@@ -19,14 +22,14 @@ public class Arc extends CadObject {
         area = roundcut((R * R * Math.PI) * Math.abs(startA - endA) / 360); // 면적 * (일부각도 / 전체각도)
 
         // 생성시 정보출력
-        //System.out.println("중심점 X:  " + centerX + " Y:  " + centerY);
-        //System.out.println("반지름 R:  " + radius);
-        //System.out.println("시작각 : " + roundcut(startA) + "º");
-        //System.out.println("끝도 : " + roundcut(endA) + "º");
-        //System.out.println("각도 : " + roundcut(Math.abs(startA - endA)) + "º");
+        log.debug("중심점 X:  " + centerX + " Y:  " + centerY);
+        log.debug("반지름 R:  " + radius);
+        log.debug("시작각 : " + roundcut(startA) + "º");
+        log.debug("끝도 : " + roundcut(endA) + "º");
+        log.debug("각도 : " + roundcut(Math.abs(startA - endA)) + "º");
 
-        //System.out.println("start   " + startX + ",     " + startY);
-        //System.out.println("end     " + endX + ",   " + endY);
-        //System.out.println("길이     " + length);
+        log.debug("start   " + startX + ",     " + startY);
+        log.debug("end     " + endX + ",   " + endY);
+        log.debug("길이     " + length);
     }
 }

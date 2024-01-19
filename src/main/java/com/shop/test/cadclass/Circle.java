@@ -1,5 +1,8 @@
 package com.shop.test.cadclass;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Circle extends CadObject {
 
     // 생성자
@@ -16,11 +19,11 @@ public class Circle extends CadObject {
         length = roundcut((R + R) * Math.PI);
 
         // 생성시 정보출력
-        //System.out.println("중심점 X:  " + centerX + " Y:  " + centerY);
-        //System.out.println("반지름 R:  " + radius);
-        //System.out.println("드릴가능 :  " + drillable);
+        log.debug("중심점 X:  " + centerX + " Y:  " + centerY);
+        log.debug("반지름 R:  " + radius);
+        log.debug("드릴가능 :  " + drillable);
 
-        //System.out.println("길이 :  " + length);
-        //System.out.println("면적 :  " + area);
+        log.debug("길이 :  " + length);
+        log.debug("면적 :  " + area);
     }
 }

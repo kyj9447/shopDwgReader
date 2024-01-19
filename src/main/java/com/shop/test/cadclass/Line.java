@@ -1,5 +1,8 @@
 package com.shop.test.cadclass;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Line extends CadObject {
 
     // 생성자
@@ -12,7 +15,7 @@ public class Line extends CadObject {
         length = roundcut(Math.sqrt((X - x) * (X - x) + (Y - y) * (Y - y)));
 
         // 생성시 정보출력
-        //System.out.println("start   " + startX + ",     " + startY);
-        //System.out.println("end     " + endX + ",       " + endY);
+        log.debug("start   " + startX + ",     " + startY);
+        log.debug("end     " + endX + ",       " + endY);
     }
 }

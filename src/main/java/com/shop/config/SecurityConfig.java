@@ -4,6 +4,8 @@ import com.shop.service.AuthTokenParser;
 import com.shop.service.CustomUserDetailsService;
 import com.shop.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +29,8 @@ import java.io.IOException;
 // WebSecurityConfigurerAdapter 를 상속받는 클래스에
 // @EnableWebSecurity를 선언하면
 // SpringSecurityfilterChain이 자동 포함 메소드를 오버라이딩 가능
+@Slf4j
+
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -108,7 +112,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             OAuth2AuthenticationToken authToken = (OAuth2AuthenticationToken) authentication;
             String[] parsedToken = AuthTokenParser.getParseToken(authToken);
             // role 확인
-            //System.out.println("!OAuth2 role-loginType! : " + parsedToken[1]);
+            log.info("!OAuth2 role-loginType! : " + parsedToken[1]);
 
             if(parsedToken[1].equals("google")){
                //return "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=https://kyj9447.iptime.org/members/logout";

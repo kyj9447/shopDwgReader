@@ -65,9 +65,7 @@ class CartServiceTest {
 
         CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(EntityNotFoundException::new);
 
-        //System.out.println("check1");
         assertEquals(item.getId(), cartItem.getItem().getId());
-        //System.out.println("check2");
         assertEquals(cartItemDto.getCount(), cartItem.getCount());
     }
 }

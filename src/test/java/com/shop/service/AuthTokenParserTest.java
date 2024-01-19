@@ -7,6 +7,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,7 @@ import static com.shop.service.AuthTokenParser.isAdmin;
 
 
 @SpringBootTest
+@Slf4j
 public class AuthTokenParserTest {
 
     // 테스트를 위한 가짜 Principal 객체 생성
@@ -57,7 +60,7 @@ public class AuthTokenParserTest {
             long duration = endTime - startTime;
 
             // 결과 출력
-            System.out.println("isAdmin 실행 시간 (나노초): " + duration);
+            log.info("isAdmin 실행 시간 (나노초): " + duration);
         }
 
         for (int i = 0 ; i<10 ; i++ ) {
@@ -68,7 +71,7 @@ public class AuthTokenParserTest {
             long duration = endTime - startTime;
 
             // 결과 출력
-            System.out.println("isAdmin 실행 시간 (나노초): " + duration);
+            log.info("isAdmin 실행 시간 (나노초): " + duration);
         }
     }
 
@@ -86,7 +89,7 @@ public class AuthTokenParserTest {
             long duration = endTime - startTime;
 
             // 결과 출력
-            System.out.println("isAdmin 실행 시간 (나노초): " + duration);
+            log.info("isAdmin 실행 시간 (나노초): " + duration);
         }
 
         for (int i = 0 ; i<10 ; i++ ) {
@@ -97,7 +100,7 @@ public class AuthTokenParserTest {
             long duration = endTime - startTime;
 
             // 결과 출력
-            System.out.println("isAdmin 실행 시간 (나노초): " + duration);
+            log.info("isAdmin 실행 시간 (나노초): " + duration);
         }
     }
 }

@@ -102,12 +102,12 @@ public class DwgReader {
 //        File directory = new File(directoryPath);
 //        if (!directory.exists()) {
 //            if (directory.mkdirs()) {
-//                //System.out.println("디렉터리 생성함");
+//              log.info("디렉터리 생성함");
 //            } else {
-//                //System.out.println("디렉터리 생성 실패함");
+//                log.info("디렉터리 생성 실패함");
 //            }
 //        } else {
-//            //System.out.println("디렉터리 존재함");
+//            log.info("디렉터리 존재함");
 //        }
 //
 //        // 임시파일 지정
@@ -126,7 +126,7 @@ public class DwgReader {
 
         // CAD 이미지의 엔티티 수를 확인
         //int entityCount = cadImage.getEntities().length;
-        //System.out.println("Entity count: " + entityCount);
+        //log.debug("Entity count: " + entityCount);
 
         // 엔티티들을 배열에 입력
         CadBaseEntity[] objectlist = cadImage.getEntities();
@@ -136,13 +136,12 @@ public class DwgReader {
         List<CadObject> partList2 = new ArrayList<>(); // 조립작업용
         List<FinalObject> finalList = new ArrayList<>(); // 조립 완성된 최종객체들
 
-        //System.out.println("CHECK2");
 
         // 클래스별 정보출력 및 처리
         for (CadBaseEntity cadBaseEntity : objectlist) {
             // CadLine
             if (cadBaseEntity instanceof CadLine) {
-                //System.out.println("\n[캐드라인] " + objectlist[i]);
+                log.debug("\n[캐드라인] " + objectlist[i]);
 
                 partList.add(new Line(
                         (((CadLine) cadBaseEntity).getFirstPoint().getX()),
@@ -155,7 +154,7 @@ public class DwgReader {
             // !순서 중요!
             // CadArc -> CadCircle 순
             else if (cadBaseEntity instanceof CadArc) {
-                //System.out.println("\n[캐드아크] " + objectlist[i]);
+                log.debug("\n[캐드아크] " + objectlist[i]);
 
                 partList.add(new Arc(
                         ((CadArc) cadBaseEntity).getCenterPoint().getX(),
@@ -172,7 +171,7 @@ public class DwgReader {
             // (오른쪽이 객체가 없음 / CadCircle.getClass() 안됨)
             // objectlist[i].getClass().toString() == "CadCircle" 안됨
             else if (cadBaseEntity instanceof CadCircle) {
-                //System.out.println("\n[캐드서클] " + objectlist[i]);
+                log.debug("\n[캐드서클] " + objectlist[i]);
 
                 partList.add(new Circle(
                         ((CadCircle) cadBaseEntity).getCenterPoint().getX(),
@@ -182,7 +181,7 @@ public class DwgReader {
 
             // CadPolyline
             else if (cadBaseEntity instanceof CadPolyline) {
-                //System.out.println("\n[캐드폴리라인] " + objectlist[i] + "\n");
+                log.debug("\n[캐드폴리라인] " + objectlist[i] + "\n");
                 CadPolyline x = (CadPolyline) cadBaseEntity;
 
                 // PolyLine line으로 분해
@@ -198,7 +197,6 @@ public class DwgReader {
                 }
 
                 // 닫혀있는지 확인 // CadPolyline.getFlag() = 1 (닫힘) / 0 (열림)
-                //System.out.println(openclose(x.getFlag()));
                 // 닫힌 PolyLine 마지막 line 추가
                 if (x.getFlag() == 1) {
 
@@ -214,7 +212,7 @@ public class DwgReader {
 
             // 기타
             else {
-                System.out.println("\nother " + cadBaseEntity.getClass().toString());
+                log.debug("\nother " + cadBaseEntity.getClass().toString());
             }
         }
 
@@ -351,10 +349,10 @@ public class DwgReader {
         moveAll(finalList, -mainMinX+10, -mainMinY+10); // X양수,Y양수영역으로 이동
         // moveAll(finalList, 1000, 1000); // 2000x2000 캔버스 중심으로 이동
 
-        //System.out.println("\n최종출력");
-        //System.out.println("partList " + partList);
-        //System.out.println("partList2 " + partList2);
-        //System.out.println("finalList " + finalList);
+        log.debug("\n최종출력");
+        log.debug("partList " + partList);
+        log.debug("partList2 " + partList2);
+        log.debug("finalList " + finalList);
 
         // 메모리 해제
         cadImage.dispose();

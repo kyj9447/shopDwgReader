@@ -5,6 +5,8 @@ import com.shop.dto.MainItemDto;
 import com.shop.service.ItemService;
 import com.shop.service.KakaoAPI;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +22,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MainController {
     private final ItemService itemService;
     @Autowired
@@ -27,7 +30,7 @@ public class MainController {
 
     @GetMapping(value = "/")
     public String main(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model) {
-        //System.out.println("SearchQuery : "+itemSearchDto.getSearchQuery());
+        log.info("SearchQuery : "+itemSearchDto.getSearchQuery());
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
         if (itemSearchDto.getSearchQuery() == null) {
             itemSearchDto.setSearchQuery("");
@@ -45,9 +48,7 @@ public class MainController {
     public String kakaologout(HttpSession session) {
 
 //        kakao.kakaoLogout((String) session.getAttribute("access_Token"));
-//        //System.out.println("removeAttribute : \"access_Token\"");
 //        session.removeAttribute("access_Token");
-//        //System.out.println("removeAttribute : \"userId\"");
 //        session.removeAttribute("userId");
 
         //kakao.kakaoLogout3();
@@ -58,7 +59,7 @@ public class MainController {
     //카테고리 선택
     @GetMapping(value = "/category/{category}")
     public String category(@PathVariable("category") String category, ItemSearchDto itemSearchDto, Optional<Integer> page, Model model) {
-        //System.out.println("category "+category);
+        log.info("category "+category);
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 
 //        if (itemSearchDto.getSearchQuery() == null) {

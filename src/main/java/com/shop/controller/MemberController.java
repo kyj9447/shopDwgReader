@@ -5,6 +5,8 @@ import com.shop.entity.Member;
 import com.shop.service.MailService;
 import com.shop.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,13 +20,14 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping(value = "/members")
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
 
-    private final MailService mailService;
-    String confirm = "";
-    boolean confirmCheck = false;
+    // private final MailService mailService;
+    // String confirm = "";
+    // boolean confirmCheck = false;
 
     @GetMapping(value = "/new")
     public String memberFrom(Model model){
@@ -43,12 +46,10 @@ public class MemberController {
             memberService.saveMember(member);
         }
         catch (IllegalStateException e){
-            //System.out.println("check1");
             model.addAttribute("errorMessage",e.getMessage());
-            //System.out.println(model.getAttribute("errorMessage"));
+            log.info((String) model.getAttribute("errorMessage"));
             return "member/memberForm";
         }
-        //System.out.println("check4");
         return "redirect:/";
     }
 
@@ -66,7 +67,7 @@ public class MemberController {
     // // 메일인증
     // @PostMapping(value = "/{email}/emailConfirm")
     // public @ResponseBody ResponseEntity emailConfirm(@PathVariable("email") String email) throws Exception{
-    //     //System.out.println("인증요청 메일 : "+email);
+    //     log.info("인증요청 메일 : "+email);
     //     confirm = mailService.sendSimpleMessage(email);
     //     return new ResponseEntity<String>("인증 메일을 보냈습니다.", HttpStatus.OK);
     // }
@@ -74,7 +75,7 @@ public class MemberController {
     // // 메일인증 코드 체크
     // @PostMapping(value = "/{code}/codeCheck")
     // public @ResponseBody ResponseEntity codeConfirm(@PathVariable("code") String code) throws Exception {
-    //     //System.out.println("인증요청 코드 : "+code);
+    //     log.info("인증요청 코드 : "+code);
     //     if (code.equals(confirm)) {
     //         confirmCheck=true;
     //         return new ResponseEntity<String>("인증 성공하였습니다.",HttpStatus.OK);

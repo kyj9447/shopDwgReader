@@ -1,6 +1,9 @@
 package com.shop.entity;
 
 import com.shop.repository.MemberRepository;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import javax.persistence.PersistenceContext;
 @SpringBootTest
 @Transactional
 @TestPropertySource(locations = "classpath:application-test.properties")
+@Slf4j
 class MemberTest {
     @Autowired
     MemberRepository memberRepository;
@@ -35,10 +39,10 @@ class MemberTest {
 
         Member member = memberRepository.findById(newMember.getId())
                 .orElseThrow(EntityNotFoundException::new);
-        //System.out.println("register time : " + member.getRegTime());
-        //System.out.println("update time : "+member.getRegTime());
-        //System.out.println("create member : "+member.getCreatedBy());
-        //System.out.println("modify member : "+member.getModifiedBy());
+                log.debug("register time : " + member.getRegTime());
+                log.debug("update time : "+member.getRegTime());
+                log.debug("create member : "+member.getCreatedBy());
+                log.debug("modify member : "+member.getModifiedBy());
     }
 
 }

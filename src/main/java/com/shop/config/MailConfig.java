@@ -8,9 +8,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Properties;
 
 @Configuration
+@Slf4j
 public class MailConfig {
 
     @Value("${naverid}")
@@ -23,7 +26,7 @@ public class MailConfig {
     public JavaMailSender javaMailService(){
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         javaMailSender.setHost("smtp.naver.com");
-        //System.out.println("smtp 사용 메일 : "+naverid);
+        log.info("smtp 사용 메일 : "+naverid);
         javaMailSender.setUsername(naverid);
         javaMailSender.setPassword(naverpasswd);
         javaMailSender.setPort(465);

@@ -7,12 +7,15 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Component
+@Slf4j
 public class ChatSocketHandler extends TextWebSocketHandler {
 
     //private static List<WebSocketSession> userList = new ArrayList<>();
@@ -30,10 +33,10 @@ public class ChatSocketHandler extends TextWebSocketHandler {
         String payload = message.getPayload();
         boolean isAdmin = AuthTokenParser.isAdmin(session.getPrincipal());
 
-        //System.out.println("sessionId : " + sessionId);
-        //System.out.println("identification : " + identificationRaw[0] + " / type : " + identificationRaw[1]);
-        //System.out.println("payload : " + payload);
-        //System.out.println("admin? : " + isAdmin);
+        //log.info("sessionId : " + sessionId);
+        //log.info("identification : " + identificationRaw[0] + " / type : " + identificationRaw[1]);
+        //log.info("payload : " + payload);
+        //log.info("admin? : " + isAdmin);
 
         /*---------------------------------------[공통 처리사항]-------------------------------------*/
 
@@ -41,9 +44,9 @@ public class ChatSocketHandler extends TextWebSocketHandler {
 
             try {
                 String[] Message = message.getPayload().split(",", 3); // {이메일,type,내용} 내용에 쉼표가 있어도 나누지 않고 하나로 처리
-                //System.out.println("name : " + Message[0]);
-                //System.out.println("type : " + Message[1]);
-                //System.out.println("message : " + Message[2]);
+                log.info("name : " + Message[0]);
+                log.info("type : " + Message[1]);
+                log.info("message : " + Message[2]);
 
                 String targetUser = Message[0] + "," + Message[1]; // "email,type" 형식으로 한개의 String 생성
                 WebSocketSession targetSession = userList.get(targetUser); // 해당 String을 key로 하여 value(=session) 찾음
@@ -85,7 +88,7 @@ public class ChatSocketHandler extends TextWebSocketHandler {
             if (adminList.size() != 0) { // 관리자가 한명이라도 있으면
                 String[] userInfo = AuthTokenParser.getParseToken(session.getPrincipal());
                 String userInfoString = userInfo[0]+","+userInfo[1]; // "이메일,type" 형식
-                //System.out.println("새 사용자 등록 : "+userInfoString);
+                log.info("새 사용자 등록 : "+userInfoString);
                 userList.put(userInfoString, session); // 사용자 목록에 추가하고
                 for (WebSocketSession sessions : adminList) { // 모든 admin에게 알림
                     WebSocketMessage<String> newUserMessage =
@@ -94,22 +97,22 @@ public class ChatSocketHandler extends TextWebSocketHandler {
                     sessions.sendMessage(newUserMessage);
                 }
             } else { // 관리자가 없으면
-                //System.out.println("!현재 접속중인 관리자가 없어 채팅을 닫습니다.!");
+                log.info("!현재 접속중인 관리자가 없어 채팅을 닫습니다.!");
                 WebSocketMessage<String> errorMessage = new TextMessage("현재 상담시간이 아닙니다.");
                 session.sendMessage(errorMessage); // 접속시도한 세션에 에러메세지를 되돌려 보낸다
                 session.close(); // 세션 닫음
             }
         }
 
-        //System.out.println("현재 접속 session");
+        log.info("현재 접속 session");
 
-        //System.out.println("admin session");
-        //for (WebSocketSession sessions : adminList) {
-        //    //System.out.println(sessions);
-        //}
+        log.info("admin session");
+        for (WebSocketSession sessions : adminList) {
+            log.info(sessions.getId());
+        }
 
-        //System.out.println("user session");
-        //userList.forEach((key, value) -> //System.out.println("키: " + key + "/ 값: " + value));
+        log.info("user session");
+        userList.forEach((key, value) -> log.info("키: " + key + "/ 값: " + value));
 
     }
 
@@ -122,7 +125,7 @@ public class ChatSocketHandler extends TextWebSocketHandler {
         } else { // 사용자가 연결 종료시
             String[] userInfo = AuthTokenParser.getParseToken(session.getPrincipal());
             String userInfoString = userInfo[0]+","+userInfo[1]; // "이메일,type" 형식
-            //System.out.println("사용자 연결 종료 : "+userInfoString);
+            log.info("사용자 연결 종료 : "+userInfoString);
             for (WebSocketSession sessions : adminList) { // 모든 admin에게 알리고
                 WebSocketMessage<String> endUserMessage =
                         // {이메일, type, 메세지 내용}
@@ -132,7 +135,7 @@ public class ChatSocketHandler extends TextWebSocketHandler {
 
             userList.remove(session); // 목록에서 삭제
         }
-        //System.out.println(session + " 클라이언트 접속 해제");
+        log.info(session + " 클라이언트 접속 해제");
     }
 
 }

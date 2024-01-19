@@ -6,6 +6,9 @@ import com.shop.repository.ItemRepository;
 import com.shop.repository.MemberRepository;
 import com.shop.repository.OrderItemRepository;
 import com.shop.repository.OrderRepository;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @Transactional
 @TestPropertySource(locations = "classpath:application-test.properties")
+@Slf4j
 class OrderTest {
     @Autowired
     OrderRepository orderRepository;
@@ -105,9 +109,9 @@ class OrderTest {
         em.flush();
         em.clear();
         OrderItem orderItem = orderItemRepository.findById(orderItemId).orElseThrow(EntityNotFoundException::new);
-        //System.out.println("Order class : "+orderItem.getOrder().getClass());
-        //System.out.println("============================");
+        log.debug("Order class : "+orderItem.getOrder().getClass());
+        log.debug("============================");
         orderItem.getOrder().getOrderDate();
-        //System.out.println("============================");
+        log.debug("============================");
     }
 }
