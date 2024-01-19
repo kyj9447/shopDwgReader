@@ -93,6 +93,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
         QueryResults<MainItemDto> results = queryFactory.select(new QMainItemDto(item.id, item.itemName, item.itemDetail, itemImg.imgUrl, item.price, item.itemCategory))
                 .from(itemImg)
                 .join(itemImg.item , item)
+                .where(item.itemSellStatus.ne(ItemSellStatus.DELETED))
                 .where(itemImg.repImgYn.eq("Y")) //대표 이미지 가져옴
                 .where(itemNameLike(itemSearchDto.getSearchQuery()))
                 .orderBy(item.id.desc())
@@ -112,6 +113,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
         QueryResults<MainItemDto> results = queryFactory.select(new QMainItemDto(item.id, item.itemName, item.itemDetail, itemImg.imgUrl, item.price, item.itemCategory))
                 .from(itemImg)
                 .join(itemImg.item, item)
+                .where(item.itemSellStatus.ne(ItemSellStatus.DELETED))
                 .where(itemImg.repImgYn.eq("Y"))
                 .where(categoryLike(itemSearchDto.getSearchCategory()))
                 .orderBy(item.id.desc())

@@ -120,4 +120,28 @@ public class ItemService {
 
         return itemImgUrlList;
     }
+
+    // public void deleteItemByItemId(Long id) throws Exception{
+    //     FileService fileService = new FileService(); // 파일 서비스 호출용
+    //     List<ItemImg> itemImgList = itemImgRepository.findImgUrlByItemId(id); // 해당 id의 아이템 이미지 리스트
+
+    //     // 1. 해당 id 아이템의 이미지 백업
+    //     for (ItemImg itemImg : itemImgList) {
+    //         String imgurl = itemImg.getImgUrl();
+    //         String backupFolder = "backup/"+id;
+    //         fileService.moveFile(imgurl,backupFolder);
+    //     }
+        
+    //     // 2. 원본 이미지 삭제
+    //     for (ItemImg itemImg : itemImgList) {
+    //         String imgurl = itemImg.getImgUrl();
+    //         fileService.deleteFile(imgurl);
+    //     }
+
+    //     // 3. db의 itemImg 삭제, item 삭제
+
+    //     itemRepository.deleteItemImgById(id);
+    //     itemRepository.deleteItemById(id);
+
+    // }
 }

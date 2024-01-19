@@ -63,23 +63,23 @@ public class MemberController {
         return "member/memberLoginForm";
     }
 
-    // 메일인증
-    @PostMapping(value = "/{email}/emailConfirm")
-    public @ResponseBody ResponseEntity emailConfirm(@PathVariable("email") String email) throws Exception{
-        //System.out.println("인증요청 메일 : "+email);
-        confirm = mailService.sendSimpleMessage(email);
-        return new ResponseEntity<String>("인증 메일을 보냈습니다.", HttpStatus.OK);
-    }
+    // // 메일인증
+    // @PostMapping(value = "/{email}/emailConfirm")
+    // public @ResponseBody ResponseEntity emailConfirm(@PathVariable("email") String email) throws Exception{
+    //     //System.out.println("인증요청 메일 : "+email);
+    //     confirm = mailService.sendSimpleMessage(email);
+    //     return new ResponseEntity<String>("인증 메일을 보냈습니다.", HttpStatus.OK);
+    // }
 
-    // 메일인증 코드 체크
-    @PostMapping(value = "/{code}/codeCheck")
-    public @ResponseBody ResponseEntity codeConfirm(@PathVariable("code") String code) throws Exception {
-        //System.out.println("인증요청 코드 : "+code);
-        if (code.equals(confirm)) {
-            confirmCheck=true;
-            return new ResponseEntity<String>("인증 성공하였습니다.",HttpStatus.OK);
-        }
-        return new ResponseEntity<String>("인증 코드를 확인해주세요.", HttpStatus.BAD_REQUEST);
-    }
+    // // 메일인증 코드 체크
+    // @PostMapping(value = "/{code}/codeCheck")
+    // public @ResponseBody ResponseEntity codeConfirm(@PathVariable("code") String code) throws Exception {
+    //     //System.out.println("인증요청 코드 : "+code);
+    //     if (code.equals(confirm)) {
+    //         confirmCheck=true;
+    //         return new ResponseEntity<String>("인증 성공하였습니다.",HttpStatus.OK);
+    //     }
+    //     return new ResponseEntity<String>("인증 코드를 확인해주세요.", HttpStatus.BAD_REQUEST);
+    // }
 
 }

@@ -103,10 +103,10 @@ public class ItemController {
     public List<String> getItemImgsByItemId(@RequestParam("itemId") Long itemId) {
         List<String> imgUrls = itemService.getItemImgsByItemId(itemId);
 
-        //System.out.println("이미지 리스트 출력 테스트");
-        for (int i = 0; i < imgUrls.size(); i++) {
-            //System.out.println("이미지 "+i+"번째 "+imgUrls.get(i));
-        }
+        // System.out.println("이미지 리스트 출력 테스트");
+        // for (int i = 0; i < imgUrls.size(); i++) {
+        //     System.out.println("이미지 "+i+"번째 "+imgUrls.get(i));
+        // }
 
         return imgUrls;
     }

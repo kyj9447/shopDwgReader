@@ -42,4 +42,19 @@ public class FileService {
             log.info("파일이 존재하지 않습니다.");
         }
     }
+
+    // // 파일 이동 ( 원본 경로, 원본경로 기준 대상 폴더)
+    // public void moveFile(String filePath, String destinationFolder) throws Exception {
+    //     Path sourcePath = Paths.get(filePath);
+    //     Path destinationPath = Paths.get(destinationFolder + "/" + filePath);
+
+    //     try {
+    //         // 파일 이동
+    //         Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+    //         System.out.println("파일이 성공적으로 이동되었습니다.");
+    //     } catch (IOException e) {
+    //         System.err.println("파일 이동 중 오류 발생: " + e.getMessage());
+    //     }
+        
+    // }
 }
