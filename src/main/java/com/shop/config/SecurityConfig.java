@@ -115,13 +115,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             log.info("!OAuth2 role-loginType! : " + parsedToken[1]);
 
             if(parsedToken[1].equals("google")){
-               //return "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=https://kyj9447.iptime.org/members/logout";
+               //return "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=https://www.kyj9447.kr/members/logout";
 
             } else if (parsedToken[1].equals("naver")) {
                //return "http://nid.naver.com/nidlogin.logout?";
 
             }else if (parsedToken[1].equals("kakao")) {
-                return "https://kauth.kakao.com/oauth/logout/?client_id=0ea9af982ecb374ececf50d24a8894d6&logout_redirect_uri=https://kyj9447.iptime.org/members/logout";
+                return "https://kauth.kakao.com/oauth/logout/?client_id=0ea9af982ecb374ececf50d24a8894d6&logout_redirect_uri=https://www.kyj9447.kr:444/members/logout";
             }
 
         }
