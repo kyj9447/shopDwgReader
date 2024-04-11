@@ -138,30 +138,30 @@ public class DwgReader {
 
 
         // 클래스별 정보출력 및 처리
-        for (CadBaseEntity cadBaseEntity : objectlist) {
+        for (int i = 0 ; i < objectlist.length ; i++) {
             // CadLine
-            if (cadBaseEntity instanceof CadLine) {
+            if (objectlist[i] instanceof CadLine) {
                 log.debug("\n[캐드라인] " + objectlist[i]);
 
                 partList.add(new Line(
-                        (((CadLine) cadBaseEntity).getFirstPoint().getX()),
-                        (((CadLine) cadBaseEntity).getFirstPoint().getY()),
-                        (((CadLine) cadBaseEntity).getSecondPoint().getX()),
-                        (((CadLine) cadBaseEntity).getSecondPoint().getY())));
+                        (((CadLine) objectlist[i]).getFirstPoint().getX()),
+                        (((CadLine) objectlist[i]).getFirstPoint().getY()),
+                        (((CadLine) objectlist[i]).getSecondPoint().getX()),
+                        (((CadLine) objectlist[i]).getSecondPoint().getY())));
             }
 
             // CadArc
             // !순서 중요!
             // CadArc -> CadCircle 순
-            else if (cadBaseEntity instanceof CadArc) {
+            else if (objectlist[i] instanceof CadArc) {
                 log.debug("\n[캐드아크] " + objectlist[i]);
 
                 partList.add(new Arc(
-                        ((CadArc) cadBaseEntity).getCenterPoint().getX(),
-                        ((CadArc) cadBaseEntity).getCenterPoint().getY(),
-                        ((CadArc) cadBaseEntity).getRadius(),
-                        ((CadArc) cadBaseEntity).getStartAngle(),
-                        ((CadArc) cadBaseEntity).getEndAngle()));
+                        ((CadArc) objectlist[i]).getCenterPoint().getX(),
+                        ((CadArc) objectlist[i]).getCenterPoint().getY(),
+                        ((CadArc) objectlist[i]).getRadius(),
+                        ((CadArc) objectlist[i]).getStartAngle(),
+                        ((CadArc) objectlist[i]).getEndAngle()));
             }
 
             // CadCircle
@@ -170,27 +170,27 @@ public class DwgReader {
             // objectlist[i].getClass() == CadCircle 사용불가
             // (오른쪽이 객체가 없음 / CadCircle.getClass() 안됨)
             // objectlist[i].getClass().toString() == "CadCircle" 안됨
-            else if (cadBaseEntity instanceof CadCircle) {
+            else if (objectlist[i] instanceof CadCircle) {
                 log.debug("\n[캐드서클] " + objectlist[i]);
 
                 partList.add(new Circle(
-                        ((CadCircle) cadBaseEntity).getCenterPoint().getX(),
-                        ((CadCircle) cadBaseEntity).getCenterPoint().getY(),
-                        ((CadCircle) cadBaseEntity).getRadius()));
+                        ((CadCircle) objectlist[i]).getCenterPoint().getX(),
+                        ((CadCircle) objectlist[i]).getCenterPoint().getY(),
+                        ((CadCircle) objectlist[i]).getRadius()));
             }
 
             // CadPolyline
-            else if (cadBaseEntity instanceof CadPolyline) {
+            else if (objectlist[i] instanceof CadPolyline) {
                 log.debug("\n[캐드폴리라인] " + objectlist[i] + "\n");
-                CadPolyline x = (CadPolyline) cadBaseEntity;
+                CadPolyline x = (CadPolyline) objectlist[i];
 
                 // PolyLine line으로 분해
-                for (int j = 1; j < cadBaseEntity.getChildObjects().size(); j++) {
-                    if (cadBaseEntity.getChildObjects().get(j) instanceof Cad2DVertex) {
-                        double startX = ((Cad2DVertex) cadBaseEntity.getChildObjects().get(j - 1)).getLocationPoint().getX();
-                        double startY = ((Cad2DVertex) cadBaseEntity.getChildObjects().get(j - 1)).getLocationPoint().getY();
-                        double endX = ((Cad2DVertex) cadBaseEntity.getChildObjects().get(j)).getLocationPoint().getX();
-                        double endY = ((Cad2DVertex) cadBaseEntity.getChildObjects().get(j)).getLocationPoint().getY();
+                for (int j = 1; j < objectlist[i].getChildObjects().size(); j++) {
+                    if (objectlist[i].getChildObjects().get(j) instanceof Cad2DVertex) {
+                        double startX = ((Cad2DVertex) objectlist[i].getChildObjects().get(j - 1)).getLocationPoint().getX();
+                        double startY = ((Cad2DVertex) objectlist[i].getChildObjects().get(j - 1)).getLocationPoint().getY();
+                        double endX = ((Cad2DVertex) objectlist[i].getChildObjects().get(j)).getLocationPoint().getX();
+                        double endY = ((Cad2DVertex) objectlist[i].getChildObjects().get(j)).getLocationPoint().getY();
 
                         partList.add(new Line(startX, startY, endX, endY));
                     }
@@ -201,10 +201,10 @@ public class DwgReader {
                 if (x.getFlag() == 1) {
 
                     // 첫 시작점 => 끝점 / 마지막 끝점 => 시작점으로하여 1개 추가
-                    double startX = ((Cad2DVertex) cadBaseEntity.getChildObjects().get(cadBaseEntity.getChildObjects().size() - 2)).getLocationPoint().getX();
-                    double startY = ((Cad2DVertex) cadBaseEntity.getChildObjects().get(cadBaseEntity.getChildObjects().size() - 2)).getLocationPoint().getY();
-                    double endX = ((Cad2DVertex) cadBaseEntity.getChildObjects().get(0)).getLocationPoint().getX();
-                    double endY = ((Cad2DVertex) cadBaseEntity.getChildObjects().get(0)).getLocationPoint().getY();
+                    double startX = ((Cad2DVertex) objectlist[i].getChildObjects().get(objectlist[i].getChildObjects().size() - 2)).getLocationPoint().getX();
+                    double startY = ((Cad2DVertex) objectlist[i].getChildObjects().get(objectlist[i].getChildObjects().size() - 2)).getLocationPoint().getY();
+                    double endX = ((Cad2DVertex) objectlist[i].getChildObjects().get(0)).getLocationPoint().getX();
+                    double endY = ((Cad2DVertex) objectlist[i].getChildObjects().get(0)).getLocationPoint().getY();
 
                     partList.add(new Line(startX, startY, endX, endY));
                 }
@@ -212,7 +212,7 @@ public class DwgReader {
 
             // 기타
             else {
-                log.debug("\nother " + cadBaseEntity.getClass().toString());
+                log.debug("\nother " + objectlist[i].getClass().toString());
             }
         }
 
