@@ -22,6 +22,8 @@
 
 ### 2-2. 카테고리별 조회
 
+### ※요약 gif※
+
 <img src="https://github.com/kyj9447/shopDwgReader/assets/122734245/79cfc1a5-049b-4fbb-93ea-1d7a7b05d707" width=600px>
 
 상품 클릭시 해당 상품의 상세이미지 로드 (ajax요청 사용)
@@ -50,7 +52,7 @@
 
 <img src="https://github.com/kyj9447/shopDwgReader/assets/122734245/8303d351-00d6-43d9-bc81-9095b86e2a19" width=600px>
 
-## 4. 웹소켓 기반 고객상 채팅 기능
+## 4. 웹소켓 기반 고객상담 채팅 기능
 
 ### ※요약 gif※
 
