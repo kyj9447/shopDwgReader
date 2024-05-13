@@ -6,3 +6,4 @@ custom
 target
 src/main/resources/application-smtp.properties
 src/main/resources/application-oauth.properties
+certificate.p12
