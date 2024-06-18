@@ -29,7 +29,7 @@
                 send();
             });
 
-            const websocket = new WebSocket("wss://ec2-13-209-198-40.ap-northeast-2.compute.amazonaws.com:443/ws/chat");
+            const websocket = new WebSocket("wss://www.kyj9447.kr:444/ws/chat");
 
             websocket.onmessage = onMessage;
 
@@ -61,7 +61,7 @@
 
                 // 웹소켓으로 받은 메세지
                 var data = msg.data;
-                //console.log("data " + data);
+                console.log("data " + data);
 
                 // [이메일, type, 메세지 내용]
                 var messageParts = data.split(",");
@@ -75,6 +75,8 @@
                 else {
                     var result = [messageParts[0] + "," + messageParts[1], messageParts[2]];
                 }
+
+                console.log("result " + result);
 
                 // html에 추가
                 let messageArea = document.getElementById("message-area");

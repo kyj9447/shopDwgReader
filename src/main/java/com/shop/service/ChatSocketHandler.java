@@ -98,7 +98,7 @@ public class ChatSocketHandler extends TextWebSocketHandler {
                 }
             } else { // 관리자가 없으면
                 log.info("!현재 접속중인 관리자가 없어 채팅을 닫습니다.!");
-                WebSocketMessage<String> errorMessage = new TextMessage("현재 상담시간이 아닙니다.");
+                WebSocketMessage<String> errorMessage = new TextMessage(",,현재 상담시간이 아닙니다.");
                 session.sendMessage(errorMessage); // 접속시도한 세션에 에러메세지를 되돌려 보낸다
                 session.close(); // 세션 닫음
             }
