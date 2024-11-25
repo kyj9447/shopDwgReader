@@ -60,8 +60,8 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
-            <optional>true</optional>
+            <version>1.18.36</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -164,15 +164,13 @@
     <build>
         <plugins>
 
-            <plugin>
+ 	        <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.7.13</version>
                 <configuration>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
-                            <!-- <version>1.18.30</version> -->
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
@@ -199,28 +197,30 @@
             <!-- jar 패키징 플러그인 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
+                <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <archive>
                         <manifest>
                             <mainClass>com.shop.ShopApplication</mainClass> <!-- 실행할 클래스의 Main 메서드가 있는 클래스의 경로 -->
                         </manifest>
                     </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
+            <!-- maven 컴파일러 플러그인 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths> <!-- 컴파일시 lombok 어노테이션 처리기 추가 -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.36</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -233,5 +233,13 @@
         </repository>
 
     </repositories>
+
+    <!-- maven deploy 설정 -->
+    <distributionManagement>
+        <repository>
+            <id>local-deploy-repo</id>
+            <url>file:///C:/Servers/shopDwgReader</url>
+        </repository>
+    </distributionManagement>
 
 </project>
