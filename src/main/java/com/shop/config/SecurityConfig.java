@@ -121,7 +121,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                //return "http://nid.naver.com/nidlogin.logout?";
 
             }else if (parsedToken[1].equals("kakao")) {
-                return "https://kauth.kakao.com/oauth/logout/?client_id=0ea9af982ecb374ececf50d24a8894d6&logout_redirect_uri=https://www.kyj9447.kr:9444/members/logout";
+                // return "https://kauth.kakao.com/oauth/logout/?client_id=0ea9af982ecb374ececf50d24a8894d6&logout_redirect_uri=https://www.kyj9447.kr:9444/members/logout";
             }
 
         }
